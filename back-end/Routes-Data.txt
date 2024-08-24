@@ -1,0 +1,31 @@
+AuthRoutes
+│
+├── /UserSignup
+│   ├── Method: POST
+│   └── Controller: authControllers.UserSignup
+│
+├── /UserSignin
+│   ├── Method: POST
+│   └── Controller: authControllers.UserSignin
+│
+├── /userDetails
+│   ├── Method: GET
+│   ├── Middleware: authToken
+│   └── Controller: authControllers.userDetails
+│
+├── /userLogout
+│   ├── Method: GET
+│   └── Controller: authControllers.logout
+│
+├── /employerSignin
+│   ├── Method: POST
+│   └── Controller: authControllers.signInRecruiter
+│
+├── /signUpEmployer
+│   ├── Method: POST
+│   └── Controller: authControllers.signUpEmployer
+│
+└── /getEmployerDetails
+    ├── Method: GET
+    ├── Middleware: recruiterToken
+    └── Controller: authControllers.getEmployerDetails

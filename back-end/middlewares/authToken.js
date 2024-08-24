@@ -23,6 +23,8 @@ async function authToken(req,res,next){
 
             req.userId = decoded?._id
             req.userEmail = decoded.email
+            req.role = decoded.role
+            console.log("From Token" + " " +req.role)
             next()
         });
 

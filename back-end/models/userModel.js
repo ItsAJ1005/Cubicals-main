@@ -20,7 +20,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ["jobSeeker", "employer", "admin"],
+    enum: ["jobSeeker", "recruiter", "admin"],
     default: "jobSeeker",
   },
   address: {
