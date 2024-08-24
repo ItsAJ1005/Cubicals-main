@@ -17,12 +17,10 @@ To get started, follow these steps:
 Copy the following code block into your `.env` file:
 
 ```
-
-MONGO_URI="mongodb+srv://varunTyagarayanG:Tyagi__2004@tally.iu2ne.mongodb.net/?retryWrites=true&w=majority&appName=Tally"
-MONGO_PASS = "Tyagi__2004"
+MONGO_URI="mongodb+srv://varuntyagarayang:zNQTt1TsJhjZUllW@cubiclescluster.i6k0s.mongodb.net/?retryWrites=true&w=majority&appName=CubiclesCluster"
+MONGO_PASS = "zNQTt1TsJhjZUllW"
 TOKEN_SECRET_KEY = "pookie bear"
 PORT = 9000
-
 ```
 ### Step 3: Installing Packages
 
