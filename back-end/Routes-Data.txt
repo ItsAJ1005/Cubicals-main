@@ -3,29 +3,70 @@ AuthRoutes
 ├── /UserSignup
 │   ├── Method: POST
 │   └── Controller: authControllers.UserSignup
+│   └── Example Payload:
+│       {
+│           "name": "Aarav Sharma",
+│           "email": "aarav.sharma@example.com",
+│           "password": "123",
+│           "role": "jobSeeker",
+│           "address": {
+│               "street": "456 Elm St",
+│               "city": "Mumbai",
+│               "state": "MH",
+│               "zipCode": "400001",
+│               "country": "India"
+│           },
+│           "profilePicture": "https://www.example.com/profile-pic.jpg",
+│           "resume": "https://www.example.com/resume.pdf"
+│       }
 │
 ├── /UserSignin
 │   ├── Method: POST
 │   └── Controller: authControllers.UserSignin
+│   └── Example Payload:
+│       {
+│           "email": "aarav.sharma@example.com",
+│           "password": "123"
+│       }
 │
 ├── /userDetails
 │   ├── Method: GET
 │   ├── Middleware: authToken
 │   └── Controller: authControllers.userDetails
+│   └── Example Request:
+│       Header: Authorization: Bearer <token>
 │
 ├── /userLogout
 │   ├── Method: GET
 │   └── Controller: authControllers.logout
+│   └── Example Request:
+│       Header: Authorization: Bearer <token>
 │
 ├── /employerSignin
 │   ├── Method: POST
 │   └── Controller: authControllers.signInRecruiter
+│   └── Example Payload:
+│       {
+│           "email": "neha.sharma@example.com",
+│           "password": "123"
+│       }
 │
 ├── /signUpEmployer
 │   ├── Method: POST
 │   └── Controller: authControllers.signUpEmployer
+│   └── Example Payload:
+│       {
+│           "name": "Ravi Kumar",
+│           "email": "ravi.kumar@example.com",
+│           "password": "123",
+│           "company": "Tech Innovations Pvt. Ltd.",
+│           "companyWebsite": "https://www.techinnovations.com",
+│           "location": "Bengaluru, India"
+│       }
 │
 └── /getEmployerDetails
     ├── Method: GET
     ├── Middleware: recruiterToken
     └── Controller: authControllers.getEmployerDetails
+    └── Example Request:
+        Header: Authorization: Bearer <token>
