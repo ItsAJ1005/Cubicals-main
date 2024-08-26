@@ -23,6 +23,10 @@ const jobSchema = new Schema({
         type: Number,
         required: true
     },
+    openings: {
+        type: Number,
+        default: 1
+    },
     recruiter: {
         type: Schema.Types.ObjectId,
         ref: 'Recruiter',
