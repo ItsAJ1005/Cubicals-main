@@ -12,10 +12,11 @@ app.use(cookieParser());
 connectToDB();
 
 const authRoutes = require("./routes/authRoutes");
-const recruiterRoutes = require('./routes/recruiterRoutes')
-
+const recruiterRoutes = require("./routes/recruiterRoutes");
+const jobSeekerRoutes = require("./routes/jobSeekerRoutes");
 app.use("/auth", authRoutes);
-app.use("/recruiter",recruiterRoutes)
+app.use("/recruiter", recruiterRoutes);
+app.use("/jobSeeker", jobSeekerRoutes);
 
 app.get("/", (req, res) => {
   res.status(200).json({ message: "running" });
