@@ -1,9 +1,11 @@
+
 const User = require('../models/userModel');
 const Job = require('../models/Job');
+const sendMail = require('../middlewares/mailer'); // Import the mailing utility
 
 exports.getUserDetails = async (req, res) => {
     try {
-        const userId = req.userId;      
+        const userId = req.userId;
         const user = await User.findById(userId).populate('jobApplications.jobId').populate('savedJobs.jobId');
 
         if (!user) {
@@ -21,7 +23,7 @@ exports.applyForJob = async (req, res) => {
         const { jobId } = req.body;
         const userId = req.userId;
 
-        const job = await Job.findById(jobId);
+        const job = await Job.findById(jobId).populate('recruiter'); // Populate recruiter details
         if (!job) {
             return res.status(404).json({ error: "Job not found" });
         }
@@ -36,6 +38,14 @@ exports.applyForJob = async (req, res) => {
         user.jobApplications.push({ jobId });
         await user.save();
 
+        const recruiterEmail = job.recruiter.email; // Assuming recruiter model has an email field
+        await sendMail({
+            to: recruiterEmail,
+            subject: 'New Job Application',
+            text: `A new job seeker has applied for your job: ${job.title}.`,
+            html: `<p>A new job seeker has applied for your job: <strong>${job.title}</strong>.</p>`,
+        });
+
         res.status(200).json({ message: "Successfully applied for the job", jobApplication: user.jobApplications });
     } catch (error) {
         res.status(500).json({ error: "Failed to apply for the job" });
@@ -44,7 +54,7 @@ exports.applyForJob = async (req, res) => {
 
 exports.saveJob = async (req, res) => {
     try {
-        const { jobId } = req.params; 
+        const { jobId } = req.params;
         const userId = req.userId;
 
         const job = await Job.findById(jobId);
@@ -64,10 +74,11 @@ exports.saveJob = async (req, res) => {
 
         res.status(200).json({ message: "Job successfully saved", savedJobs: user.savedJobs });
     } catch (error) {
-        console.error(error); 
+        console.error(error);
         res.status(500).json({ error: "Failed to save job" });
     }
 };
+
 exports.viewSavedJobs = async (req, res) => {
     try {
         const userId = req.userId;
