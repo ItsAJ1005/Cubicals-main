@@ -1,15 +1,20 @@
-const User = require("../models/userModel");
-const Job = require("../models/Job");
+const User = require('../models/userModel');
+const Job = require('../models/Job');
+const sendMail = require('../middlewares/mailer'); // Import the mailing utility
 
 exports.getUserDetails = async (req, res) => {
-  try {
-    const userId = req.userId;
-    const user = await User.findById(userId)
-      .populate("jobApplications.jobId")
-      .populate("savedJobs.jobId");
+    try {
+        const userId = req.userId;
+        const user = await User.findById(userId).populate('jobApplications.jobId').populate('savedJobs.jobId');
 
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
+        if (!user) {
+            return res.status(404).json({ error: "User not found" });
+        }
+
+        res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to retrieve user details" });
+>>>>>>> main
     }
 
     res.status(200).json({ user });
@@ -24,10 +29,12 @@ exports.applyForJob = async (req, res) => {
     const { jobId } = req.body;
     const userId = req.userId;
 
-    const job = await Job.findById(jobId);
-    if (!job) {
-      return res.status(404).json({ error: "Job not found" });
-    }
+
+        const job = await Job.findById(jobId).populate('recruiter'); // Populate recruiter details
+        if (!job) {
+            return res.status(404).json({ error: "Job not found" });
+        }
+
 
     const user = await User.findById(userId);
     const alreadyApplied = user.jobApplications.some(
@@ -41,6 +48,7 @@ exports.applyForJob = async (req, res) => {
     }
 
     user.jobApplications.push({ jobId });
+
 
     job.applications.push({ userId });
 
@@ -102,4 +110,5 @@ exports.viewSavedJobs = async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve saved jobs" });
   }
+
 };
