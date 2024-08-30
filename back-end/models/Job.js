@@ -1,6 +1,23 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+const applicationSchema = new Schema({
+    userId: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    status: {
+        type: String,
+        enum: ['pending', 'accepted', 'rejected'],
+        default: 'pending'
+    },
+    appliedAt: {
+        type: Date,
+        default: Date.now
+    }
+});
+
 const jobSchema = new Schema({
     title: {
         type: String,
@@ -32,6 +49,7 @@ const jobSchema = new Schema({
         ref: 'Recruiter',
         required: true
     },
+    applications: [applicationSchema],
     status: {
         type: String,
         enum: ['open', 'closed'],
