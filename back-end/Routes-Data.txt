@@ -1,31 +1,116 @@
 AuthRoutes
 │
-├── /UserSignup
+├── /userSignup
+│   ├── URL: http://127.0.0.1:9000/auth/userSignup
 │   ├── Method: POST
 │   └── Controller: authControllers.UserSignup
+│   └── Example Payload:
+│       {
+│           "name": "Aarav Sharma",
+│           "email": "aarav.sharma@example.com",
+│           "password": "123",
+│           "role": "jobSeeker",
+│           "address": {
+│               "street": "456 Elm St",
+│               "city": "Mumbai",
+│               "state": "MH",
+│               "zipCode": "400001",
+│               "country": "India"
+│           },
+│           "profilePicture": "https://www.example.com/profile-pic.jpg",
+│           "resume": "https://www.example.com/resume.pdf"
+│       }
 │
-├── /UserSignin
+├── /userSignin
+│   ├── URL: http://127.0.0.1:9000/auth/userSignin
 │   ├── Method: POST
 │   └── Controller: authControllers.UserSignin
+│   └── Example Payload:
+│       {
+│           "email": "aarav.sharma@example.com",
+│           "password": "123"
+│       }
 │
 ├── /userDetails
+│   ├── URL: http://127.0.0.1:9000/auth/userDetails
 │   ├── Method: GET
 │   ├── Middleware: authToken
 │   └── Controller: authControllers.userDetails
+│   └── Example Request:
+│       Header: Authorization: Bearer <token>
 │
 ├── /userLogout
+│   ├── URL: http://127.0.0.1:9000/auth/userLogout
 │   ├── Method: GET
 │   └── Controller: authControllers.logout
+│   └── Example Request:
+│       Header: Authorization: Bearer <token>
 │
-├── /employerSignin
+├── /recruiterSignin
+│   ├── URL: http://127.0.0.1:9000/auth/recruiterSignin
 │   ├── Method: POST
 │   └── Controller: authControllers.signInRecruiter
+│   └── Example Payload:
+│       {
+│           "email": "neha.sharma@example.com",
+│           "password": "123"
+│       }
 │
-├── /signUpEmployer
+├── /recruiterSignup
+│   ├── URL: http://127.0.0.1:9000/auth/recruiterSignup
 │   ├── Method: POST
 │   └── Controller: authControllers.signUpEmployer
+│   └── Example Payload:
+│       {
+│           "name": "Ravi Kumar",
+│           "email": "ravi.kumar@example.com",
+│           "password": "123",
+│           "company": "Tech Innovations Pvt. Ltd.",
+│           "companyWebsite": "https://www.techinnovations.com",
+│           "location": "Bengaluru, India"
+│       }
 │
-└── /getEmployerDetails
+└── /getRecruiterDetails
+    ├── URL: http://127.0.0.1:9000/auth/getRecruiterDetails
     ├── Method: GET
     ├── Middleware: recruiterToken
     └── Controller: authControllers.getEmployerDetails
+    └── Example Request:
+        Header: Authorization: Bearer <token>
+
+JobSeekerRoutes
+│
+├── /applyJob
+│   ├── URL: http://127.0.0.1:9000/jobSeeker/applyJob
+│   ├── Method: POST
+│   ├── Middleware: authToken
+│   └── Controller: jobSeekerControllers.applyForJob
+│   └── Example Payload:
+│       {
+│           "jobId": "66cae028e98f34a886bf77f7"
+│       }
+│       
+│
+├── /getUserDetails
+│   ├── URL: http://127.0.0.1:9000/jobSeeker/getUserDetails
+│   ├── Method: POST
+│   ├── Middleware: authToken
+│   └── Controller: jobSeekerControllers.getUserDetails
+│
+│
+├── /saveJob/:jobId
+│   ├── URL: http://127.0.0.1:9000/jobSeeker/saveJob/:jobId
+│   ├── Method: POST
+│   ├── Middleware: authToken
+│   └── Controller: jobSeekerControllers.saveJob
+│   └── Example Request:
+│       URL: http://127.0.0.1:9000/jobSeeker/saveJob/66cae028e98f34a886bf77f7
+│       Header: Authorization: Bearer <token>
+│
+└── /savedJobs
+    ├── URL: http://127.0.0.1:9000/jobSeeker/savedJobs
+    ├── Method: GET
+    ├── Middleware: authToken
+    └── Controller: jobSeekerControllers.viewSavedJobs
+    └── Example Request:
+        Header: Authorization: Bearer <token>

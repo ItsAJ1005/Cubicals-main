@@ -19,7 +19,7 @@ exports.UserSignup = async (req, res) => {
       throw new Error("Please provide password");
     }
     if (!name) {
-      throw new Error("Please provide name");
+      throw new Error("Please provide name")
     }
 
     const salt = bcrypt.genSaltSync(10);
@@ -246,7 +246,6 @@ exports.getEmployerDetails = async (req, res) => {
       });
     }
 
-    // Return recruiter details
     return res.status(200).json({
       message: "Recruiter details fetched successfully.",
       recruiter,
