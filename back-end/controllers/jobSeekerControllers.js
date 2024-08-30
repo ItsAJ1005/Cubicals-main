@@ -1,12 +1,13 @@
-
-const User = require('../models/userModel');
-const Job = require('../models/Job');
-const sendMail = require('../middlewares/mailer'); // Import the mailing utility
+const User = require("../models/userModel");
+const Job = require("../models/Job");
+const sendMail = require("../middlewares/mailer");
 
 exports.getUserDetails = async (req, res) => {
     try {
         const userId = req.userId;
-        const user = await User.findById(userId).populate('jobApplications.jobId').populate('savedJobs.jobId');
+        const user = await User.findById(userId)
+            .populate("jobApplications.jobId")
+            .populate("savedJobs.jobId");
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
@@ -29,14 +30,19 @@ exports.applyForJob = async (req, res) => {
         }
 
         const user = await User.findById(userId);
-        const alreadyApplied = user.jobApplications.some(application => application.jobId.toString() === jobId);
+        const alreadyApplied = user.jobApplications.some(
+            (application) => application.jobId.toString() === jobId
+        );
 
         if (alreadyApplied) {
             return res.status(400).json({ error: "You have already applied for this job" });
         }
 
         user.jobApplications.push({ jobId });
+        job.applications.push({ userId });
+
         await user.save();
+        await job.save();
 
         const recruiterEmail = job.recruiter.email; // Assuming recruiter model has an email field
         await sendMail({
@@ -46,7 +52,10 @@ exports.applyForJob = async (req, res) => {
             html: `<p>A new job seeker has applied for your job: <strong>${job.title}</strong>.</p>`,
         });
 
-        res.status(200).json({ message: "Successfully applied for the job", jobApplication: user.jobApplications });
+        res.status(200).json({
+            message: "Successfully applied for the job",
+            jobApplication: user.jobApplications,
+        });
     } catch (error) {
         res.status(500).json({ error: "Failed to apply for the job" });
     }
@@ -63,7 +72,9 @@ exports.saveJob = async (req, res) => {
         }
 
         const user = await User.findById(userId);
-        const alreadySaved = user.savedJobs.some(savedJob => savedJob.jobId.toString() === jobId);
+        const alreadySaved = user.savedJobs.some(
+            (savedJob) => savedJob.jobId.toString() === jobId
+        );
 
         if (alreadySaved) {
             return res.status(400).json({ error: "Job already saved" });
@@ -82,8 +93,7 @@ exports.saveJob = async (req, res) => {
 exports.viewSavedJobs = async (req, res) => {
     try {
         const userId = req.userId;
-
-        const user = await User.findById(userId).populate('savedJobs.jobId');
+        const user = await User.findById(userId).populate("savedJobs.jobId");
 
         if (!user) {
             return res.status(404).json({ error: "User not found" });
