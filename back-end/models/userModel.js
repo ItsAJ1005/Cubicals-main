@@ -46,8 +46,17 @@ const UserSchema = new Schema({
         type: Date,
         default: Date.now,
       },
+      status: {
+        type: String,
+        enum: ["pending", "accepted", "rejected"],
+        default: "pending",
+      },
+      recruiterNote: {
+        type: String,
+      },
     },
   ],
+
   savedJobs: [
     {
       jobId: {
@@ -66,7 +75,6 @@ const UserSchema = new Schema({
   },
 });
 
-// Middleware to update `updatedAt` on save
 UserSchema.pre("save", function (next) {
   this.updatedAt = Date.now();
   next();
