@@ -1,4 +1,3 @@
-
 const Job = require("../models/Job");
 const Recruiter = require("../models/recruiterModel");
 
@@ -38,6 +37,28 @@ exports.getJobsByRecruiter = async (req, res) => {
     res.status(200).json(jobs);
   } catch (error) {
     res.status(500).json({ error: "Failed to retrieve job postings" });
+  }
+};
+
+exports.removeJobOpening = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const recruiterId = req.userId;
+
+    const job = await Job.findOneAndDelete({ _id: jobId, recruiter: recruiterId });
+
+    if (!job) {
+      return res.status(404).json({ error: "Job not found or you do not have permission to delete this job." });
+    }
+
+    await Recruiter.updateOne(
+      { _id: recruiterId },
+      { $pull: { jobPostings: jobId } }
+    );
+
+    res.status(200).json({ message: "Job opening removed successfully" });
+  } catch (error) {
+    res.status(500).json({ error: "Failed to remove job opening" });
   }
 };
 

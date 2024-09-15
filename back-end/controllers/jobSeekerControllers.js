@@ -104,3 +104,46 @@ exports.viewSavedJobs = async (req, res) => {
         res.status(500).json({ error: "Failed to retrieve saved jobs" });
     }
 };
+
+exports.editSavedJob = async (req, res) => {
+    try {
+        const { jobId } = req.params;
+        const { newJobId } = req.body;
+        const userId = req.userId;
+
+        const user = await User.findById(userId);
+
+        const savedJobIndex = user.savedJobs.findIndex(savedJob => savedJob.jobId.toString() === jobId);
+        if (savedJobIndex === -1) {
+            return res.status(404).json({ error: "Saved job not found" });
+        }
+
+        user.savedJobs[savedJobIndex].jobId = newJobId;
+        await user.save();
+
+        res.status(200).json({ message: "Saved job updated successfully", savedJobs: user.savedJobs });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to update saved job" });
+    }
+};
+
+exports.removeAppliedJob = async (req, res) => {
+    try {
+        const { jobId } = req.params;
+        const userId = req.userId;
+
+        const user = await User.findById(userId);
+
+        const appliedJobIndex = user.jobApplications.findIndex(application => application.jobId.toString() === jobId);
+        if (appliedJobIndex === -1) {
+            return res.status(404).json({ error: "Applied job not found" });
+        }
+
+        user.jobApplications.splice(appliedJobIndex, 1);
+        await user.save();
+
+        res.status(200).json({ message: "Applied job removed successfully", jobApplications: user.jobApplications });
+    } catch (error) {
+        res.status(500).json({ error: "Failed to remove applied job" });
+    }
+};
