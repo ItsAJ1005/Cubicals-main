@@ -1,11 +1,11 @@
 import React from 'react'
 
-const LandingPage = () => {
+const JobPage = () => {
   return (
     <div>
-      
+      JobPage
     </div>
   )
 }
 
-export default LandingPage;
+export default JobPage
