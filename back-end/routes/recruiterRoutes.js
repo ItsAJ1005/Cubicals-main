@@ -1,12 +1,8 @@
-const express = require('express')
-const router = express.Router()
-const recruiterController = require('../controllers/recruiterControllers')
-const isRecruiter = require('../middlewares/checkRecruiterRole')
+const express = require('express');
+const router = express.Router();
+const RecruiterController = require('../controllers/RecruiterController');
 
+router.post('/addJob', isRecruiter, RecruiterController.addJob);
+router.delete('/removeJobOpening/:jobId', isRecruiter, RecruiterController.removeJobOpening);
 
-router.post('/addOpenings', isRecruiter, recruiterController.addJob);
-router.get('/getJobsByRecruiter', isRecruiter, recruiterController.getJobsByRecruiter);
-router.delete('/removeJobOpening/:jobId', isRecruiter, recruiterController.removeJobOpening);
-
-
-module.exports = router 
+module.exports = router;
