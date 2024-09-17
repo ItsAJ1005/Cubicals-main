@@ -1,16 +1,28 @@
 
 import './App.css'
-import { Button } from './components/ui/button'
-import Button2 from './components/ui/button2';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import AppLayout from './layouts/app-layout';
+
+const router = createBrowserRouter([
+  {
+    element: <AppLayout/>,
+    children: [
+      {
+        path: '/',
+        element: <LandingPage/>
+      }
+    ]
+  }
+])
+
+
+
+
 
 function App() {
 
   return (
-    <div>
-      <div><br/>HI this is the home page</div>
-      <Button2/>  
-    </div>
-
+   <RouterProvider router={router} />
   );
 }
 
