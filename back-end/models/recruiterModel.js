@@ -2,49 +2,37 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const recruiterSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        trim: true,
-        lowercase: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    role :{
-        type: String,
-        default : "recruiter"
-    },
-    company: {
-        type: String,
-        required: true,
-        trim: true
-    },
-    companyWebsite: {
-        type: String,
-        trim: true
-    },
-    location: {
-        type: String,
-        trim: true
-    },
-    jobPostings: [{
-        type: Schema.Types.ObjectId,
-        ref: 'Job'
-    }],
-    createdAt: {
-        type: Date,
-        default: Date.now
-    }
+    name: String,
+    email: { type: String, unique: true },
+    password: String,
+    company: String,
+    jobPostings: [{ type: Schema.Types.ObjectId, ref: 'Job' }],
+    createdAt: { type: Date, default: Date.now }
 });
 
-const Recruiter = mongoose.model('Recruiter', recruiterSchema);
+const RecruiterModel = mongoose.model('Recruiter', recruiterSchema);
+
+class Recruiter {
+    constructor(data) {
+        this.data = data;
+    }
+
+    async save() {
+        const recruiter = new RecruiterModel(this.data);
+        return await recruiter.save();
+    }
+
+    static async findById(recruiterId) {
+        return await RecruiterModel.findById(recruiterId).populate('jobPostings');
+    }
+
+    static async updateRecruiter(recruiterId, updatedData) {
+        return await RecruiterModel.findByIdAndUpdate(recruiterId, updatedData, { new: true });
+    }
+
+    static async deleteRecruiter(recruiterId) {
+        return await RecruiterModel.findByIdAndDelete(recruiterId);
+    }
+}
 
 module.exports = Recruiter;
