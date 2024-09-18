@@ -8,10 +8,7 @@ class Database {
 
     async connect() {
         try {
-            await mongoose.connect(this.mongoURI, {
-                useNewUrlParser: true,
-                useUnifiedTopology: true,
-            });
+            await mongoose.connect(this.mongoURI);
             console.log('Connected to DB');
         } catch (error) {
             console.error('DB connection error:', error);

@@ -1,15 +1,14 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Recruiter = require("../models/recruiterModel");
+const  Recruiter  = require('../models/recruiterModel') // Import the Recruiter model
 
 class AuthController {
-
   // User signup
   async userSignup(req, res) {
     try {
       const { email, password, name, username } = req.body;
-      const existingUser = await User.findOne({ email });
+      const existingUser = await User.findOne({ email: email });
 
       if (existingUser) {
         throw new Error("User already exists.");
@@ -74,12 +73,15 @@ class AuthController {
         { expiresIn: "8h" }
       );
 
-      res.cookie("token", token, { httpOnly: true, secure: true }).status(200).json({
-        message: "Login successful.",
-        data: token,
-        success: true,
-        error: false,
-      });
+      res
+        .cookie("token", token, { httpOnly: true, secure: true })
+        .status(200)
+        .json({
+          message: "Login successful.",
+          data: token,
+          success: true,
+          error: false,
+        });
     } catch (error) {
       res.json({
         message: error.message || error,
@@ -130,7 +132,7 @@ class AuthController {
   async signInRecruiter(req, res) {
     try {
       const { email, password } = req.body;
-      const recruiter = await Recruiter.findOne({ email });
+      const recruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
@@ -168,13 +170,13 @@ class AuthController {
     try {
       const { name, email, password, company, companyWebsite, location } = req.body;
 
-      const existingRecruiter = await Recruiter.findOne({ email });
+      const existingRecruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
       if (existingRecruiter) {
         return res.status(400).json({ message: "Email is already registered." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newRecruiter = new Recruiter({
+      const newRecruiter = new Recruiter({ // Use the imported Recruiter model
         name,
         email,
         password: hashedPassword,
@@ -196,7 +198,7 @@ class AuthController {
   async getRecruiterDetails(req, res) {
     try {
       const recruiterId = req.userId;
-      const recruiter = await Recruiter.findById(recruiterId).select('-password');
+      const recruiter = await Recruiter.findById(recruiterId).select("-password"); // Use the imported Recruiter model
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
