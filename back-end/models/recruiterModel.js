@@ -11,8 +11,10 @@ const recruiterSchema = new Schema({
     createdAt: { type: Date, default: Date.now }
 });
 
+// Create the Recruiter model
 const RecruiterModel = mongoose.model('Recruiter', recruiterSchema);
 
+// Recruiter class to handle recruiter-related operations
 class Recruiter {
     constructor(data) {
         this.data = data;
@@ -36,4 +38,4 @@ class Recruiter {
     }
 }
 
-module.exports = Recruiter;
+module.exports = Recruiter = mongoose.model('recruiter', recruiterSchema)

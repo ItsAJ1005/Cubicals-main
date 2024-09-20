@@ -1,49 +1,60 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Recruiter = require("../models/recruiterModel");
+const Recruiter = require('../models/recruiterModel') // Import the Recruiter model
 
 class AuthController {
-
+  // User signup
   async userSignup(req, res) {
     try {
       const { email, password, name, username } = req.body;
-      const user = await User.findOne({ email });
+      const existingUser = await User.findOne({ email: email });
 
-      if (user) {
+      if (existingUser) {
         throw new Error("User already exists.");
       }
       if (!email || !password || !name) {
-        throw new Error("Please provide all required fields.");
+        throw new Error("All fields are required.");
       }
 
       const salt = bcrypt.genSaltSync(10);
       const hashPassword = await bcrypt.hashSync(password, salt);
 
-      const payload = { name, username, password: hashPassword, email };
-      const newUser = new User(payload);
-      const savedUser = await newUser.save();
+      if (!hashPassword) {
+        throw new Error("Error while hashing password.");
+      }
+
+      const userData = new User({
+        name,
+        username,
+        email,
+        password: hashPassword,
+      });
+
+      const savedUser = await userData.save();
 
       res.status(201).json({
         data: savedUser,
         success: true,
+        error: false,
         message: "User created successfully!",
       });
-    } catch (err) {
+    } catch (error) {
       res.json({
-        message: err.message || err,
+        message: error.message || error,
         error: true,
         success: false,
       });
     }
   }
 
+  // User sign in
   async userSignin(req, res) {
     try {
       const { email, password } = req.body;
 
       if (!email || !password) {
-        throw new Error("Please provide email and password.");
+        throw new Error("Email and password are required.");
       }
 
       const user = await User.findOne({ email });
@@ -52,28 +63,35 @@ class AuthController {
       }
 
       const isPasswordValid = await bcrypt.compare(password, user.password);
+      if (!isPasswordValid) {
+        throw new Error("Invalid credentials.");
+      }
 
-      if (isPasswordValid) {
-        const tokenData = { _id: user._id, email: user.email, role: user.role };
-        const token = jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, { expiresIn: '8h' });
+      const token = jwt.sign(
+        { _id: user._id, email: user.email, role: user.role },
+        process.env.TOKEN_SECRET_KEY,
+        { expiresIn: "8h" }
+      );
 
-        res.cookie("token", token, { httpOnly: true, secure: true }).status(200).json({
+      res
+        .cookie("token", token, { httpOnly: true, secure: true })
+        .status(200)
+        .json({
           message: "Login successful.",
           data: token,
           success: true,
+          error: false,
         });
-      } else {
-        throw new Error("Invalid password.");
-      }
-    } catch (err) {
+    } catch (error) {
       res.json({
-        message: err.message || err,
+        message: error.message || error,
         error: true,
         success: false,
       });
     }
   }
 
+  // Get user details
   async getUserDetails(req, res) {
     try {
       const user = await User.findById(req.userId);
@@ -81,45 +99,47 @@ class AuthController {
       res.status(200).json({
         data: user,
         success: true,
+        error: false,
         message: "User details fetched successfully.",
       });
-    } catch (err) {
+    } catch (error) {
       res.status(400).json({
-        message: err.message || err,
+        message: error.message || error,
         error: true,
         success: false,
       });
     }
   }
 
+  // User logout
   async logout(req, res) {
     try {
-      res.clearCookie("token");
-
-      res.json({
+      res.clearCookie("token").json({
         message: "Logged out successfully.",
         success: true,
+        error: false,
       });
-    } catch (err) {
+    } catch (error) {
       res.json({
-        message: err.message || err,
+        message: error.message || error,
         error: true,
         success: false,
       });
     }
   }
 
+  // Recruiter sign in
   async signInRecruiter(req, res) {
     try {
       const { email, password } = req.body;
-      const recruiter = await Recruiter.findOne({ email });
+      const recruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
       }
 
-      const isMatch = await bcrypt.compare(password, recruiter.password);
-      if (!isMatch) {
+      const isPasswordValid = await bcrypt.compare(password, recruiter.password);
+      if (!isPasswordValid) {
         return res.status(400).json({ message: "Invalid credentials." });
       }
 
@@ -145,36 +165,40 @@ class AuthController {
     }
   }
 
+  // Recruiter signup
   async signUpRecruiter(req, res) {
     try {
-      const { name, email, password, company, companyWebsite, contactNumber, location } = req.body;
+      const { name, email, password, company, companyWebsite, location } = req.body;
 
-      const existingRecruiter = await Recruiter.findOne({ email });
+      const existingRecruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
       if (existingRecruiter) {
         return res.status(400).json({ message: "Email is already registered." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-
-      const newRecruiter = new Recruiter({
-        name, email, password: hashedPassword, company, companyWebsite, contactNumber, location,
+      const newRecruiter = new Recruiter({ // Use the imported Recruiter model
+        name,
+        email,
+        password: hashedPassword,
+        company,
+        companyWebsite,
+        location,
       });
 
       await newRecruiter.save();
 
-      return res.status(201).json({
-        message: "Recruiter account created successfully.",
-        success: true,
-      });
+      return res.status(201).json({ message: "Recruiter account created successfully." });
     } catch (error) {
       console.error("Signup Error:", error);
       return res.status(500).json({ message: "Server error." });
     }
   }
 
+  // Get recruiter details
   async getRecruiterDetails(req, res) {
     try {
-      const recruiter = await Recruiter.findById(req.userId).select('-password');
+      const recruiterId = req.userId;
+      const recruiter = await Recruiter.findById(recruiterId).select("-password"); // Use the imported Recruiter model
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
@@ -184,9 +208,10 @@ class AuthController {
         message: "Recruiter details fetched successfully.",
         recruiter,
         success: true,
+        error: false,
       });
     } catch (error) {
-      console.error("Get Recruiter Details Error:", error);
+      console.error("Get Employer Details Error:", error);
       return res.status(500).json({ message: "Server error." });
     }
   }

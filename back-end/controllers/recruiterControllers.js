@@ -2,9 +2,7 @@ const Job = require("../models/Job");
 const Recruiter = require("../models/recruiterModel");
 
 class RecruiterController {
-
-  // Add Job
-  async addJob(req, res) {
+  static async addJob(req, res) {
     try {
       const { title, description, requirements, location, salary, openings } = req.body;
 
@@ -30,8 +28,7 @@ class RecruiterController {
     }
   }
 
-  // Get Jobs by Recruiter
-  async getJobsByRecruiter(req, res) {
+  static async getJobsByRecruiter(req, res) {
     try {
       const recruiterId = req.userId;
       const jobs = await Job.find({ recruiter: recruiterId });
@@ -41,8 +38,7 @@ class RecruiterController {
     }
   }
 
-  // Remove Job Opening
-  async removeJobOpening(req, res) {
+  static async removeJobOpening(req, res) {
     try {
       const { jobId } = req.params;
       const recruiterId = req.userId;
@@ -64,8 +60,7 @@ class RecruiterController {
     }
   }
 
-  // Get Job Applications
-  async getJobApplications(req, res) {
+  static async getJobApplications(req, res) {
     try {
       const { jobId } = req.params;
       const recruiterId = req.userId;
@@ -86,8 +81,7 @@ class RecruiterController {
     }
   }
 
-  // Update Application Status
-  async updateApplicationStatus(req, res) {
+  static async updateApplicationStatus(req, res) {
     try {
       const { jobId, applicationId } = req.params;
       const { status } = req.body;
@@ -116,4 +110,4 @@ class RecruiterController {
   }
 }
 
-module.exports = new RecruiterController();
+module.exports = RecruiterController;
