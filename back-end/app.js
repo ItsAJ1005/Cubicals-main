@@ -14,10 +14,10 @@ connectToDB();
 const authRoutes = require("./routes/authRoutes");
 const recruiterRoutes = require("./routes/recruiterRoutes");
 const jobSeekerRoutes = require("./routes/jobSeekerRoutes");
-
+const collabOptions = require('./routes/collaborationRoutes')
 
 app.use("/auth", authRoutes);
-app.use("/recruiter", recruiterRoutes);
+app.use("/recruiter", recruiterRoutes,collabOptions);
 app.use("/jobSeeker", jobSeekerRoutes);
 
 
