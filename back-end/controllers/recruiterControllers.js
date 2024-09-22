@@ -4,7 +4,8 @@ const Recruiter = require("../models/recruiterModel");
 class RecruiterController {
   static async addJob(req, res) {
     try {
-      const { title, description, requirements, location, salary, openings } = req.body;
+      const { title, description, requirements, location, salary, openings } =
+        req.body;
 
       const newJob = new Job({
         title,
@@ -31,8 +32,15 @@ class RecruiterController {
   static async getJobsByRecruiter(req, res) {
     try {
       const recruiterId = req.userId;
-      const jobs = await Job.find({ recruiter: recruiterId });
-      res.status(200).json(jobs);
+      const recruiter = await Recruiter.findById(recruiterId).populate(
+        "jobPostings"
+      );
+
+      if (!recruiter) {
+        return res.status(404).json({ error: "Recruiter not found" });
+      }
+
+      res.status(200).json(recruiter.jobPostings);
     } catch (error) {
       res.status(500).json({ error: "Failed to retrieve job postings" });
     }
@@ -43,10 +51,16 @@ class RecruiterController {
       const { jobId } = req.params;
       const recruiterId = req.userId;
 
-      const job = await Job.findOneAndDelete({ _id: jobId, recruiter: recruiterId });
+      const job = await Job.findOneAndDelete({
+        _id: jobId,
+        recruiter: recruiterId,
+      });
 
       if (!job) {
-        return res.status(404).json({ error: "Job not found or you do not have permission to delete this job." });
+        return res.status(404).json({
+          error:
+            "Job not found or you do not have permission to delete this job.",
+        });
       }
 
       await Recruiter.updateOne(
@@ -71,7 +85,8 @@ class RecruiterController {
 
       if (!job) {
         return res.status(404).json({
-          error: "Job not found or you don't have permission to view these applications",
+          error:
+            "Job not found or you don't have permission to view these applications",
         });
       }
 
@@ -91,7 +106,8 @@ class RecruiterController {
 
       if (!job) {
         return res.status(404).json({
-          error: "Job not found or you don't have permission to update this application",
+          error:
+            "Job not found or you don't have permission to update this application",
         });
       }
 
