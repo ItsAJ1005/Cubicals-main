@@ -1,0 +1,84 @@
+import React from 'react'
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+  } from "@/components/ui/avatar"
+
+const InfoCardsHome = () => {
+  return (
+    <div className='flex flex-row justify-between gap-10 mx-[10vw]  '>
+
+      <div className='h-[12vh] w-[50rem] ' >
+        <div>
+            <span className=' flex gap-3'>
+                <Avatar>
+                    <AvatarImage src="https://img.icons8.com/?size=100&id=112468&format=png&color=7950F2" alt="search" className=''/>
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <span className='font-bold text-lg my-1'>
+                    Easy Job Search
+                </span>
+            </span>
+        </div>
+        <div className='text-[#73737A] font-semibold'>
+            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+        </div>
+      </div>
+ 
+      <div className=' h-[12vh] w-[50rem] ' >
+        <div>
+            <span className=' flex gap-4'>
+                <Avatar>
+                    <AvatarImage src="https://img.icons8.com/?size=100&id=53426&format=png&color=7950F2" alt="notimp" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <span className='font-bold text-lg my-1'>
+                    Companies Collaboration
+                </span>
+            </span>
+        </div>
+        <span className='text-[#73737A] font-semibold'>
+            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+        </span>
+      </div>
+
+      <div className=' h-[12vh] w-[50rem] ' >
+        <div>
+            <span className=' flex gap-4'>
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" alt="notimp" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <span className='font-bold text-lg my-1'>
+                    Easy Job Search
+                </span>
+            </span>
+        </div>
+        <span className='text-[#73737A] font-semibold'>
+            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+        </span>
+      </div>
+
+      <div className=' h-[12vh] w-[50rem] '>
+        <div>
+            <div className=' flex gap-4'>
+                <Avatar>
+                    <AvatarImage src="https://github.com/shadcn.png" alt="notimp" />
+                    <AvatarFallback>CN</AvatarFallback>
+                </Avatar>
+                <span className='font-bold text-lg my-1'>
+                    Easy Job Search
+                </span>
+            </div>
+        </div>
+        <div className='text-[#73737A] font-semibold'>
+            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+        </div>
+      </div>
+
+    </div>
+  )
+}
+
+export default InfoCardsHome
