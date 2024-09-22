@@ -157,6 +157,7 @@ class AuthController {
           name: recruiter.name,
           email: recruiter.email,
           company: recruiter.company,
+          role : "recruiter"
         },
       });
     } catch (error) {
