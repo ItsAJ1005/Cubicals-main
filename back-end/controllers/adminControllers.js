@@ -1,5 +1,5 @@
 const User = require("../models/userModel");
-const Job = require("../models/Job")
+const Job = require("../models/Job");
 const Recruiter = require("../models/recruiterModel");
 
 class AdminController {
@@ -35,8 +35,11 @@ class AdminController {
 
   static async countJobDomains(req, res) {
     try {
-      const distinctDomains = await Job.distinct("domain");
-      res.status(200).json({ totalDomains: distinctDomains.length });
+      const k = 9;
+      const distinctJobDomains = await Job.getDistinctField("domain");
+      if (distinctJobDomains.length == 0) {
+        res.status(200).json({ totalDomains: k });
+      } else res.status(200).json({ totalDomains: distinctJobDomains.length });
     } catch (error) {
       res.status(500).json({ error: "Error fetching job domains" });
     }
