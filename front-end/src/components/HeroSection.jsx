@@ -21,6 +21,10 @@ const HeroSection = () => {
             <div className=''>
                 <img className=' absolute -z-1 overflow-hidden' src='/looper-pattern.svg' />
             </div>
+
+            <div id="popup" className="popup flex gap-2">
+                <p>Hello, Welcome to Cubicles!</p> <div className='w-8 h-8'><img className='rounded-full' src='/src/assets/anime-emoji.gif'/></div>
+            </div>
             
             
             {/* Left part of top section starts */}
