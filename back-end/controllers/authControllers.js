@@ -1,13 +1,36 @@
 const User = require("../models/userModel");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const Recruiter = require('../models/recruiterModel') // Import the Recruiter model
+const Recruiter = require('../models/recruiterModel');
+
+// Simple email validation regex (checks for format: something@something.something)
+const simpleEmailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
+
+// Simple password validation regex
+// This regex enforces the following rules:
+// - Minimum 8 characters
+// - At least one lowercase letter
+// - At least one uppercase letter
+// - At least one digit
+// - At least one special character (like @, #, $, etc.)
+const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
 
 class AuthController {
   // User signup
   async userSignup(req, res) {
     try {
       const { email, password, name, username } = req.body;
+
+      // Validate email format using regex
+      if (!simpleEmailRegex.test(email)) {
+        throw new Error("Invalid email format.");
+      }
+
+      // Validate password strength using regex
+      if (!passwordRegex.test(password)) {
+        throw new Error("Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character.");
+      }
+
       const existingUser = await User.findOne({ email: email });
 
       if (existingUser) {
@@ -132,7 +155,7 @@ class AuthController {
   async signInRecruiter(req, res) {
     try {
       const { email, password } = req.body;
-      const recruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
+      const recruiter = await Recruiter.findOne({ email });
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
@@ -171,13 +194,23 @@ class AuthController {
     try {
       const { name, email, password, company, companyWebsite, location } = req.body;
 
-      const existingRecruiter = await Recruiter.findOne({ email }); // Use the imported Recruiter model
+      // Validate email format using regex
+      if (!simpleEmailRegex.test(email)) {
+        throw new Error("Invalid email format.");
+      }
+
+      // Validate password strength using regex
+      if (!passwordRegex.test(password)) {
+        throw new Error("Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character.");
+      }
+
+      const existingRecruiter = await Recruiter.findOne({ email });
       if (existingRecruiter) {
         return res.status(400).json({ message: "Email is already registered." });
       }
 
       const hashedPassword = await bcrypt.hash(password, 10);
-      const newRecruiter = new Recruiter({ // Use the imported Recruiter model
+      const newRecruiter = new Recruiter({
         name,
         email,
         password: hashedPassword,
@@ -199,7 +232,7 @@ class AuthController {
   async getRecruiterDetails(req, res) {
     try {
       const recruiterId = req.userId;
-      const recruiter = await Recruiter.findById(recruiterId).select("-password"); // Use the imported Recruiter model
+      const recruiter = await Recruiter.findById(recruiterId).select("-password");
 
       if (!recruiter) {
         return res.status(404).json({ message: "Recruiter not found." });
