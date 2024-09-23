@@ -60,6 +60,10 @@ class JobSeekerController {
         } catch (error) {
             res.status(500).json({ error: "Failed to apply for the job" });
         }
+        // const { jobId } = req.body;
+        // const userId = req.userId;
+        // res.status(200).json({message: jobId + " " + userId});
+
     }
     
 
