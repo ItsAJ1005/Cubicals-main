@@ -2,7 +2,7 @@ const User = require("../models/userModel");
 const Job = require("../models/Job");
 const sendMail = require("../middlewares/mailer");
 class JobSeekerController {
-    
+
     static async getUserDetails(req, res) {
         try {
             const userId = req.userId;
@@ -24,27 +24,27 @@ class JobSeekerController {
         try {
             const { jobId } = req.body;
             const userId = req.userId;
-    
-            const job = await Job.findById(jobId).populate('recruiter'); // Populate recruiter details
+
+            const job = await Job.findById(jobId); // Populate recruiter details
             if (!job) {
                 return res.status(404).json({ error: "Job not found" });
             }
-    
+
             const user = await User.findById(userId);
             const alreadyApplied = user.jobApplications.some(
                 (application) => application.jobId.toString() === jobId
             );
-    
+
             if (alreadyApplied) {
                 return res.status(400).json({ error: "You have already applied for this job" });
             }
-    
+
             user.jobApplications.push({ jobId });
             job.applications.push({ userId });
-    
+
             await user.save();
             await job.save();
-    
+
             const recruiterEmail = job.recruiter.email; // Assuming recruiter model has an email field
             await sendMail({
                 to: recruiterEmail,
@@ -52,7 +52,7 @@ class JobSeekerController {
                 text: `A new job seeker has applied for your job: ${job.title}.`,
                 html: `<p>A new job seeker has applied for your job: <strong>${job.title}</strong>.</p>`,
             });
-    
+
             res.status(200).json({
                 message: "Successfully applied for the job",
                 jobApplication: user.jobApplications,
@@ -65,7 +65,7 @@ class JobSeekerController {
         // res.status(200).json({message: jobId + " " + userId});
 
     }
-    
+
 
     static async saveJob(req, res) {
         try {
@@ -102,7 +102,7 @@ class JobSeekerController {
     static async viewSavedJobs(req, res) {
         try {
             const userId = req.userId;
-            const user = await User.findById(userId).populate("savedJobs.jobId");
+            const user = await User.findById(userId);
 
             if (!user) {
                 return res.status(404).json({ error: "User not found" });

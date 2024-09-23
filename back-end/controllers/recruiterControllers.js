@@ -5,8 +5,7 @@ const mongoose = require("mongoose");
 class RecruiterController {
   static async addJob(req, res) {
     try {
-      const { title, description, requirements, location, salary, openings } =
-        req.body;
+      const { title, description, requirements, location, salary, openings } = req.body;
 
       const newJob = new Job({
         title,
@@ -33,9 +32,8 @@ class RecruiterController {
   static async getJobsByRecruiter(req, res) {
     try {
       const recruiterId = req.userId;
-      const recruiter = await Recruiter.findById(recruiterId).populate(
-        "jobPostings"
-      );
+      const recruiter = await Recruiter.findById(recruiterId);
+
 
       if (!recruiter) {
         return res.status(404).json({ error: "Recruiter not found" });
@@ -82,12 +80,9 @@ class RecruiterController {
 
   static async getJobApplications(req, res) {
     try {
-      const { jobId } = req.params;
+      const { jobId } = req.body;
       const recruiterId = req.userId;
-      const job = await Job.findOne({
-        _id: jobId,
-        recruiter: recruiterId,
-      }).populate("applications.userId", "name email");
+      const job = await Job.findOne({ _id: jobId, recruiter: recruiterId, }).populate("applications.userId", "name email");
 
       if (!job) {
         return res.status(404).json({
