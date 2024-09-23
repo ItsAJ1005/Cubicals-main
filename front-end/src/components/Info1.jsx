@@ -21,7 +21,7 @@ import { Link } from 'react-router-dom'
 
 const Info1 = () => {
   return (
-    <div className='h-screen w-full'>
+    <div className='h-screen w-[100]'>
         <div className='top text-white mx-[8vw] '>
             <div   className='text-6xl font-[900] w-[7em]'>
             <h1 className="font-bold" data-aos='fade-in'>Accessibility <span className="gradient-text">out of the</span> box.</h1>

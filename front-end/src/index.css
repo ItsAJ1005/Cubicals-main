@@ -147,7 +147,6 @@ body::-webkit-scrollbar-button:single-button {
   width: 16px;
 }
 
-/* in herosection */
 .samplecard1{
   animation: moveUpDown1 4s ease-in-out infinite;
 }
@@ -173,11 +172,11 @@ body::-webkit-scrollbar-button:single-button {
 
 
 .glass {
-  background: rgba(255, 255, 255, 0.1); /* Slight transparency */
+  background: rgba(255, 255, 255, 0.1); 
   border-radius: 15px;
-  backdrop-filter: blur(10px); /* Creates the frosted effect */
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); /* Soft shadow */
-  border: 0.001px solid rgba(255, 255, 255, 0.032); /* Light border */
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); 
+  border: 0.001px solid rgba(255, 255, 255, 0.032); 
   font-size: 1.5rem;
   width: 95vw;
 
@@ -220,8 +219,34 @@ body::-webkit-scrollbar-button:single-button {
   left: 0;
   right: 0;
   bottom: 0;
-  border-radius: 8px; /* Match the border radius */
+  border-radius: 8px; 
   background: linear-gradient(90deg, #00f, #f00, #ff8c00, #ff1493, #800080);
   z-index: 0;
-  filter: blur(5px); /* Optional: for a softer edge */
+  filter: blur(5px); 
+}
+
+.popup {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: #2b2a2a;
+  color: white;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 1s ease-in-out, visibility 0s 1s;
+}
+
+.popup.visible {
+  opacity: 1; 
+  visibility: visible; 
+  transition: opacity 1s ease-in-out, visibility 0s 0s; 
+}
+
+.popup.hidden {
+  opacity: 0; 
+  visibility: hidden; 
+  transition: opacity 1s ease-in-out, visibility 0s 1s;
 }

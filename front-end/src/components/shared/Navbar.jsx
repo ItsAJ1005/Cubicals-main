@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
@@ -14,7 +14,6 @@ const Navbar = () => {
     const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const logoutHandler = async () => {
         try {
             const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
@@ -28,6 +27,7 @@ const Navbar = () => {
             toast.error(error.response.data.message);
         }
     }
+
     return (
         <nav className='bg-black text-white'>
 
@@ -37,7 +37,7 @@ const Navbar = () => {
                     Try our pro version to smash all the boundaries 
                 </div>
                 <div>
-                    <button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button>
+                <Link><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
                 </div>
             </div>
 
