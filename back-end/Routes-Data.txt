@@ -184,7 +184,7 @@ RecruiterRoutes
   - Controller: recruiterControllers.getJobsByRecruiter
 
 --------------------------------------------------------------------------------
-****/error
+****/error - Fixed
 - /removeJob/:jobId
   - URL: http://127.0.0.1:9000/recruiter/removeJob/:jobId
   - Method: DELETE

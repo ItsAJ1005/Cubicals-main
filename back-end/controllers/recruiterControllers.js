@@ -1,5 +1,6 @@
-const Job = require("../models/Job");
 const Recruiter = require("../models/recruiterModel");
+const Job = require("../models/Job");
+const mongoose = require("mongoose");
 
 class RecruiterController {
   static async addJob(req, res) {
@@ -48,29 +49,34 @@ class RecruiterController {
 
   static async removeJobOpening(req, res) {
     try {
-      const { jobId } = req.params;
+      const { jobId } = req.body;
       const recruiterId = req.userId;
 
-      const job = await Job.findOneAndDelete({
-        _id: jobId,
-        recruiter: recruiterId,
-      });
+      const recruiterObjectId = new mongoose.Types.ObjectId(recruiterId);
+
+      const job = await Job.findById(jobId);
 
       if (!job) {
         return res.status(404).json({
-          error:
-            "Job not found or you do not have permission to delete this job.",
+          error: "Job not found.",
         });
       }
 
-      await Recruiter.updateOne(
-        { _id: recruiterId },
-        { $pull: { jobPostings: jobId } }
-      );
+      if (!job.recruiter.equals(recruiterObjectId)) {
+        return res.status(403).json({
+          error: "You do not have permission to update this job.",
+        });
+      }
 
-      res.status(200).json({ message: "Job opening removed successfully" });
+      job.status = "closed";
+      await job.save();
+
+      res
+        .status(200)
+        .json({ message: "Job status updated to 'closed' successfully." });
     } catch (error) {
-      res.status(500).json({ error: "Failed to remove job opening" });
+      console.error(error);
+      res.status(500).json({ error: "Failed to update job status." });
     }
   }
 

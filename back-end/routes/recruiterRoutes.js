@@ -6,7 +6,7 @@ const recruiterToken = require('../middlewares/checkRecruiterRole');
 
 router.post('/addJob', authToken, recruiterToken, RecruiterController.addJob);
 router.get('/jobs', authToken, recruiterToken, RecruiterController.getJobsByRecruiter);
-router.delete('/removeJob/:jobId', authToken, recruiterToken, RecruiterController.removeJobOpening);
+router.patch('/removeJob', authToken, recruiterToken, RecruiterController.removeJobOpening);
 router.get('/jobApplications/:jobId', authToken, recruiterToken, RecruiterController.getJobApplications);
 router.put('/updateApplicationStatus/:jobId/:applicationId', authToken, recruiterToken, RecruiterController.updateApplicationStatus);
 
