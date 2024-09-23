@@ -23,14 +23,15 @@ class App {
   }
 
   initializeRoutes() {
-    const authRoutes = require("./routes/authRoutes");
-    const recruiterRoutes = require("./routes/recruiterRoutes");
-    const jobSeekerRoutes = require("./routes/jobSeekerRoutes");
+    const authRoutes = require("./routes/authRoutes")
+    const recruiterRoutes = require("./routes/recruiterRoutes")
+    const jobSeekerRoutes = require("./routes/jobSeekerRoutes")
+    const adminRoutes = require("./routes/adminRoutes")
 
     this.app.use("/auth", authRoutes);
     this.app.use("/recruiter", recruiterRoutes);
     this.app.use("/jobSeeker", jobSeekerRoutes);
-
+    this.app.use("/admin" , adminRoutes)
     this.app.get("/", (req, res) => {
       res.status(200).json({ message: "Server running" });
     });
