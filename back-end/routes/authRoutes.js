@@ -1,15 +1,16 @@
-const express = require('express')
-const router =  express.Router() ;
-const authControllers = require('../controllers/authControllers')
+const express = require('express');
+const router = express.Router();
+const AuthController = require('../controllers/authControllers');
 const authToken = require('../middlewares/authToken');
-const recruiterToken = require('../middlewares/checkRecruiterRole')
-router.post('/userSignup' , authControllers.UserSignup) 
-router.post("/userSignin",authControllers.UserSignin) 
-router.get("/userDetails",authToken,authControllers.userDetails) 
-router.get("/userLogout",authControllers.logout)  
+const recruiterToken = require('../middlewares/checkRecruiterRole');
 
-router.post("/recruiteSignin",authControllers.signInRecruiter)
-router.post("/recruiterSignup",authControllers.signUpEmployer)
-router.get("/getRecruiterDetails",recruiterToken,authControllers.getEmployerDetails)
+router.post('/userSignup', AuthController.userSignup.bind(AuthController));
+router.post('/userSignin', AuthController.userSignin.bind(AuthController));
+router.get('/userDetails', authToken, AuthController.getUserDetails.bind(AuthController));
+router.get('/userLogout', AuthController.logout.bind(AuthController));
+
+router.post('/recruiterSignin', AuthController.signInRecruiter.bind(AuthController));
+router.post('/recruiterSignup', AuthController.signUpRecruiter.bind(AuthController));
+router.get('/getRecruiterDetails', recruiterToken, AuthController.getRecruiterDetails.bind(AuthController));
 
 module.exports = router;

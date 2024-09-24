@@ -1,10 +1,9 @@
-const Job = require("../models/Job");
 const Recruiter = require("../models/recruiterModel");
+const Job = require("../models/Job");
+const mongoose = require("mongoose");
 
 class RecruiterController {
-
-  // Add Job
-  async addJob(req, res) {
+  static async addJob(req, res) {
     try {
       const { title, description, requirements, location, salary, openings } = req.body;
 
@@ -30,53 +29,65 @@ class RecruiterController {
     }
   }
 
-  // Get Jobs by Recruiter
-  async getJobsByRecruiter(req, res) {
+  static async getJobsByRecruiter(req, res) {
     try {
       const recruiterId = req.userId;
-      const jobs = await Job.find({ recruiter: recruiterId });
-      res.status(200).json(jobs);
+      const recruiter = await Recruiter.findById(recruiterId);
+
+
+      if (!recruiter) {
+        return res.status(404).json({ error: "Recruiter not found" });
+      }
+
+      res.status(200).json(recruiter.jobPostings);
     } catch (error) {
       res.status(500).json({ error: "Failed to retrieve job postings" });
     }
   }
 
-  // Remove Job Opening
-  async removeJobOpening(req, res) {
+  static async removeJobOpening(req, res) {
     try {
-      const { jobId } = req.params;
+      const { jobId } = req.body;
       const recruiterId = req.userId;
 
-      const job = await Job.findOneAndDelete({ _id: jobId, recruiter: recruiterId });
+      const recruiterObjectId = new mongoose.Types.ObjectId(recruiterId);
 
-      if (!job) {
-        return res.status(404).json({ error: "Job not found or you do not have permission to delete this job." });
-      }
-
-      await Recruiter.updateOne(
-        { _id: recruiterId },
-        { $pull: { jobPostings: jobId } }
-      );
-
-      res.status(200).json({ message: "Job opening removed successfully" });
-    } catch (error) {
-      res.status(500).json({ error: "Failed to remove job opening" });
-    }
-  }
-
-  // Get Job Applications
-  async getJobApplications(req, res) {
-    try {
-      const { jobId } = req.params;
-      const recruiterId = req.userId;
-      const job = await Job.findOne({
-        _id: jobId,
-        recruiter: recruiterId,
-      }).populate("applications.userId", "name email");
+      const job = await Job.findById(jobId);
 
       if (!job) {
         return res.status(404).json({
-          error: "Job not found or you don't have permission to view these applications",
+          error: "Job not found.",
+        });
+      }
+
+      if (!job.recruiter.equals(recruiterObjectId)) {
+        return res.status(403).json({
+          error: "You do not have permission to update this job.",
+        });
+      }
+
+      job.status = "closed";
+      await job.save();
+
+      res
+        .status(200)
+        .json({ message: "Job status updated to 'closed' successfully." });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Failed to update job status." });
+    }
+  }
+
+  static async getJobApplications(req, res) {
+    try {
+      const { jobId } = req.body;
+      const recruiterId = req.userId;
+      const job = await Job.findOne({ _id: jobId, recruiter: recruiterId, }).populate("applications.userId", "name email");
+
+      if (!job) {
+        return res.status(404).json({
+          error:
+            "Job not found or you don't have permission to view these applications",
         });
       }
 
@@ -86,8 +97,7 @@ class RecruiterController {
     }
   }
 
-  // Update Application Status
-  async updateApplicationStatus(req, res) {
+  static async updateApplicationStatus(req, res) {
     try {
       const { jobId, applicationId } = req.params;
       const { status } = req.body;
@@ -97,7 +107,8 @@ class RecruiterController {
 
       if (!job) {
         return res.status(404).json({
-          error: "Job not found or you don't have permission to update this application",
+          error:
+            "Job not found or you don't have permission to update this application",
         });
       }
 
@@ -116,4 +127,4 @@ class RecruiterController {
   }
 }
 
-module.exports = new RecruiterController();
+module.exports = RecruiterController;

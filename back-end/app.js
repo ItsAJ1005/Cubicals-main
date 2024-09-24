@@ -1,34 +1,49 @@
+require('dotenv').config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
-const { connectToDB } = require("./database/db");
-require("dotenv").config();
+const db = require("./database/db");
 
-const app = express();
+class App {
+  constructor() {
+    this.app = express();
+    this.initializeMiddlewares();
+    this.connectToDatabase();
+    this.initializeRoutes();
+  }
 
-app.use(express.json());
-app.use(cookieParser());
+  initializeMiddlewares() {
+    this.app.use(express.json());
+    this.app.use(cookieParser());
+    this.app.use(cors());
+  }
 
-connectToDB();
+  connectToDatabase() {
+    db.connect();
+  }
 
-const authRoutes = require("./routes/authRoutes");
-const recruiterRoutes = require("./routes/recruiterRoutes");
-const jobSeekerRoutes = require("./routes/jobSeekerRoutes");
+  initializeRoutes() {
+    const authRoutes = require("./routes/authRoutes")
+    const recruiterRoutes = require("./routes/recruiterRoutes")
+    const jobSeekerRoutes = require("./routes/jobSeekerRoutes")
+    const adminRoutes = require("./routes/adminRoutes")
 
+    this.app.use("/auth", authRoutes);
+    this.app.use("/recruiter", recruiterRoutes);
+    this.app.use("/jobSeeker", jobSeekerRoutes);
+    this.app.use("/admin", adminRoutes)
+    this.app.get("/", (req, res) => {
+      res.status(200).json({ message: "Server running" });
+    });
+  }
 
-app.use("/auth", authRoutes);
-app.use("/recruiter", recruiterRoutes);
-app.use("/jobSeeker", jobSeekerRoutes);
+  listen() {
+    const PORT = process.env.PORT || 8000;
+    this.app.listen(PORT, () => {
+      console.log(`App [STARTED] ~ http://localhost:${PORT}`);
+    });
+  }
+}
 
-
-
-app.get("/", (req, res) => {
-  res.status(200).json({ message: "running" });
-});
-
-
-
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => {
-  console.log(`app [STARTED] ~ http://localhost:${PORT}`);
-});
+const appInstance = new App();
+appInstance.listen();

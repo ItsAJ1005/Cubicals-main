@@ -1,13 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const RecruiterController = require('../controllers/RecruiterController');
+const RecruiterController = require('../controllers/recruiterControllers');
 const authToken = require('../middlewares/authToken');
 const recruiterToken = require('../middlewares/checkRecruiterRole');
 
-router.post('/addJob', authToken, recruiterToken, RecruiterController.addJob.bind(RecruiterController));
-router.get('/jobs', authToken, recruiterToken, RecruiterController.getJobsByRecruiter.bind(RecruiterController));
-router.delete('/removeJob/:jobId', authToken, recruiterToken, RecruiterController.removeJobOpening.bind(RecruiterController));
-router.get('/jobApplications/:jobId', authToken, recruiterToken, RecruiterController.getJobApplications.bind(RecruiterController));
-router.put('/updateApplicationStatus/:jobId/:applicationId', authToken, recruiterToken, RecruiterController.updateApplicationStatus.bind(RecruiterController));
+router.post('/addJob', authToken, recruiterToken, RecruiterController.addJob);
+router.get('/jobs', authToken, recruiterToken, RecruiterController.getJobsByRecruiter);
+router.patch('/removeJob', authToken, recruiterToken, RecruiterController.removeJobOpening);
+router.get('/jobApplications/:jobId', authToken, recruiterToken, RecruiterController.getJobApplications);
+router.put('/updateApplicationStatus/:jobId/:applicationId', authToken, recruiterToken, RecruiterController.updateApplicationStatus);
 
 module.exports = router;
