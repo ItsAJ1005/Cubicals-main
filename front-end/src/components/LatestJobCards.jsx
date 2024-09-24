@@ -37,8 +37,9 @@ const LatestJobCards = ({ job }) => {
           {job?.location || ""}
         </div>
         <div className="z-0 text-zinc-500 w-72 text-start my-2 text-sm max-h-20 overflow-hidden overflow-ellipsis">
-          {job?.description}
+          {job?.description?.length > 100 ? job?.description.slice(0, 100) + "..." : job?.description}
         </div>
+
         <div className="flex items-center gap-2 mt-4">
           <Badge className={"text-green-600 font-bold"} variant="ghost">
             {job?.position} Positions
