@@ -214,3 +214,74 @@ RecruiterRoutes
     }
 
 --------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+
+- /editSavedJob/:jobId
+  - URL: http://127.0.0.1:9000/jobSeeker/editSavedJob/:jobId
+  - Method: PATCH
+  - Middleware: authToken
+  - Controller: jobSeekerControllers.editSavedJob
+  - Example Payload:
+    {
+        "newJobId": "newJobIdValue"
+    }
+
+--------------------------------------------------------------------------------
+
+RecruiterRoutes
+
+- /addJob
+  - URL: http://127.0.0.1:9000/recruiter/addJob
+  - Method: POST
+  - Middleware: authToken, recruiterToken
+  - Controller: recruiterControllers.addJob
+  - Example Payload:
+    {
+        "title": "Software Engineer",
+        "description": "Job description goes here.",
+        "requirements": "Requirements for the job.",
+        "location": "Bengaluru, India",
+        "salary": 60000,
+        "openings": 2
+    }
+
+--------------------------------------------------------------------------------
+*****/error - FIXED
+- /jobs
+  - URL: http://127.0.0.1:9000/recruiter/jobs
+  - Method: GET
+  - Middleware: authToken, recruiterToken
+  - Controller: recruiterControllers.getJobsByRecruiter
+
+--------------------------------------------------------------------------------
+****/error - Fixed
+- /removeJob/:jobId
+  - URL: http://127.0.0.1:9000/recruiter/removeJob/:jobId
+  - Method: DELETE
+  - Middleware: authToken, recruiterToken
+  - Controller: recruiterControllers.removeJobOpening
+  - Example Request:
+    - URL: http://127.0.0.1:9000/recruiter/removeJob/66cae028e98f34a886bf77f7
+
+--------------------------------------------------------------------------------
+******/error-Fixed
+- /jobApplications/:jobId
+  - URL: http://127.0.0.1:9000/recruiter/jobApplications/:jobId
+  - Method: GET
+  - Middleware: authToken, recruiterToken
+  - Controller: recruiterControllers.getJobApplications
+
+--------------------------------------------------------------------------------
+******/error-Fixed
+- /updateApplicationStatus/:jobId/:applicationId
+  - URL: http://127.0.0.1:9000/recruiter/updateApplicationStatus/:jobId/:applicationId
+  - Method: PUT
+  - Middleware: authToken, recruiterToken
+  - Controller: recruiterControllers.updateApplicationStatus
+  - Example Payload:
+    {
+        "status": "accepted" // or "rejected", "pending"
+    }
+
+--------------------------------------------------------------------------------
