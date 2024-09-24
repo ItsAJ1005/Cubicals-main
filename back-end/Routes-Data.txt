@@ -91,7 +91,7 @@ AuthRoutes
     - Header: Authorization: Bearer <token>
 
 --------------------------------------------------------------------------------
-
+Fixed
 JobSeekerRoutes
 *******/error
 - /applyJob
@@ -134,7 +134,7 @@ JobSeekerRoutes
     - Header: Authorization: Bearer <token>
 
 --------------------------------------------------------------------------------
-*****//error
+*****//error-fixed
 - /removeAppliedJob/:jobId
   - URL: http://127.0.0.1:9000/jobSeeker/removeAppliedJob/:jobId
   - Method: DELETE
@@ -194,7 +194,7 @@ RecruiterRoutes
     - URL: http://127.0.0.1:9000/recruiter/removeJob/66cae028e98f34a886bf77f7
 
 --------------------------------------------------------------------------------
-******/error
+******/error-Fixed
 - /jobApplications/:jobId
   - URL: http://127.0.0.1:9000/recruiter/jobApplications/:jobId
   - Method: GET
@@ -202,7 +202,7 @@ RecruiterRoutes
   - Controller: recruiterControllers.getJobApplications
 
 --------------------------------------------------------------------------------
-******/error
+******/error-Fixed
 - /updateApplicationStatus/:jobId/:applicationId
   - URL: http://127.0.0.1:9000/recruiter/updateApplicationStatus/:jobId/:applicationId
   - Method: PUT
