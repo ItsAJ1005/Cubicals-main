@@ -28,7 +28,7 @@ const InfoLast = () => {
 
           {/* Right part */}
           <div className='flex mt-8'>
-            <div data-aos='fade-left' className='mt-8 h-[18vh] ml-36 border-4 rounded-2xl border-transparent hover:border-4 rounded-2xl cursor-not-allowed p-3 hover:border-zinc-800'>
+            <div data-aos='fade-right' className='mt-8 h-[18vh] ml-36 border-4 rounded-2xl border-transparent hover:border-4 rounded-2xl cursor-not-allowed p-3 hover:border-zinc-800'>
               <div className='flex gap-2'>
                 <img src='/src/assets/icons8-calender-58.png' className='h-[20px]'/>
                 <h3 className='text-[18px] font-bold'>
@@ -42,7 +42,7 @@ const InfoLast = () => {
             </div>
 
 
-            <div data-aos='fade-left' className='mt-8 h-[18vh] border-4 rounded-2xl border-transparent hover:border-4 rounded-2xl cursor-not-allowed p-3 hover:border-zinc-800'>
+            <div data-aos='fade-right ' className='mt-8 h-[18vh] border-4 rounded-2xl border-transparent hover:border-4 rounded-2xl cursor-not-allowed p-3 hover:border-zinc-800'>
               <div className='flex gap-2'>
                 <img src='/src/assets/icons8-calender-58.png' className='h-[20px]'/>
                 <h3 className='text-[18px] font-bold'>
