@@ -43,7 +43,7 @@ const HeroSection = () => {
                                 <Search className='h-5 w-5' />
                             </Button>
                         </div>
-                        <span className='mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>No. 1 Job Hunt Website</span>
+                        <span className='mx-auto px-4 py-2 rounded-full bg-gray-100 text-[#F83002] font-medium'>Best Job Hunt Website</span>
                     </div>
 
                 </div>
