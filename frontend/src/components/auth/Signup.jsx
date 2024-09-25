@@ -105,7 +105,7 @@ const Signup = () => {
                             value={input.fullname}
                             name="fullname"
                             onChange={changeEventHandler}
-                            placeholder="John Doe"
+                            placeholder="Ayush Singhai"
                         />
                     </div>
 
@@ -117,7 +117,7 @@ const Signup = () => {
                             value={input.email}
                             name="email"
                             onChange={changeEventHandler}
-                            placeholder="john.doe@gmail.com"
+                            placeholder="ayush@gmail.com"
                         />
                     </div>
 
@@ -129,7 +129,7 @@ const Signup = () => {
                             value={input.phoneNumber}
                             name="phoneNumber"
                             onChange={changeEventHandler}
-                            placeholder="8080808080"
+                            placeholder="9876543210"
                         />
                     </div>
 
@@ -190,7 +190,7 @@ const Signup = () => {
                             ? <Button className="w-full my-4">
                                 <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                                 Please wait
-                              </Button>
+                            </Button>
                             : <Button type="submit" className="w-full my-4">Signup</Button>
                     }
 
