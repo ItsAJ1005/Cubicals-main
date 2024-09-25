@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Search } from 'lucide-react'
 import { useDispatch } from 'react-redux';
-import { setSearchedQuery } from '@/redux/jobSlice';
+import { setSearchedQuery } from '@/red/jobSlice';
 import { useNavigate } from 'react-router-dom';
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"

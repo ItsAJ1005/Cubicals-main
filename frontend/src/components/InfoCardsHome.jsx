@@ -47,16 +47,16 @@ const InfoCardsHome = () => {
         <div>
             <span className=' flex gap-4'>
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="notimp" />
+                    <AvatarImage src="https://img.icons8.com/?size=100&id=o8REW0inhzbM&format=png&color=7950F2" alt="notimp" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <span className='font-bold text-lg my-1'>
-                    Easy Job Search
+                    Learn Industry Leading Concepts
                 </span>
             </span>
         </div>
         <span className='text-[#73737A] font-semibold'>
-            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+            We provide you with hand-picked concepts to help you maximise your knowledge and actually get a job. Learn with Us!
         </span>
       </div>
 
@@ -64,16 +64,16 @@ const InfoCardsHome = () => {
         <div>
             <div className=' flex gap-4'>
                 <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" alt="notimp" />
+                    <AvatarImage src="https://img.icons8.com/?size=100&id=122812&format=png&color=7950F2" alt="notimp" />
                     <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
                 <span className='font-bold text-lg my-1'>
-                    Easy Job Search
+                    Communities
                 </span>
             </div>
         </div>
         <div className='text-[#73737A] font-semibold'>
-            Search & find your dream jobs with ease. Lorem ipsum, dolor sit amet consectetur adipisicing elit. Atque minima itaque illum 
+            Connect with like minded people through blogs, share your main interests & experiences. Grow your network!
         </div>
       </div>
 
