@@ -28,13 +28,13 @@ class ApplicationController {
       job.applications.push(newApplication._id);
       await job.save();
 
-      const recruiterEmail = job.recruiter.email; // Assuming recruiter model has an email field
-      await sendMail({
-          to: recruiterEmail,
-          subject: 'New Job Application',
-          text: `A new job seeker has applied for your job: ${job.title}.`,
-          html: `<p>A new job seeker has applied for your job: <strong>${job.title}</strong>.</p>`,
-      });
+      // const recruiterEmail = job.recruiter.email; // Assuming recruiter model has an email field
+      // await sendMail({
+      //     to: recruiterEmail,
+      //     subject: 'New Job Application',
+      //     text: `A new job seeker has applied for your job: ${job.title}.`,
+      //     html: `<p>A new job seeker has applied for your job: <strong>${job.title}</strong>.</p>`,
+      // });
 
       return res.status(201).json({ message: "Job applied successfully.", success: true });
     } catch (error) {
