@@ -28,6 +28,11 @@ const Navbar = () => {
             toast.error(error.response.data.message);
         }
     }
+
+    const scrollToTop = () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      };
+
     return (
         <nav className='bg-black text-white'>
 
@@ -93,6 +98,7 @@ const Navbar = () => {
                                             {
                                                 user && user.role === 'student' && (
                                                     <div className='flex w-fit items-center gap-2 cursor-pointer border-0 '>
+                                                        {/*  User2 is a svg icon component */}
                                                         <User2 />
                                                         <Button variant="link"> <Link to="/profile" className='text-white '>View Profile</Link></Button>
                                                     </div>

@@ -1,6 +1,7 @@
 import Company from "../models/company.model.js";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import companyModel from "../models/company.model.js";
 
 class CompanyController {
   // Register a new company
@@ -38,6 +39,38 @@ class CompanyController {
       next(error);
     }
   }
+
+  // Get all companies across users
+  async getAllCompanies(req, res, next) {
+    try {
+      const companies = await Company.find()
+        .select('name website location logo createdAt') 
+        .populate({
+          path: 'userId',
+          select: 'fullname email', 
+        });
+
+      if (companies.length === 0) {
+        return res.status(404).json({ message: "No companies found.", success: false });
+      }
+
+      return res.status(200).json({ companies, success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  // Get total number of Companies
+  async companyCount(req, res, next) {
+    try {
+        const totalCompanies = await companyModel.countDocuments(); 
+
+        return res.status(200).json({ count: totalCompanies, success: true });
+    } catch (error) {
+        next(error); 
+    }
+  }
+
 
   // Get a specific company by ID
   async getCompanyById(req, res, next) {
@@ -81,6 +114,7 @@ class CompanyController {
       next(error);
     }
   }
+
 }
 
 export default new CompanyController();
