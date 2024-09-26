@@ -1,5 +1,4 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Navbar from './components/shared/Navbar'
 import Login from './components/auth/Login'
 import Signup from './components/auth/Signup'
 import Home from './components/Home'
@@ -18,6 +17,8 @@ import AdminHome from './components/superUser/Components/adminHome/adminHome'
 import Lists from './components/superUser/Pages/UserLists/UserLists'
 import Orders from './components/superUser/Components/Orders/Orders'
 import SuperLogin from './components/superUser/Components/Login/SuperLogin'
+import ProErr from './components/ProErr'
+import NotFoundErr from './components/NotFoundErr'
 
 
 const appRouter = createBrowserRouter([
@@ -98,6 +99,14 @@ const appRouter = createBrowserRouter([
   {
     path:"/supreme/JobVacancies",
     element:<ProtectedRoute><Orders /></ProtectedRoute>
+  },
+  {
+    path:"/proErr",
+    element:<ProErr/>
+  },
+  {
+    path:"*",
+    element:<NotFoundErr/>
   },
 
 ])
