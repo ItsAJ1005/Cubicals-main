@@ -1,6 +1,6 @@
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
-import companyController from "../controllers/company.controller.js"; // Adjusted import
+import companyController from "../controllers/company.controller.js"; 
 import { singleUpload } from "../middlewares/mutler.js";
 
 const router = express.Router();
@@ -16,5 +16,11 @@ router.route("/get/:id").get(isAuthenticated, companyController.getCompanyById);
 
 // Route to update a company by ID (PUT method with file upload)
 router.route("/update/:id").put(isAuthenticated, singleUpload, companyController.updateCompany);
+
+// Add this route to get all companies
+router.get('/companies/all', companyController.getAllCompanies); 
+
+//Rouet to get all the recruiters
+router.get('/companyCount', companyController.companyCount);
 
 export default router;

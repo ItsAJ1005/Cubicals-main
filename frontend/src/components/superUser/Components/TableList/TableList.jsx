@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './tableList.scss';
 
 // mui table
@@ -11,113 +11,66 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 
-// import dummy image
-import book1 from '../../../../assets/superuser-dashboard/book1.jpg';
-import book2 from '../../../../assets/superuser-dashboard/book2.jpg';
-import book3 from '../../../../assets/superuser-dashboard/book3.jpg';
-import book4 from '../../../../assets/superuser-dashboard/book4.jpg';
-import book5 from '../../../../assets/superuser-dashboard/book5.jpg';
+// mui circular progress for loading state
+import CircularProgress from '@mui/material/CircularProgress';
+import { COMPANY_API_END_POINT } from '@/utils/constant';
 
+// Make the API call to the backend
 function TableList() {
+    const [companies, setCompanies] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const data = [
-        {
-            _id: 23423343,
-            product: 'Programing Book 1',
-            image: book1,
-            customer: 'Devid John',
-            date: '3 October, 2022',
-            ammount: 45,
-            method: 'Online Payment',
-            status: 'Approved',
-        },
-        {
-            _id: 235343343,
-            product: 'Programing Book 2',
-            image: book2,
-            customer: 'Julia Ani',
-            date: '23 April, 2022',
-            ammount: 55,
-            method: 'Cash On Delivery',
-            status: 'Pending',
-        },
-        {
-            _id: 234239873,
-            product: 'Programing Book 3',
-            image: book3,
-            customer: 'John Smith',
-            date: '10 October, 2022',
-            ammount: 25,
-            method: 'Online Payment',
-            status: 'Approved',
-        },
-        {
-            _id: 23423143,
-            product: 'Programing Book 4',
-            image: book4,
-            customer: 'Devid John',
-            date: '3 March, 2022',
-            ammount: 40,
-            method: 'Cash On Delivery',
-            status: 'Approved',
-        },
-        {
-            _id: 123423343,
-            product: 'Programing Book 5',
-            image: book5,
-            customer: 'Humlar',
-            date: '20 November, 2022',
-            ammount: 45,
-            method: 'Online Payment',
-            status: 'Approved',
-        },
-        {
-            _id: 2333343,
-            product: 'Programing Book 6',
-            image: book2,
-            customer: 'Devid John',
-            date: '12 June, 2022',
-            ammount: 28,
-            method: 'Cash On Delivery',
-            status: 'Pending',
-        },
-    ];
+    useEffect(() => {
+        const fetchCompanies = async () => {
+            try {
+                const response = await fetch(`${COMPANY_API_END_POINT}/companies/all`); // Assuming this is the correct route
+                const data = await response.json();
+                if (data.success) {
+                    setCompanies(data.companies);
+                }
+                setLoading(false);
+            } catch (error) {
+                console.error('Error fetching companies:', error);
+                setLoading(false);
+            }
+        };
+
+        fetchCompanies();
+    }, []);
 
     return (
         <TableContainer component={Paper} className="table_list">
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell className="table_cell">Tracking Id</TableCell>
-                        <TableCell className="table_cell">Product</TableCell>
-                        <TableCell className="table_cell">Customer</TableCell>
-                        <TableCell className="table_cell">Ammount</TableCell>
-                        <TableCell className="table_cell">Date</TableCell>
-                        <TableCell className="table_cell">Payment Status</TableCell>
-                        <TableCell className="table_cell">Status</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {data.map((row) => (
-                        <TableRow key={row._id}>
-                            <TableCell component="th" scope="row" className="table_cell">
-                                <div className="product_idd">
-                                    <img src={row.image} alt="product" className="product_img" />
-                                    {row._id}
-                                </div>
-                            </TableCell>
-                            <TableCell className="table_cell">{row.product}</TableCell>
-                            <TableCell className="table_cell">{row.customer}</TableCell>
-                            <TableCell className="table_cell">{row.ammount}</TableCell>
-                            <TableCell className="table_cell">{row.date}</TableCell>
-                            <TableCell className="table_cell">{row.method}</TableCell>
-                            <TableCell className="table_cell">
-                                <span className={`status ${row.status}`}>{row.status}</span>
-                            </TableCell>
+            {loading ? (
+                <CircularProgress />
+            ) : (
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell className="table_cell">Company Id</TableCell>
+                            <TableCell className="table_cell">Company</TableCell>
+                            <TableCell className="table_cell">Location</TableCell>
+                            <TableCell className="table_cell">Created By</TableCell>
+                            <TableCell className="table_cell">Website</TableCell>
+                            <TableCell className="table_cell">Created On</TableCell>
                         </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                    </TableHead>
+                    <TableBody>
+                        {companies.map((company) => (
+                            <TableRow key={company._id}>
+                                <TableCell component="th" scope="row" className="table_cell">
+                                <img src={company.logo || 'https://img.icons8.com/?size=100&id=7819&format=png&color=C850F2'} alt={company.name} className="company_logo_img h-10" />
+                                    <div>{company._id}</div>
+                                </TableCell>
+                                <TableCell className="table_cell">{company.name}</TableCell>
+                                <TableCell className="table_cell">{company.location || 'N/A'}</TableCell>
+                                <TableCell className="table_cell">{company.userId?.fullname || 'Unknown'}</TableCell>
+                                <TableCell className="table_cell">{company.website || 'N/A'}</TableCell>
+                                <TableCell className="table_cell">{new Date(company.createdAt).toLocaleDateString()}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            )}
         </TableContainer>
     );
 }

@@ -1,6 +1,6 @@
 import express from "express";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
-import jobController from "../controllers/job.controller.js";
+import jobController from "../controllers/job.controller.js"; 
 
 const router = express.Router();
 
@@ -15,5 +15,8 @@ router.route("/getadminjobs").get(isAuthenticated, jobController.getAdminJobs);
 
 // Route to get a specific job by ID (GET method)
 router.route("/get/:id").get(isAuthenticated, jobController.getJobById);
+
+// Route to get the count of all jobs (GET method)
+router.route("/count").get(jobController.getJobCount); 
 
 export default router;

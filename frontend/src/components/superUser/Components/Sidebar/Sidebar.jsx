@@ -38,7 +38,7 @@ function Sidebar() {
         <div className="sidebar">
             <div className="logo">
                 <Link to="/supreme" style={{ textDecoration: 'none' }}>
-                    <h3 className="text_none">Admin Dashboard</h3>
+                    <h3 className="text_none font-bold">Admin Dashboard</h3>
                 </Link>
             </div>
 
@@ -68,11 +68,11 @@ function Sidebar() {
                             <TableChartIcon className="icon" /> Companies
                         </li>
                     </Link>
-                    <Link to="/supreme/JobVacancies" style={{ textDecoration: 'none' }}>
+                    {/* <Link to="/supreme/JobVacancies" style={{ textDecoration: 'none' }}>
                         <li>
                             <CreditCardIcon className="icon" /> Job Vacancies
                         </li>
-                    </Link>
+                    </Link> */}
 
                     <p className="spann">Seetings</p>
 
