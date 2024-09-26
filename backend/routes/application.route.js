@@ -13,6 +13,9 @@ router.route("/get").get(isAuthenticated, applicationController.getAppliedJobs);
 // Route to get applicants for a job (GET method)
 router.route("/:id/applicants").get(isAuthenticated, applicationController.getApplicants);
 
+// Route to get all applicants across all jobs
+router.route("/applicants").get(isAuthenticated, applicationController.getAllApplicants);
+
 // Route to update the status of an application (PATCH method)
 router.route("/status/:id/update").patch(isAuthenticated, applicationController.updateStatus);
 
