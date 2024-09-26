@@ -26,33 +26,49 @@ const Login = () => {
         setInput({ ...input, [e.target.name]: e.target.value });
     }
 
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-        try {
-            dispatch(setLoading(true));
-            const res = await axios.post(`${USER_API_END_POINT}/login`, input, {
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                withCredentials: true,
-            });
-            if (res.data.success) {
-                dispatch(setUser(res.data.user));
-                navigate("/");
-                toast.success(res.data.message);
+        dispatch(setLoading(true));
+    
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", `${USER_API_END_POINT}/login`, true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        xhr.withCredentials = true;
+    
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4) {
+                dispatch(setLoading(false));
+    
+                if (xhr.status === 200) {
+                    const resData = JSON.parse(xhr.responseText);
+                    if (resData.success) {
+                        dispatch(setUser(resData.user));
+                        navigate("/");
+                        toast.success(resData.message);
+                    } else {
+                        toast.error(resData.message || "Login failed");
+                    }
+                } else {
+                    const errorRes = JSON.parse(xhr.responseText);
+                    toast.error(errorRes.message || "Something went wrong");
+                }
             }
-        } catch (error) {
-            console.log(error);
-            toast.error(error.response.data.message);
-        } finally {
+        };
+    
+        xhr.onerror = function() {
             dispatch(setLoading(false));
-        }
-    }
-    useEffect(()=>{
-        if(user){
+            toast.error("Network Error");
+        };
+    
+        xhr.send(JSON.stringify(input));
+    };
+    
+    useEffect(() => {
+        if (user) {
             navigate("/");
         }
-    },[])
+    }, []);
+    
     return (
         <div>
             <Navbar />

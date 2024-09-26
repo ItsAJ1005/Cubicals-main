@@ -44,46 +44,63 @@ const Signup = () => {
     };
 
     // Handle form submission
-    const submitHandler = async (e) => {
+    const submitHandler = (e) => {
         e.preventDefault();
-
-        // Basic validation before form submission
+    
         if (!input.fullname || !input.email || !input.phoneNumber || !input.password || !input.role) {
             return toast.error("Please fill in all fields.");
         }
-
+    
+        // Validate phone number format
         if (!/^\d{10}$/.test(input.phoneNumber)) {
             return toast.error("Please enter a valid 10-digit phone number.");
         }
-
+    
         const formData = new FormData(); // FormData object
         formData.append("fullname", input.fullname);
         formData.append("email", input.email);
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("password", input.password);
         formData.append("role", input.role);
+    
         if (input.file) {
             formData.append("file", input.file);
         }
-
-        try {
-            dispatch(setLoading(true));
-            const res = await axios.post(`${USER_API_END_POINT}/register`, formData, {
-                headers: { 'Content-Type': 'multipart/form-data' },
-                withCredentials: true,
-            });
-            if (res.data.success) {
-                navigate('/login');
-                toast.success(res.data.message);
+    
+        const xhr = new XMLHttpRequest();
+    
+        xhr.upload.onprogress = function (event) {
+            if (event.lengthComputable) {
+                const percentComplete = (event.loaded / event.total) * 100;
+                console.log(`File upload progress: ${percentComplete}%`);
             }
-        } catch (error) {
-            toast.error(error.response?.data?.message || "An error occurred. Please try again.");
-        } finally {
-            dispatch(setLoading(false));
-        }
+        };
+    
+        // Handle success and error responses
+        xhr.onload = function () {
+            const res = JSON.parse(xhr.responseText);
+            if (xhr.status === 200 && res.success) {
+                navigate('/login');
+                toast.success(res.message);
+            } else {
+                toast.error(res.message || "An error occurred. Please try again.");
+            }
+        };
+    
+        xhr.onerror = function () {
+            toast.error("An error occurred during the request.");
+        };
+    
+        xhr.open("POST", `${USER_API_END_POINT}/register`, true);
+        xhr.withCredentials = true;  // To send cookies(req)
+        xhr.send(formData);  // Send the FormData object
+    
+        dispatch(setLoading(true));
+        xhr.onloadend = () => {
+            dispatch(setLoading(false));  
+        };
     };
-
-    // Redirect if the user is already logged in
+    
     useEffect(() => {
         if (user) {
             navigate('/');
