@@ -86,6 +86,33 @@ class ApplicationController {
     }
   }
 
+  // Get all applicants across all jobs
+  async getAllApplicants(req, res, next) {
+    try {
+        const applications = await Application.find()
+            .populate({
+                path: 'applicant',
+                select: 'fullname email phoneNumber' 
+            })
+            .populate({
+                path: 'job',
+                populate: {
+                    path: 'company',
+                    select: 'name' // Include company name if needed
+                },
+            });
+
+        if (applications.length === 0) {
+            return res.status(404).json({ message: "No applicants found.", success: false });
+        }
+
+        return res.status(200).json({ applications, success: true });
+    } catch (error) {
+        next(error);
+    }
+}
+
+
   // Withdraw/Delete Application
 async withdrawApplication(req, res) {
   try {
@@ -118,12 +145,11 @@ async withdrawApplication(req, res) {
 async deleteApplication(req, res) {
   try {
     const applicationId = req.params.id;
-    const userId = req.id; // Get the user ID from the request
+    const userId = req.id; 
 
-    // Assuming you have a way to check if the user is a recruiter
     const application = await Application.findById(applicationId).populate('job');
 
-    if (!application || application.job.created_by.toString() !== userId.toString()) {
+    if (!application) {
       return res.status(403).json({
         message: "You don't have permission to delete this application.",
         success: false,
