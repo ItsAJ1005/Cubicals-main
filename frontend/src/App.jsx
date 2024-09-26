@@ -19,6 +19,7 @@ import Orders from './components/superUser/Components/Orders/Orders'
 import SuperLogin from './components/superUser/Components/Login/SuperLogin'
 import ProErr from './components/ProErr'
 import NotFoundErr from './components/NotFoundErr'
+// import EditJob from './components/admin/EditJob'
 
 
 const appRouter = createBrowserRouter([
@@ -52,53 +53,57 @@ const appRouter = createBrowserRouter([
   },
   // admin ke liye yha se start hoga
   {
-    path:"/admin/companies",
-    element: <ProtectedRoute><Companies/></ProtectedRoute>
+    path: "/admin/companies",
+    element: <ProtectedRoute><Companies /></ProtectedRoute>
   },
   {
-    path:"/admin/companies/create",
-    element: <ProtectedRoute><CompanyCreate/></ProtectedRoute> 
+    path: "/admin/companies/create",
+    element: <ProtectedRoute><CompanyCreate /></ProtectedRoute>
   },
   {
-    path:"/admin/companies/:id",
-    element:<ProtectedRoute><CompanySetup/></ProtectedRoute> 
+    path: "/admin/companies/:id",
+    element: <ProtectedRoute><CompanySetup /></ProtectedRoute>
   },
   {
-    path:"/admin/jobs",
-    element:<ProtectedRoute><AdminJobs/></ProtectedRoute> 
+    path: "/admin/jobs",
+    element: <ProtectedRoute><AdminJobs /></ProtectedRoute>
   },
   {
-    path:"/admin/jobs/create",
-    element:<ProtectedRoute><PostJob/></ProtectedRoute> 
+    path: "/admin/jobs/create",
+    element: <ProtectedRoute><PostJob /></ProtectedRoute>
   },
   {
-    path:"/admin/jobs/:id/applicants",
-    element:<ProtectedRoute><Applicants/></ProtectedRoute> 
+    path: "/admin/jobs/:id/applicants",
+    element: <ProtectedRoute><Applicants /></ProtectedRoute>
+  },
+  // {
+  //   path: "/admin/EditJob/:id",
+  //   element: <ProtectedRoute><EditJob /></ProtectedRoute>
+  // },
+  {
+    path: "/supreme",
+    element: <SuperLogin />
   },
   {
-    path:"/supreme",
-    element:<SuperLogin/>
-  },
-  {
-    path:"/supreme/adminHome",
-    element:<ProtectedRoute><AdminHome/></ProtectedRoute>
+    path: "/supreme/adminHome",
+    element: <ProtectedRoute><AdminHome /></ProtectedRoute>
   },
 
   {
-    path:"/supreme/applicants",
+    path: "/supreme/applicants",
     element: <ProtectedRoute><Lists type="user" /></ProtectedRoute>
   },
   {
-    path:"/supreme/recruiters",
-    element:<ProtectedRoute><Lists type="recruiter" /></ProtectedRoute>
+    path: "/supreme/recruiters",
+    element: <ProtectedRoute><Lists type="recruiter" /></ProtectedRoute>
   },
   {
-    path:"/supreme/Companies",
-    element:<ProtectedRoute><Lists type="companies" /></ProtectedRoute>
+    path: "/supreme/Companies",
+    element: <ProtectedRoute><Lists type="companies" /></ProtectedRoute>
   },
   {
-    path:"/supreme/JobVacancies",
-    element:<ProtectedRoute><Orders /></ProtectedRoute>
+    path: "/supreme/JobVacancies",
+    element: <ProtectedRoute><Orders /></ProtectedRoute>
   },
   {
     path:"/proErr",

@@ -6,7 +6,7 @@ const ProErr = () => {
     <div className=''>
       <Navbar/>
       <div className='text-center text-8xl mt-48'>
-      Pro will come soon :)
+      Will come soon :)
       </div>
     </div>
   )

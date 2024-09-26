@@ -4,10 +4,10 @@ import jobController from "../controllers/job.controller.js";
 
 const router = express.Router();
 
-// Route to post a new job (POST method)
+// Route to post a new job
 router.route("/post").post(isAuthenticated, jobController.postJob);
 
-// Route to get all jobs for students (GET method)
+// Route to get all jobs for students
 router.route("/get").get(isAuthenticated, jobController.getAllJobs);
 
 // Route to get all jobs created by the admin (GET method)
