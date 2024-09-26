@@ -17,6 +17,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute'
 import AdminHome from './components/superUser/Components/adminHome/adminHome'
 import Lists from './components/superUser/Pages/UserLists/UserLists'
 import Orders from './components/superUser/Components/Orders/Orders'
+import SuperLogin from './components/superUser/Components/Login/SuperLogin'
 
 
 const appRouter = createBrowserRouter([
@@ -75,23 +76,28 @@ const appRouter = createBrowserRouter([
   },
   {
     path:"/supreme",
-    element:<AdminHome/>
+    element:<SuperLogin/>
   },
   {
+    path:"/supreme/adminHome",
+    element:<ProtectedRoute><AdminHome/></ProtectedRoute>
+  },
+
+  {
     path:"/supreme/applicants",
-    element:<Lists type="user" />
+    element: <ProtectedRoute><Lists type="user" /></ProtectedRoute>
   },
   {
     path:"/supreme/recruiters",
-    element:<Lists type="recruiter" />
+    element:<ProtectedRoute><Lists type="recruiter" /></ProtectedRoute>
   },
   {
     path:"/supreme/Companies",
-    element:<Lists type="companies" />
+    element:<ProtectedRoute><Lists type="companies" /></ProtectedRoute>
   },
   {
     path:"/supreme/JobVacancies",
-    element:<Orders />
+    element:<ProtectedRoute><Orders /></ProtectedRoute>
   },
 
 ])

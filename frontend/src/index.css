@@ -250,3 +250,9 @@ body::-webkit-scrollbar-button:single-button {
   visibility: hidden; 
   transition: opacity 1s ease-in-out, visibility 0s 1s;
 }
+
+.superLoginBg {
+  background: url('./assets/superuser-dashboard/abstract-dark-purple-4k-uz.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
