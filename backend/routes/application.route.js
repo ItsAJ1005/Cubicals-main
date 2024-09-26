@@ -28,6 +28,11 @@ router.route("/delete/:id").delete(isAuthenticated, applicationController.delete
 // Route for recruiter to accept/reject an application (PATCH method)
 router.route("/status/:id").patch(isAuthenticated, applicationController.updateApplicationStatus);
 
+// Get total number of applicants for all jobs
+router.get('/countApplicants', applicationController.getTotalApplicants);
+
+// Assuming you're using a router instance
+router.get('/getApplicantCountsOfEachCompany', applicationController.getApplicantCountsOfEachCompany);
 
 
 export default router;

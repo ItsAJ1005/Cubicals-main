@@ -1,5 +1,5 @@
 import express from "express";
-import { generateUserReport, login, logout, register, updateProfile } from "../controllers/user.controller.js";
+import { getAllRecruiters, generateUserReport, login, logout, register, updateProfile, getRecruiterCount } from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js"; 
 
@@ -20,5 +20,10 @@ router.route("/profile/update").post(isAuthenticated, singleUpload, updateProfil
 
 // Route to generate PDF report for authenticated user
 router.get('/report', isAuthenticated, generateUserReport);
+
+//Rouet to get all the recruiters
+router.get('/getAllRecruiters', getAllRecruiters);
+
+router.get('/getRecruiterCount', getRecruiterCount)
 
 export default router;

@@ -87,10 +87,11 @@ Cubicles/
 │   ├── cloudinary.js
 │   ├── datauri.js
 │   └── db.js
-├── app.js
+├── index.js
+├── createSuperUser.js
 ├── package.json
 ├── README.md
-└── .env.example
+└── .env
 ```
 
 ## 4. Features

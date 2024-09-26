@@ -69,6 +69,16 @@ class JobController {
     }
   }
 
+  // Get all jobs for students
+  async getJobCount(req, res, next) {
+    try {
+      const count = await Job.countDocuments(); // Count all job documents
+      return res.status(200).json({ count, success: true });
+    } catch (error) {
+      next(error);
+    }
+  }
+
   // Get jobs created by admin
   async getAdminJobs(req, res, next) {
     try {

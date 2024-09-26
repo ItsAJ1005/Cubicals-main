@@ -6,6 +6,7 @@ import cloudinary from "../utils/cloudinary.js";
 import PDFDocument from "pdfkit";
 import applicationModel from "../models/application.model.js";
 import moment from 'moment';
+import userModel from "../models/user.model.js";
 
 // Simple email validation regex
 //format: something@something.something
@@ -228,13 +229,41 @@ class UserController {
         }
     }
 
+    async getAllRecruiters(req, res, next) {
+        try {
+            const recruiters = await userModel.find({ role: 'recruiter' }) 
+                .select('fullname email phoneNumber') 
+
+    
+            if (recruiters.length === 0) {
+                return res.status(404).json({ message: "No recruiters found.", success: false });
+            }
+    
+            return res.status(200).json({ recruiters, success: true });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // Get total number of Recruiters
+    async getRecruiterCount(req, res, next) {
+        try {
+            const totalRecruiters = await userModel.countDocuments({ role: 'recruiter' }); // Count users with role 'recruiter'
+    
+            return res.status(200).json({ count: totalRecruiters, success: true });
+        } catch (error) {
+            next(error);
+        }
+        }
 
     register = this.register.bind(this);
     login = this.login.bind(this);
     logout = this.logout.bind(this);
     updateProfile = this.updateProfile.bind(this);
     generateUserReport = this.generateUserReport.bind(this);
+    getAllRecruiters = this.getAllRecruiters.bind(this);
+    getRecruiterCount = this.getRecruiterCount.bind(this);
 }
 
 const userController = new UserController();
-export const { register, login, logout, updateProfile, generateUserReport } = userController;
+export const { register, login, logout, updateProfile, generateUserReport, getAllRecruiters, getRecruiterCount } = userController;
