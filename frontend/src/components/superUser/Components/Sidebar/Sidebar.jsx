@@ -7,10 +7,33 @@ import PersonIcon from '@mui/icons-material/Person';
 import SettingsRoundedIcon from '@mui/icons-material/SettingsRounded';
 import TableChartIcon from '@mui/icons-material/TableChart';
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './Sidebar.scss';
+import { Button } from '@/components/ui/button';
+import axios from 'axios';
+import { setUser } from '@/red/authSlice';
+import { toast } from 'sonner';
+import { USER_API_END_POINT } from '@/utils/constant';
+import { useDispatch } from 'react-redux';
 
 function Sidebar() {
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const logoutHandler = async () => {
+        try {
+            const res = await axios.get(`${USER_API_END_POINT}/logout`, { withCredentials: true });
+            if (res.data.success) {
+                dispatch(setUser(null));
+                navigate("/");
+                toast.success(res.data.message);
+            }
+        } catch (error) {
+            console.log(error);
+            toast.error(error.response.data.message);
+        }
+    }
     return (
         <div className="sidebar">
             <div className="logo">
@@ -53,8 +76,8 @@ function Sidebar() {
 
                     <p className="spann">Seetings</p>
 
-                    <li>
-                        <LogoutIcon className="icon" /> Log Out
+                    <li className='hover:bg-transparent'>
+                        <Button  onClick={logoutHandler}><LogoutIcon className="icon" /> Log Out</Button>
                     </li>
                 </ul>
             </div>
