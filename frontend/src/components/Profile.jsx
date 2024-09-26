@@ -9,6 +9,7 @@ import AppliedJobTable from './AppliedJobTable'
 import UpdateProfileDialog from './UpdateProfileDialog'
 import { useSelector } from 'react-redux'
 import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
+import { ReportDownloadButton } from './DownloadReport'
 
 // const skills = ["Html", "Css", "Javascript", "Reactjs"]
 const isResume = true;
@@ -52,11 +53,14 @@ const Profile = () => {
                         }
                     </div>
                 </div>
-                <div className='grid w-full max-w-sm items-center gap-1.5'>
-                    <Label className="text-md font-bold">Resume</Label>
+                <div className='w-full max-w-sm items-center gap-1.5 mt-6'>
+                    <Label className=" text-md font-bold">Resume</Label>
                     {
-                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
+                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer ml-2'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
                     }
+                </div>
+                <div className='mt-4 p-2'>
+                    <ReportDownloadButton/>
                 </div>
             </div>
             <div className='max-w-4xl mx-auto bg-white rounded-2xl'>

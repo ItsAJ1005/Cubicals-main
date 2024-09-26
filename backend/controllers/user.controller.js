@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import getDataUri from "../utils/datauri.js";
 import cloudinary from "../utils/cloudinary.js";
+import PDFDocument from "pdfkit";
+import applicationModel from "../models/application.model.js";
+import moment from 'moment';
 
 // Simple email validation regex
 //format: something@something.something
@@ -174,12 +177,64 @@ class UserController {
         };
     }
 
-    // Bind methods to the class instance
+    async generateUserReport(req, res, next) {
+        try {
+            const userId = req.id;
+            const user = await User.findById(userId); 
+    
+            if (!user) {
+                return res.status(404).json({ message: "User not found", success: false });
+            }
+    
+            const applications = await applicationModel
+                .find({ applicant: userId })
+                .populate({
+                    path: 'job',
+                    populate: { path: 'company' } // Populate the company field
+                });
+    
+            const doc = new PDFDocument();
+            res.setHeader('Content-Type', 'application/pdf');
+            res.setHeader('Content-Disposition', 'attachment; filename=user_report.pdf');
+        
+            // Add user details to the PDF
+            doc.fontSize(18).text(`User Report for ${user.fullname}`, { align: 'center' });
+            doc.moveDown();
+            doc.fontSize(14).text(`Email: ${user.email}`);
+            doc.text(`Phone: ${user.phoneNumber}`);
+            doc.moveDown();
+        
+            doc.fontSize(16).text('All Applications:', { underline: true });
+        
+            if (applications.length === 0) {
+                doc.text('No applications found.'); 
+            } else {
+                applications.forEach((app, index) => {
+                    doc.moveDown();
+                    doc.fontSize(12).text(`Application No.${index + 1}`);
+                    doc.text(`Job Title: ${app.job?.title || "N/A"}`); 
+                    doc.text(`Company: ${app.job?.company?.name || "N/A"}`); 
+                    doc.text(`Status: ${app.status || "N/A"}`);
+                    doc.text(`Applied On: ${moment(app.createdAt).format('DD-MM-YYYY')}`);
+                });
+            }
+    
+            doc.end(); 
+            doc.pipe(res); 
+    
+        } catch (error) {
+            console.error('Error generating report:', error); 
+            next(error);
+        }
+    }
+
+
     register = this.register.bind(this);
     login = this.login.bind(this);
     logout = this.logout.bind(this);
     updateProfile = this.updateProfile.bind(this);
+    generateUserReport = this.generateUserReport.bind(this);
 }
 
 const userController = new UserController();
-export const { register, login, logout, updateProfile } = userController;
+export const { register, login, logout, updateProfile, generateUserReport } = userController;
