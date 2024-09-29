@@ -8,14 +8,12 @@ import {
 
   import {
     Command,
-    CommandDialog,
     CommandEmpty,
     CommandGroup,
     CommandInput,
     CommandItem,
     CommandList,
     CommandSeparator,
-    CommandShortcut,
   } from "@/components/ui/command"
 import { Link } from 'react-router-dom'
 
@@ -78,7 +76,7 @@ const Info1 = () => {
                     </div>
 
                     <div className='w-[20vw] text-white'>
-                        <Command className='bg-black text-white  shadow-sm shadow-zinc-900 mx-[17vh]'>
+                        <Command className='bg-black text-white shadow-sm shadow-zinc-900 mx-[17vh]'>
                             <CommandInput className=' text-white ' placeholder="Shortcuts..." />
                             <CommandList>
                                 <CommandEmpty className='bg-black text-white'>No results found.</CommandEmpty>
