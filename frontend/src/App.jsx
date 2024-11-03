@@ -19,6 +19,7 @@ import Orders from './components/superUser/Components/Orders/Orders'
 import SuperLogin from './components/superUser/Components/Login/SuperLogin'
 import ProErr from './components/ProErr'
 import NotFoundErr from './components/NotFoundErr'
+import LearnMore from './components/LearnMore'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -50,6 +51,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/profile",
     element: <Profile />
+  },
+  {
+    path: "/learn-more",
+    element: <LearnMore />
   },
   // admin ke liye yha se start hoga
   {

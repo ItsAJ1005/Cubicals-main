@@ -61,7 +61,9 @@ const Info1 = () => {
 
 
                 </div>
-                <Button className=' bg-green-900 my-5 text-green-500' data-aos='fade-in'>Learn more</Button>
+                {/* <Button className=' bg-green-900 my-5 text-green-500' data-aos='fade-in'>Learn more</Button> */}
+                <Link to='/learn-more'><Button className=' bg-green-900 my-5 text-green-500' data-aos='fade-in'>Learn more</Button></Link>
+
             </div>
 
             <div>
