@@ -30,15 +30,15 @@ const Navbar = () => {
     }
 
     return (
-        <nav className='bg-black text-white'>
+        <nav className='bg-black text-white sm:p-4 xm:p-4'>
 
-            <div className='flex gap-1 justify-center py-2 '>
+            <div className='flex gap-1 justify-center py-2'>
                 <span>🚀</span>
                 <div className='gradient-text-purple'>
                     Try our pro version to smash all the boundaries 
                 </div>
                 <div>
-                    <Link to='/proErr'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
+                    <Link to='/proErr'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border sm:w-32'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
                 </div>
             </div>
  
