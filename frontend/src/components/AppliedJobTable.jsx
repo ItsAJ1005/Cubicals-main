@@ -4,7 +4,7 @@ import { Badge } from './ui/badge';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button } from '@mui/material';
 import { APPLICATION_API_END_POINT } from '@/utils/constant';
-import { setAllAppliedJobs } from '@/red/jobSlice'; 
+import { setAllAppliedJobs } from '@/redux/jobSlice'; 
 
 const AppliedJobTable = () => {
     const dispatch = useDispatch(); 
