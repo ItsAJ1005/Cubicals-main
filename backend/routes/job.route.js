@@ -14,7 +14,7 @@ router.route("/get").get(isAuthenticated, jobController.getAllJobs);
 router.route("/getadminjobs").get(isAuthenticated, jobController.getAdminJobs);
 
 // Route to get a specific job by ID (GET method)
-router.route("/get/:id").get(isAuthenticated, jobController.getJobById);
+router.route("/get/:id").get(jobController.getJobById);
 
 // Route to get the count of all jobs (GET method)
 router.route("/count").get(jobController.getJobCount); 
