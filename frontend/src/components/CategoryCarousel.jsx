@@ -3,7 +3,7 @@ import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious
 import { Button } from './ui/button';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { setSearchedQuery } from '@/red/jobSlice';
+import { setSearchedQuery } from '@/redux/jobSlice';
 import InfoCardsHome from './InfoCardsHome';
 
 const category = [

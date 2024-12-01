@@ -11,7 +11,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import './Sidebar.scss';
 import { Button } from '@/components/ui/button';
 import axios from 'axios';
-import { setUser } from '@/red/authSlice';
+import { setUser } from '@/redux/authSlice';
 import { toast } from 'sonner';
 import { USER_API_END_POINT } from '@/utils/constant';
 import { useDispatch } from 'react-redux';

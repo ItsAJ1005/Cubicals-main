@@ -4,7 +4,7 @@ import App from './App.jsx'
 import './index.css'
 import { Toaster } from './components/ui/sonner.jsx'
 import { Provider } from 'react-redux'
-import store from './red/store.js'
+import store from './redux/store.js'
 import { persistStore } from 'redux-persist'
 import { PersistGate } from 'redux-persist/integration/react'
 
