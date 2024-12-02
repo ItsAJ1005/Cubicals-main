@@ -5,9 +5,13 @@ import Navbar from '../Navbar/Navbar';
 import ProgressBar from '../ProgressBar/ProgressBar';
 import Sidebar from '../Sidebar/Sidebar';
 import TableList from '../TableList/TableList';
-import axios from 'axios'; 
+import axios from 'axios';
 import './Home.scss';
 import { APPLICATION_API_END_POINT, COMPANY_API_END_POINT, USER_API_END_POINT } from '@/utils/constant';
+import ApplicationsOverTimeChart from '../Chart/ApplicationsOverTimeChart';
+import ApplicationsByJobChart from '../Chart/ApplicationsByJobChart';
+import JobsByCompanyChart from '../Chart/JobsByCompanyChart';
+import ApplicationByStatusChart from '../Chart/ApplicationByStatusChart';
 
 function AdminHome() {
     const [totalApplicants, setTotalApplicants] = useState(0);
@@ -19,9 +23,9 @@ function AdminHome() {
         const fetchCounts = async () => {
             try {
                 const applicantsResponse = await axios.get(`${APPLICATION_API_END_POINT}/countApplicants`);
-                const recruitersResponse = await axios.get(`${USER_API_END_POINT}/getRecruiterCount`); 
+                const recruitersResponse = await axios.get(`${USER_API_END_POINT}/getRecruiterCount`);
                 // const jobsResponse = await axios.get('/api/jobs/count'); 
-                const companiesResponse = await axios.get(`${COMPANY_API_END_POINT}/companyCount`); 
+                const companiesResponse = await axios.get(`${COMPANY_API_END_POINT}/companyCount`);
 
                 setTotalApplicants(applicantsResponse.data.count);
                 setTotalRecruiters(recruitersResponse.data.count);
@@ -49,7 +53,7 @@ function AdminHome() {
                 <div className="home_items">
                     <ItemLists type="Applicants" count={totalApplicants} />
                     <ItemLists type="Recruiter" count={totalRecruiters} />
-                
+
                     {/* <ItemLists type="Job Vacancies" count={totalJobVacancies} /> */}
                     <ItemLists type="Companies" count={totalCompanies} />
                 </div>
@@ -62,9 +66,14 @@ function AdminHome() {
                 </div>
 
                 <div className="chart_sec">
-                    <ProgressBar />
-                    <Chart height={450} title="New Users, for next review - sample graph: " />
+                    <ProgressBar style={{ height: '100px' }} />
+                    <Chart height={250} title="New Users, for next review - sample graph: " />
+                    <ApplicationsByJobChart style={{ height: '400px', marginLeft: '-200px' }} /> {/* pinkChart */}
+                    <ApplicationByStatusChart style={{ height: '400px' }} /> {/* piechart */}
+                    <ApplicationsOverTimeChart style={{ height: '400px' }} /> {/* linechart */}
+                    <JobsByCompanyChart style={{ height: '400px' }} />  {/* barChart */}
                 </div>
+
             </div>
         </div>
     );
