@@ -11,5 +11,5 @@ const NotFoundErr = () => {
     </div>
   )
 }
-
+  
 export default NotFoundErr
