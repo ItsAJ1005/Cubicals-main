@@ -68,12 +68,7 @@ function Sidebar() {
                             <TableChartIcon className="icon" /> Companies
                         </li>
                     </Link>
-                    {/* <Link to="/supreme/JobVacancies" style={{ textDecoration: 'none' }}>
-                        <li>
-                            <CreditCardIcon className="icon" /> Job Vacancies
-                        </li>
-                    </Link> */}
-
+            
                     <p className="spann">Seetings</p>
 
                     <li className='hover:bg-transparent'>
