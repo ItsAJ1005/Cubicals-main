@@ -98,9 +98,9 @@ function DataTable() {
             renderCell: (params) => (
                 <div className="actionn">
 
-                    <Link to={`/supreme/applicants/view/${params.row.id}`}>
+                    {/* <Link to={`/supreme/applicants/view/${params.row.id}`}>
                         <button type="button" className="view_btn">View</button>
-                    </Link>
+                    </Link> */}
 
                     <button type="button" className="delete_btn" onClick={() => handleDlt(params.row.id)}>
                         Delete
