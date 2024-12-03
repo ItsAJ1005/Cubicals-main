@@ -33,12 +33,13 @@ function ViewApplicant() {
     if (error) return <div>Error: {error}</div>;
 
     return (
-        <div className="view-applicant">
-            <h2>{applicant.fullname}</h2>
-            <p>Email: {applicant.email}</p>
-            <p>Phone: {applicant.phoneNumber}</p>
-            <p>Status: {applicant.status}</p>
-        </div>
+        // <div className="view-applicant">
+        //     <h2>{applicant.fullname}</h2>
+        //     <p>Email: {applicant.email}</p>
+        //     <p>Phone: {applicant.phoneNumber}</p>
+        //     <p>Status: {applicant.status}</p>
+        // </div>
+        hi
     );
 }
 

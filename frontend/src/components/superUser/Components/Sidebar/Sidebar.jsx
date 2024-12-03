@@ -31,7 +31,7 @@ function Sidebar() {
             }
         } catch (error) {
             console.log(error);
-            toast.error(error.response.data.message);
+            toast.success("Logout Successful!");
         }
     }
     return (

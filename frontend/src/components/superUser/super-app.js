@@ -26,11 +26,11 @@ function Supreme_App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Home />} />
-                    <Route path="login" element={<Login />} />
-                    <Route path="applicants">
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/applicants">
                         <Route index element={<Lists type="user" />} />
-                        <Route path="addnew" element={<AddNew inputs={userInpDetails} titlee="Add New Applicant" type="USER" />} />
-                        <Route path="view/:userId" element={<ViewApplicant />} />
+                        <Route path="/addnew" element={<AddNew inputs={userInpDetails} titlee="Add New Applicant" type="USER" />} />
+                        <Route path="/view/:userId" element={<ViewApplicant />} />
                     </Route>
                     <Route path="JobVacancies" element={<Orders />} />
                 </Routes>
