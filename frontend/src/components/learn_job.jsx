@@ -35,13 +35,7 @@ const LearnJob = () => {
               >
                 Start my free month
               </Button>
-              <Button
-                variant="outline"
-                size="lg"
-                onClick={() => navigate("/team-plans")}
-              >
-                Buy for my team
-              </Button>
+
             </div>
           </div>
           <div className="hidden lg:block">
