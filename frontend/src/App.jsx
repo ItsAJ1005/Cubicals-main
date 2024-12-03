@@ -23,6 +23,7 @@ import LearnMore from './components/LearnMore'
 import BlogHome from './components/blogComponents/BlogHome/BlogHome'
 import CreatePost from './components/blogComponents/CreatePost'
 import MyBlogs from './components/blogComponents/MyBlogs/MyBlogs'
+import Pricing from './components/pricing'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -125,6 +126,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/supreme/Companies",
     element: <ProtectedRoute><Lists type="companies" /></ProtectedRoute>
+  },
+  {
+    path:"/pricing",
+    element:<Pricing />
   },
   {
     path: "/supreme/JobVacancies",

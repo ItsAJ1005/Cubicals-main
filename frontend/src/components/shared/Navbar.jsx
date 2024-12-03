@@ -39,7 +39,7 @@ const Navbar = () => {
                     Try our pro version to smash all the boundaries 
                 </div>
                 <div>
-                    <Link to='/proErr'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border sm:w-32'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
+                    <Link to='/pricing'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border sm:w-32'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
                 </div>
             </div>
  
