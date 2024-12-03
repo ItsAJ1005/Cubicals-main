@@ -9,6 +9,7 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
+import DropDown from '../ui/drop-down'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
@@ -54,12 +55,15 @@ const Navbar = () => {
                                 <>
                                     <li><Link to="/admin/companies">Companies</Link></li>
                                     <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    <li><DropDown/></li>
+                                    
                                 </>
                             ) : (
                                 <>
                                     <li><Link onClick={()=>scrollToTop} to="/">Home</Link></li>
                                     <li><Link to="/jobs">Jobs</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
+                                    <li><DropDown/></li>
                                 </>
                             )
                         }
