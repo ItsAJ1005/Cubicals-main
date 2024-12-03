@@ -16,19 +16,19 @@ const Browse = () => {
         };
     }, [dispatch]);
 
-    console.log(allJobs.map(job => typeof job.company));
-console.log(allJobs);
+    
 
 
     // Filter jobs based on the searchedQuery
     const filteredJobs = allJobs.filter(job => {
-        const title = job.title || ""; // Handle missing title gracefully
-        const companyName = job.company?.name || ""; // Safely access job.company.name
+        const title = job.title?.toLowerCase() || ""; // Safely handle missing title
+        const companyName = job.company?.name?.toLowerCase() || ""; // Safely handle missing company name
         return (
-            title.toLowerCase().includes(searchedQuery.toLowerCase()) ||
-            companyName.toLowerCase().includes(searchedQuery.toLowerCase())
+            title.includes(searchedQuery.toLowerCase()) ||
+            companyName.includes(searchedQuery.toLowerCase())
         );
     });
+    
     
 
     return (
