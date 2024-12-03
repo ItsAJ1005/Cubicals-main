@@ -1,12 +1,13 @@
 import express from "express";
 import { createBlog, getAllBlogs, getBlogById, updateBlog, deleteBlog, addComment, getCommentsByBlogId } from "../controllers/blog.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";  
+import { singleUpload } from "../middlewares/mutler.js";
 
 const router = express.Router();
 
 // Blog Routes
-router.post("/create", isAuthenticated, createBlog);  // working
-router.get("/", getAllBlogs);  //working
+router.post("/createPost", isAuthenticated, singleUpload, createBlog);  // working
+router.get("/getPosts", getAllBlogs);  //working
 router.get("/:id", getBlogById); //working 
 // router.delete("/:id", isAuthenticated, deleteBlog);  //working
 
