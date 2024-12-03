@@ -1,77 +1,102 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid';
-import { Link, useNavigate } from 'react-router-dom';
-import { BLOG_API_END_POINT } from '@/utils/constant';
+import React, { useEffect, useState } from 'react';
 import { toast } from 'sonner';
 import { useSelector } from 'react-redux';
-// import ReactQuill from 'react-quill';
-// import 'react-quill/dist/quill.snow.css'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { BLOG_API_END_POINT } from '@/utils/constant';
 
 export default function CreatePostForm() {
-  // const [value, setValue] = useState('');
   const { user } = useSelector((store) => store.auth);
-  const [redirect, setRedirect ] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     title: '',
     content: '',
     tags: '',
-    image: null,
+    image: '',
   });
-
+  const [imagePreview, setImagePreview] = useState(null);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://widget.cloudinary.com/v2.0/global/all.js';
+    script.async = true;
+    script.onload = () => {
+      console.log('Cloudinary widget loaded');
+    };
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-        const allowedTypes = ["image/jpeg", "image/png", "image/gif"];
-        if (!allowedTypes.includes(file.type)) {
-            toast.error("Invalid file type. Only PNG, JPG, and GIF are allowed.");
+  const handleImageUpload = () => {
+    if (window.cloudinary) {
+      const widget = window.cloudinary.createUploadWidget(
+        {
+          cloudName: 'dczj69wck', // Replace with your actual cloud name
+          sources: ['local', 'url', 'camera'],
+          multiple: false,
+          clientAllowedFormats: ['jpg', 'png', 'gif'],
+          maxFileSize: 10 * 1024 * 1024, // Max file size 10MB
+          uploadPreset: 'cubicles_unsigned_preset',
+        },
+        (error, result) => {
+          if (error) {
+            console.error('Error uploading image:', error);
             return;
-        }
-        if (file.size > 10 * 1024 * 1024) {
-            toast.error("File size exceeds 10MB.");
-            return;
-        }
-        setFormData({ ...formData, image: file });
-    }
-};
+          }
 
+          if (result && result.event === 'success') {
+            const imageUrl = result.info.secure_url;
+            setFormData({ ...formData, image: imageUrl });
+            setImagePreview(imageUrl);
+            console.log('Uploaded image URL:', imageUrl);
+          }
+        }
+      );
+      widget.open();
+    } else {
+      console.error('Cloudinary widget not loaded');
+    }
+  };
 
   const createPostSubmitHandler = async (e) => {
     e.preventDefault();
     const { title, content, tags, image } = formData;
-    // console.log(user)
     if (!user) {
       return alert('User not authenticated');
     }
 
-    const postData = new FormData();
-    postData.append('title', title);
-    postData.append('content', content);
-    postData.append('tags', tags);
-    if (image) {
-      postData.append('image', image);
-    }
-    postData.append('author', user._id);
+    const postData = {
+      title,
+      content,
+      tags,
+      image,  // Send the Cloudinary image URL
+      author: user._id,
+    };
 
+    setLoading(true);
     try {
       const res = await axios.post(`${BLOG_API_END_POINT}/createPost`, postData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       });
       if (res.data.success) {
         toast.success(res.data.message);
-        setFormData({ title: '', content: '', tags: '', image: null });
+        setFormData({ title: '', content: '', tags: '', image: '' });
+        setImagePreview(null);
         navigate('/blog');
       }
     } catch (error) {
       toast.error(error.response?.data?.message || 'An error occurred.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -115,13 +140,7 @@ export default function CreatePostForm() {
                 className="block w-full rounded-md bg-white px-3 py-1.5 text-base text-gray-900 placeholder:text-gray-400 outline outline-1 outline-gray-300 focus:outline-indigo-600"
                 placeholder="Today, I would like to share..."
               />
-               {/* <ReactQuill rows={3} className='col-span-full' theme="snow" value={value} onChange={setValue} /> */}
-
-              <p className="mt-3 text-sm text-gray-600">
-                Write a few sentences that you would like to share.
-              </p>
             </div>
-
 
             <div className="sm:col-span-4">
               <label htmlFor="tags" className="block text-xl font-medium text-gray-900">
@@ -145,25 +164,25 @@ export default function CreatePostForm() {
               </label>
               <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
-                  <PhotoIcon aria-hidden="true" className="mx-auto h-12 w-12 text-gray-300" />
-                  <div className="mt-4 flex text-sm text-gray-600">
-                    <label
-                      htmlFor="file-upload"
-                      className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500"
-                    >
-                      <span>Upload a file</span>
-                      <input
-                        id="file-upload"
-                        name="image"
-                        type="file"
-                        accept="image/*"
-                        onChange={handleFileChange}
-                        className="sr-only"
-                      />
-                    </label>
-                    <p className="pl-1">or drag and drop</p>
-                  </div>
+                  <button
+                    type="button"
+                    onClick={handleImageUpload}
+                    className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 hover:text-indigo-500"
+                  >
+                    Upload a file
+                  </button>
+                  <p className="pl-1">or drag and drop</p>
                   <p className="text-xs text-gray-600">PNG, JPG, GIF up to 10MB</p>
+                  {/* Image preview */}
+                  {imagePreview && (
+                    <div className="mt-4">
+                      <img
+                        src={imagePreview}
+                        alt="Image preview"
+                        className="h-40 w-40 object-cover rounded-lg"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -172,16 +191,15 @@ export default function CreatePostForm() {
       </div>
 
       <div className="mt-6 flex items-center justify-end gap-x-6">
-        <Link to="/blog">
-          <button type="button" className="font-semibold text-gray-900">
-            Cancel
-          </button>
-        </Link>
+        <button type="button" className="font-semibold text-gray-900">
+          Cancel
+        </button>
         <button
           type="submit"
-          className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600"
+          disabled={loading}
+          className={`rounded-md ${loading ? 'bg-gray-500' : 'bg-indigo-600'} px-3 py-2 text-sm font-semibold text-white hover:bg-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-600`}
         >
-          Save
+          {loading ? 'Saving...' : 'Save'}
         </button>
       </div>
     </form>

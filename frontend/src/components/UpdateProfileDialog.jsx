@@ -19,9 +19,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         email: user?.email || "",
         phoneNumber: user?.phoneNumber || "",
         bio: user?.profile?.bio || "",
-        skills: user?.profile?.skills?.map(skill => skill) || "",
-        file: user?.profile?.resume || ""
+        skills: user?.profile?.skills?.join(', ') || "", // Assuming skills are stored as a comma-separated string
+        image: user?.profile?.resume || ""
     });
+
     const dispatch = useDispatch();
 
     const changeEventHandler = (e) => {
@@ -29,8 +30,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
 
     const fileChangeHandler = (e) => {
-        const file = e.target.files?.[0];
-        setInput({ ...input, file })
+        const image = e.target.files?.[0];
+        setInput({ ...input, image })
     }
 
     const submitHandler = async (e) => {
@@ -40,10 +41,11 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         formData.append("email", input.email);
         formData.append("phoneNumber", input.phoneNumber);
         formData.append("bio", input.bio);
-        formData.append("skills", input.skills);
-        if (input.file) {
-            formData.append("file", input.file);
+        formData.append("skills", input.skills); // Assuming skills can be stored as a comma-separated string
+        if (input.image) {
+            formData.append("image", input.image);
         }
+
         try {
             setLoading(true);
             const res = await axios.post(`${USER_API_END_POINT}/profile/update`, formData, {
@@ -52,6 +54,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                 },
                 withCredentials: true
             });
+
             if (res.data.success) {
                 dispatch(setUser(res.data.user));
                 toast.success(res.data.message);
@@ -59,14 +62,12 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
         } catch (error) {
             console.log(error);
             toast.error(error.response.data.message);
-        } finally{
+        } finally {
             setLoading(false);
         }
+
         setOpen(false);
-        console.log(input);
     }
-
-
 
     return (
         <div>
@@ -78,10 +79,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                     <form onSubmit={submitHandler}>
                         <div className='grid gap-4 py-4'>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="name" className="text-right">Name</Label>
+                                <Label htmlFor="fullname" className="text-right">Name</Label>
                                 <Input
-                                    id="name"
-                                    name="name"
+                                    id="fullname"
+                                    name="fullname"
                                     type="text"
                                     value={input.fullname}
                                     onChange={changeEventHandler}
@@ -100,10 +101,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="number" className="text-right">Number</Label>
+                                <Label htmlFor="phoneNumber" className="text-right">Number</Label>
                                 <Input
-                                    id="number"
-                                    name="number"
+                                    id="phoneNumber"
+                                    name="phoneNumber"
                                     value={input.phoneNumber}
                                     onChange={changeEventHandler}
                                     className="col-span-3"
@@ -130,10 +131,10 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
                                 />
                             </div>
                             <div className='grid grid-cols-4 items-center gap-4'>
-                                <Label htmlFor="file" className="text-right">Resume</Label>
+                                <Label htmlFor="image" className="text-right">Resume</Label>
                                 <Input
                                     id="file"
-                                    name="file"
+                                    name="image"
                                     type="file"
                                     accept="application/pdf"
                                     onChange={fileChangeHandler}

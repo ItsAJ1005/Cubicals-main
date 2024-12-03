@@ -9,6 +9,7 @@ import axios from 'axios'
 import { USER_API_END_POINT } from '@/utils/constant'
 import { setUser } from '@/redux/authSlice'
 import { toast } from 'sonner'
+import DropDown from '../ui/drop-down'
 
 const Navbar = () => {
     const { user } = useSelector(store => store.auth);
@@ -38,7 +39,7 @@ const Navbar = () => {
                     Try our pro version to smash all the boundaries 
                 </div>
                 <div>
-                    <Link to='/proErr'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border sm:w-32'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
+                    <Link to='/pricing'><button className='border text-sm ml-2 w-[8vw] py-[4.17px] rounded-3xl gradient-border sm:w-32'> <span className='relative  p-1 pl-7 pr-6 w-[8vw] rounded-3xl font-semibold bg-black'>Try Pro →</span></button></Link>
                 </div>
             </div>
  
@@ -54,13 +55,15 @@ const Navbar = () => {
                                 <>
                                     <li><Link to="/admin/companies">Companies</Link></li>
                                     <li><Link to="/admin/jobs">Jobs</Link></li>
+                                    <li><DropDown/></li>
+                                    
                                 </>
                             ) : (
                                 <>
                                     <li><Link onClick={()=>scrollToTop} to="/">Home</Link></li>
                                     <li><Link to="/jobs">Jobs</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
-                                    <li><Link to="/learn">Learn</Link></li>
+                                    <li><DropDown/></li>
                                 </>
                             )
                         }

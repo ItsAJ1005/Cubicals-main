@@ -47,24 +47,7 @@ function ItemLists({ type, count }) {
                 linkto: '/supreme/recruiters',
             };
             break;
-        // case 'Job Vacancies':
-        //     data = {
-        //         title: 'Job Vacancies',
-        //         isMoney: false,
-        //         count: count, // Use the count prop
-        //         icon: (
-        //             <WorkOutlineOutlinedIcon
-        //                 style={{
-        //                     color: '#AC7088',
-        //                     backgroundColor: '#FFF38C',
-        //                 }}
-        //                 className="icon"
-        //             />
-        //         ),
-        //         link: 'View all jobs',
-        //         linkto: '/JobVacancies',
-        //     };
-        //     break;
+
         case 'Companies':
             data = {
                 title: 'Companies',

@@ -6,12 +6,13 @@ import Navbar from '../../Components/Navbar/Navbar';
 import Sidebar from '../../Components/Sidebar/Sidebar';
 import TableList from '../../Components/TableList/TableList';
 import './userlists.scss';
+import { COMPANY_API_END_POINT } from '@/utils/constant';
 
 function Lists({ type }) {
     const getLinkPath = () => {
         switch (type) {
             case 'companies':
-                return '/companies/addnew';
+                return `/admin/companies/create`;
             case 'user':
                 return '/addnew';
             case 'recruiter':
