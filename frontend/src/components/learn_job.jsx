@@ -200,7 +200,7 @@ const topPicks = [
     author: "Frontend Expert",
     duration: "28h 45m",
     level: "Intermediate",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/react.png",
     badge: "Popular"
   },
   {
@@ -208,7 +208,7 @@ const topPicks = [
     author: "Backend Guru",
     duration: "32h 15m",
     level: "Advanced",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/node.webp",
     badge: "Hot"
   },
   {
@@ -216,7 +216,7 @@ const topPicks = [
     author: "Design Master",
     duration: "24h 30m",
     level: "Beginner",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/uiux.webp",
     badge: "New"
   }
 ]
@@ -236,7 +236,7 @@ const weeklyTopCourses = [
     author: "DevOps Pro",
     duration: "15h 30m",
     level: "Intermediate",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/docker.png",
     badge: "Trending"
   },
   {
@@ -244,7 +244,7 @@ const weeklyTopCourses = [
     author: "API Expert",
     duration: "12h 45m",
     level: "Advanced",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/graphql.jpg",
     badge: "Hot"
   },
   {
@@ -252,7 +252,7 @@ const weeklyTopCourses = [
     author: "Mobile Dev Master",
     duration: "28h 15m",
     level: "Intermediate",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/flutter.png",
     badge: "Popular"
   },
   {
@@ -260,7 +260,7 @@ const weeklyTopCourses = [
     author: "Frontend Guru",
     duration: "20h 30m",
     level: "Beginner",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/vue.jpg",
     badge: "New"
   }
 ]
@@ -298,7 +298,7 @@ const newReleases = [
     author: "Systems Expert",
     duration: "18h 45m",
     level: "Advanced",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/rust.webp",
     badge: "New"
   },
   {
@@ -306,7 +306,7 @@ const newReleases = [
     author: "Web Performance Guru",
     duration: "14h 30m",
     level: "Intermediate",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/wa.webp",
     badge: "New"
   },
   {
@@ -314,7 +314,7 @@ const newReleases = [
     author: "Frontend Master",
     duration: "16h 15m",
     level: "Intermediate",
-    image: "/placeholder.svg?height=168&width=300",
+    image: "/src/assets/learn/svelte.png",
     badge: "New"
   }
 ]
