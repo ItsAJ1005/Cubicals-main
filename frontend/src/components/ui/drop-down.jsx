@@ -28,7 +28,7 @@ export default function DropDown() {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link to='/'>
+            <Link to='/learnPage'>
             <a  
               href="#"
               className="block px-4 py-2 text-sm text-white data-[focus]:bg-gray-100 data-[focus]:text-gray-900 data-[focus]:outline-none"
