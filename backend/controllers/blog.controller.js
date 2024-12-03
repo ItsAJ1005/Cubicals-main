@@ -1,25 +1,45 @@
 import Blog from "../models/blog.model.js";
 import Comment from "../models/comment.model.js";
 
-
-// Create a new blog
 export const createBlog = async (req, res) => {
     try {
-        const { title, content, tags, image } = req.body;
+        const { title, content, tags, author } = req.body;
+        console.log(req.user)
+        const file = req.file;
+
+        if (!title || !content) {
+            return res.status(400).json({
+                success: false,
+                message: "Title and content are required.",
+            });
+        }
+
         const newBlog = new Blog({
             title,
             content,
-            author: req.id, 
-            tags,
-            image,
+            author,
+            tags: tags ? tags.split(",").map((tag) => tag.trim()) : [],
+            image: file?.originalname || null,
         });
 
-        const savedBlog = await newBlog.save();
-        res.status(201).json(savedBlog);
+        await newBlog.save();
+
+        res.status(201).json({
+            success: true,
+            message: "Blog created successfully!",
+            blog: newBlog,
+        });
     } catch (error) {
-        res.status(500).json({ message: "Error creating blog", error });
+        console.error("Error creating post:", error);
+        res.status(500).json({
+            success: false,
+            message: "Internal Server Error.",
+        });
     }
 };
+
+
+
 
 // Get all blogs
 export const getAllBlogs = async (req, res) => {
