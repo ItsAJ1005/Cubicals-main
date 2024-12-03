@@ -67,7 +67,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/blog/createPost",
-    element: <CreatePost/>
+    element: <ProtectedRoute><CreatePost/></ProtectedRoute>
   },
   {
     path: "/blog/myBlogs",

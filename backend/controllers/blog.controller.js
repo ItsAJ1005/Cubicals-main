@@ -1,44 +1,30 @@
 import Blog from "../models/blog.model.js";
 import Comment from "../models/comment.model.js";
+import cloudinary from 'cloudinary';
 
 export const createBlog = async (req, res) => {
     try {
-        const { title, content, tags, author } = req.body;
-        console.log(req.user)
-        const file = req.file;
+        const { title, content, tags, image, author } = req.body;
 
         if (!title || !content) {
-            return res.status(400).json({
-                success: false,
-                message: "Title and content are required.",
-            });
+            return res.status(400).json({ success: false, message: "Title and content are required." });
         }
 
         const newBlog = new Blog({
             title,
             content,
             author,
-            tags: tags ? tags.split(",").map((tag) => tag.trim()) : [],
-            image: file?.originalname || null,
+            image, 
+            tags: tags.split(','),
         });
 
         await newBlog.save();
-
-        res.status(201).json({
-            success: true,
-            message: "Blog created successfully!",
-            blog: newBlog,
-        });
+        res.status(201).json({ success: true, message: 'Blog post created successfully.' });
     } catch (error) {
-        console.error("Error creating post:", error);
-        res.status(500).json({
-            success: false,
-            message: "Internal Server Error.",
-        });
+        console.error(error);
+        res.status(500).json({ success: false, message: 'Server Error' });
     }
 };
-
-
 
 
 // Get all blogs
@@ -62,6 +48,18 @@ export const getBlogById = async (req, res) => {
     }
 };
 
+// Get blogs by Author ID
+export const getBlogByAuthorId = async (req, res) => {
+    try {
+        const blogs = await Blog.find({ author: req.params.id }).populate("author", "fullname email");
+        if (blogs.length === 0) return res.status(200).json({ blogs:[], message: "No blogs found for this author" });
+        res.status(200).json(blogs);
+    } catch (error) {
+        res.status(500).json({ message: "Error fetching blogs by author", error });
+    }
+};
+
+
 // Update a blog
 export const updateBlog = async (req, res) => {
     try {
@@ -81,12 +79,13 @@ export const updateBlog = async (req, res) => {
 export const deleteBlog = async (req, res) => {
     try {
         const deletedBlog = await Blog.findByIdAndDelete(req.params.id);
-        if (!deletedBlog) return res.status(404).json({ message: "Blog not found" });
-        res.status(200).json({ message: "Blog deleted successfully" });
+        if (!deletedBlog) return res.status(404).json({ success: false, message: "Blog not found" });
+        res.status(200).json({ success: true, message: "Blog deleted successfully", deletedBlog });
     } catch (error) {
-        res.status(500).json({ message: "Error deleting blog", error });
+        res.status(500).json({ success: false, message: "Error deleting blog", error: error.message });
     }
 };
+
 
 // Add a comment to a blog
 export const addComment = async (req, res) => {
