@@ -20,6 +20,7 @@ import SuperLogin from './components/superUser/Components/Login/SuperLogin'
 import ProErr from './components/ProErr'
 import NotFoundErr from './components/NotFoundErr'
 import LearnMore from './components/LearnMore'
+import LearnJob from './components/learn_job' // Add this import
 import BlogHome from './components/blogComponents/BlogHome/BlogHome'
 import CreatePost from './components/blogComponents/CreatePost'
 import MyBlogs from './components/blogComponents/MyBlogs/MyBlogs'
@@ -58,6 +59,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/learn-more",
     element: <LearnMore />
+  },
+  {
+    path: "/learn", // Add this new route
+    element: <LearnJob />
   },
 
   // **For blog pages**
