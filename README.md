@@ -51,9 +51,9 @@ Cubicles is a job portal application that helps job seekers find opportunities a
 
 1. Move into the repository:
    ```bash
-   cd cubicles 
+   cd Group-18 
    ```
-   or project name {eg. group-18}
+   or project name {eg. Cubicles-main}
 1. Open two terminals, one for front end and one for backend:
 
 1. Run:
@@ -78,11 +78,16 @@ Cubicles is a job portal application that helps job seekers find opportunities a
 
 
 
-The super user can be created using the command:
+## The super user can be created using the command:
 ```bash
    node createSuperUser.js
 ```
 in the backend terminal.
 
+
+## To access super user dashboard use this url and login in browser:
+```bash
+   http://localhost:5173/ 
+```
 # Thank You
 
