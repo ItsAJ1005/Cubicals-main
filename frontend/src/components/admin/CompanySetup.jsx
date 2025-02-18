@@ -42,7 +42,7 @@ const CompanySetup = () => {
         formData.append("website", input.website);
         formData.append("location", input.location);
         if (input.file) {
-            formData.append("file", input.file);
+            formData.append("image", input.file);
         }
         try {
             setLoading(true);
