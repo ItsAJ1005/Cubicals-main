@@ -80,7 +80,7 @@ const Navbar = () => {
                             <Popover >
                                 <PopoverTrigger asChild>
                                     <Avatar className="cursor-pointer">
-                                        <AvatarImage src={user?.profile?.profilePhoto || "https://img.icons8.com/?size=100&id=7819&format=png&color=C850F2"} alt="profile-img" />
+                                        <AvatarImage src={user?.profile?.profilePhoto || "/src/assets/user.png"} alt="profile-img" />
                                     </Avatar>
                                 </PopoverTrigger>
                                 <PopoverContent className="w-80 bg-gray-900 text-white">

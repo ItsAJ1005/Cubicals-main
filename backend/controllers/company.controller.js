@@ -28,17 +28,20 @@ class CompanyController {
   async getCompany(req, res, next) {
     try {
       const userId = req.id; // Logged in user id
-      const companies = await Company.find({ userId });
-
-      if (companies.length === 0) {
+      const fetchedCompanies = await Company.find({ userId });
+  
+      if (fetchedCompanies.length === 0) {
         return res.status(404).json({ message: "Companies not found.", success: false });
       }
-
-      return res.status(200).json({ companies, success: true });
+  
+      const sortedCompanies = fetchedCompanies.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+  
+      return res.status(200).json({ companies: sortedCompanies, success: true });
     } catch (error) {
       next(error);
     }
   }
+  
 
   // Get all companies across users
   async getAllCompanies(req, res, next) {
