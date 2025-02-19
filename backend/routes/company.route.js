@@ -23,4 +23,7 @@ router.get('/companies/all', companyController.getAllCompanies);
 //Rouet to get all the recruiters
 router.get('/companyCount', companyController.companyCount);
 
+// Route to delete a company
+router.delete('/delete/:id', isAuthenticated, companyController.deleteCompany);
+
 export default router;

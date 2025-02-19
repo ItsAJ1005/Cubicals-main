@@ -33,6 +33,12 @@ const jobSlice = createSlice({
         setAllCourses: (state, action) => { // New reducer
             state.allCourses = action.payload;
         },
+        updateJobInStore: (state, action) => {
+            state.allJobs = state.allJobs.map((job) =>
+              job._id === action.payload._id ? action.payload : job
+            );
+          },
+        
     },
 });
 
@@ -44,6 +50,7 @@ export const {
     setAllAppliedJobs,
     setSearchedQuery,
     setAllCourses, // Export the new reducer
+    updateJobInStore,
 } = jobSlice.actions;
 
 export default jobSlice.reducer;

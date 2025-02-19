@@ -25,6 +25,8 @@ import BlogHome from './components/blogComponents/BlogHome/BlogHome'
 import CreatePost from './components/blogComponents/CreatePost'
 import MyBlogs from './components/blogComponents/MyBlogs/MyBlogs'
 import Pricing from './components/pricing'
+import EditJob from './components/admin/EditJob'
+import SupremeProtectedRoute from './components/superUser/Components/SupremeProtectedRoute'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -102,6 +104,10 @@ const appRouter = createBrowserRouter([
     element: <ProtectedRoute><PostJob /></ProtectedRoute>
   },
   {
+    path: "/admin/jobs/edit/:id",
+    element: <ProtectedRoute><EditJob /></ProtectedRoute>
+  },
+  {
     path: "/admin/jobs/:id/applicants",
     element: <ProtectedRoute><Applicants /></ProtectedRoute>
   },
@@ -113,7 +119,7 @@ const appRouter = createBrowserRouter([
   // **For supreme user (highest level)**
   {
     path: "/supreme",
-    element: <SuperLogin />
+    element: <SupremeProtectedRoute><SuperLogin /></SupremeProtectedRoute>
   },
   {
     path: "/supreme/adminHome",
