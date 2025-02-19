@@ -19,4 +19,7 @@ router.route("/get/:id").get(jobController.getJobById);
 // Route to get the count of all jobs (GET method)
 router.route("/count").get(jobController.getJobCount); 
 
+//Route to update a job
+router.route("/update/:id").put(isAuthenticated, jobController.updateJob);
+
 export default router;
