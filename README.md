@@ -172,6 +172,12 @@ This document details the API endpoints available in the Cubicles job portal app
 
 [View Full API Documentation](./backend/route-api-doc.md)
 
+**For Swagger API documentation & visualization:**
+Run backend server then open this in the browser:
+```
+http://localhost:3000/api-docs/
+```
+
 
 # Installation and Setup Guide
 

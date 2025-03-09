@@ -2,6 +2,13 @@
 
 This document details the API endpoints available in the Cubicles job portal application. All endpoints are prefixed with the base URL: `http://localhost:3000/api/v1`.
 
+**For Swagger API documentation & visualization:**
+
+Run backend server then open this in the browser:
+```
+http://localhost:3000/api-docs/
+```
+
 ---
 
 
