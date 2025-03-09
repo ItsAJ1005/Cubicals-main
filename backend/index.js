@@ -10,6 +10,7 @@ import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 import blogRoutes from "./routes/blog.route.js"
+import { rate_limiter } from "./utils/rate-limiting.js";
 dotenv.config({});
 
 const app = express();
@@ -18,6 +19,7 @@ const app = express();
 
 // External middlewares (3rd party) (2)
 app.use(helmet());
+app.use(rate_limiter);
 app.use(cookieParser());
 app.use(morgan("combined"));
 
