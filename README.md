@@ -170,7 +170,7 @@ backend/
 
 This document details the API endpoints available in the Cubicles job portal application. Please find the api documentation of Cubicles here:
 
-
+[View Full API Documentation](./backend/route-api-doc.md)
 
 
 # Installation and Setup Guide
