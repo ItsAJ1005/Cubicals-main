@@ -127,31 +127,41 @@ The architecture of Cubicles is designed to deliver a maintainable, and robust j
 4. **Reporting & Analytics:** Generates reports and dashboards for actionable insights.
 
 ### Directory Structure
-Below is a sample directory layout that illustrates the separation of concerns:
+Below is a backend directory layout that illustrates the separation of concerns:
 
 ```sh
-Cubibles/
-├── frontend/
-│   ├── public/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── redux/
-│   │   └── styles/
-│   └── package.json
-├── backend/
-│   ├── src/
-│   │   ├── domains/
-│   │   │   ├── users/
-│   │   │   ├── orders/
-│   │   │   └── products/
-│   │   ├── controllers/
-│   │   ├── routes/
-│   │   ├── middlewares/
-│   │   └── app.js
-│   └── package.json
-├── Dockerfile
-└── README.md
+backend/ 
+├── controllers/ 
+│   ├── application.controller.js 
+│   ├── company.controller.js 
+│   ├── job.controller.js 
+│   └── user.controller.js 
+├── middleware/ 
+│   ├── isAuthenticated.js 
+│   ├── errorHandler.js
+│   ├── mailer.js 
+│   └── multer.js 
+├── models/ 
+│   ├── application.model.js 
+│   ├── company.model.js 
+│   ├── job.model.js 
+│   └── user.model.js 
+├── routes/ 
+│   ├── application.route.js 
+│   ├── company.route.js 
+│   ├── job.route.js 
+│   └── user.route.js 
+├── utils/ 
+│   ├── cloudinary.js 
+│   ├── datauri.js 
+│   ├── rate-limiting.js 
+│   └── db.js 
+├── logs/
+├── app.js 
+├── package.json 
+├── routes-data.md
+├── README.md 
+└── .env
 ```
 ---
 ## Cubicles API Documentation
