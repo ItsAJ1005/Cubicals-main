@@ -11,6 +11,7 @@ import jobRoute from "./routes/job.route.js";
 import applicationRoute from "./routes/application.route.js";
 import blogRoutes from "./routes/blog.route.js"
 import { rate_limiter } from "./utils/rate-limiting.js";
+import setupSwagger from './docs/swaggerDocs.js';
 dotenv.config({});
 
 const app = express();
@@ -42,6 +43,9 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 app.use("/api/v1/blog" ,blogRoutes)
+
+// Setup Swagger documentation
+setupSwagger(app);
 
 // Global Error Handling Middleware (5)
 app.use((err, req, res, next) => {
