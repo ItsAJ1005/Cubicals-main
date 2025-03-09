@@ -30,9 +30,9 @@ The application simplifies the recruitment process by providing:
 
 - **Comprehensive Job Listings:** Users can filter and search through a wide range of job opportunities.
 - **Detailed Insights:** Tips, resources, and analytics to help candidates improve their chances of getting hired.
-- Educational Content: Learn pages that provide updates on market trends and career development.
-- Multi-User Support: Tailored experiences for regular users, admins/recruiters, and superusers, including advanced features like charts and report generation.
-- Community Engagement: A blog and community section where users can create, share, and manage their own content.
+- **Educational Content:** Learn pages that provide updates on market trends and career development.
+- **Multi-User Support:** Tailored experiences for regular users, admins/recruiters, and superusers, including advanced features like charts and report generation.
+- **Community Engagement:** A blog and community section where users can create, share, and manage their own content.
 
 Built on a modern tech stack and following industry best practices, Cubicles is designed for scalability and maintainability, ensuring it can evolve with the needs of both job seekers and employers.
 
@@ -116,10 +116,12 @@ The architecture of Cubicles is designed to deliver a maintainable, and robust j
 ### Data Flow Diagram (simplified):
 ![Cubicles Class Diagram](https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/Data%20flow%20diagram%20(DFD).png)
 ### Use case diagrams:
-![Cubicles Class Diagram](https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/useCase-1.png)
-![Cubicles Class Diagram](https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/useCase-2.png)
+<img src="https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/useCase-1.png" height="1000">
+<img src="https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/useCase-2.png" height="400">
+
 ### State diagrams (simplified):
-![Cubicles Class Diagram](https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/State%20diagram.png)
+<img src="https://raw.githubusercontent.com/Cubicles2024/Cubicals-main/main/Architectural%20Diagrams/State%20diagram.png" height="1200">
+
 ### Bounded Contexts
 1. **User Management:** Manages user profiles, authentication, and authorization.
 2. **Product/Service Management:** Handles data and logic for core business entities.
