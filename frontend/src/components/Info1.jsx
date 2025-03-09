@@ -34,8 +34,8 @@ const Info1 = () => {
                 <div className='flex gap-[8vw] '>
 
                     <div className='flex flex-col gap-[2rem] w-[15vw]' data-aos='fade-in'>
-                        <div className='flex gap-3 glass-sm '>
-                            <img src='src/assets/job-seeker-50.png' className='h-[20px] mt-[4px]'/> <div className='flex '>Jobs search made easy</div>
+                        <div className='flex gap-3 glass-sm'>
+                            <img src='src/assets/job-seeker-50.png' className='h-[20px] mt-[4px]'/> <div className='flex'>Jobs search made easy</div>
                         </div>
                         <div className='flex gap-3 glass-sm '>
                             <img src='src/assets/job-seeker-50.png' className='h-[20px] mt-[4px]'/> <div className='flex '>Companies Collab Benefits</div>
@@ -90,7 +90,7 @@ const Info1 = () => {
                                 <CommandSeparator />
                                 <CommandGroup heading="Settings" className='bg-black text-white'>
                                 <Link to='/profile'><CommandItem  className='cursor-pointer'>⌘ Profile</CommandItem></Link>
-                                <CommandItem  className='cursor-pointer'>⌘ Billing</CommandItem>
+                                <Link to='/pricing'><CommandItem  className='cursor-pointer'>⌘ Billing</CommandItem></Link>
                                 <Link to='/browse'><CommandItem  className='cursor-pointer'>⌘ Browse</CommandItem></Link>
 
                                 </CommandGroup>
