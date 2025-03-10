@@ -2,8 +2,10 @@ import Navbar from '@/components/shared/Navbar';
 import { BLOG_API_END_POINT } from '@/utils/constant';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import MyBlog from '../MyBlog';
+import backButton from '@/assets/backButton.png';
+import { Button } from '@mui/material';
 
 const MyBlogs = () => {
   const navigate = useNavigate();
@@ -44,9 +46,10 @@ const MyBlogs = () => {
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
-    <div className=''>
+    <div>
       <Navbar />
       <div className='m-10'>
+        <Link to='/blog'><Button><img src={backButton} alt="Back" width='40rem'/></Button></Link>
         <h2 className="font-bold text-3xl mb-5">My Blogs</h2>
 
         {blogs.length === 0 ? (

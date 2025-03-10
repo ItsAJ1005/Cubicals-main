@@ -60,7 +60,7 @@ const Navbar = () => {
                                 </>
                             ) : (
                                 <>
-                                    <li><Link onClick={()=>scrollToTop} to="/">Home</Link></li>
+                                    <li><Link to="/">Home</Link></li>
                                     <li><Link to="/jobs">Jobs</Link></li>
                                     <li><Link to="/browse">Browse</Link></li>
                                     <li><DropDown/></li>
@@ -87,7 +87,7 @@ const Navbar = () => {
                                     <div className=''>
                                         <div className='flex gap-2 space-y-2'>
                                             <Avatar className="cursor-pointer">
-                                                <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                                <AvatarImage src={user?.profile?.profilePhoto || "/src/assets/user.png"} alt="@shadcn" />
                                             </Avatar>
                                             <div>
                                                 <h4 className='font-medium'>{user?.fullname}</h4>

@@ -4,13 +4,11 @@ import { Button } from './ui/button'
 const InfoLast = () => {
   return (
     <div className='h-screen bg-black w-100vw'>
-        <div className='relative'>
-            <img className=' absolute top-[260vh] z-[-1] overflow-hidden' src='/looper-pattern.svg' />
-        </div>
+
       
       <div>
           {/* Left part of lets  make your dream true */}
-        <div className='glass  z-1 bg-transparent flex'>
+        <div className='glass bg-transparent flex'>
           <div>
             <div className="text-6xl font-[900] w-[7em]" data-aos='fade-in'>
               Let's make your <span className='gradient-text'>Dream True </span>

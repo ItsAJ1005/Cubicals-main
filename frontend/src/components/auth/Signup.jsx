@@ -79,7 +79,7 @@ const Signup = () => {
         // Handle success and error responses
         xhr.onload = function () {
             const res = JSON.parse(xhr.responseText);
-            if (xhr.status === 200 && res.success) {
+            if (xhr.status === 200 || res.success) {
                 navigate('/login');
                 toast.success(res.message);
             } else {
@@ -122,7 +122,7 @@ const Signup = () => {
                             value={input.fullname}
                             name="fullname"
                             onChange={changeEventHandler}
-                            placeholder="Ayush Singhai"
+                            placeholder="AJ Harsh Vardhan"
                         />
                     </div>
 
@@ -134,7 +134,7 @@ const Signup = () => {
                             value={input.email}
                             name="email"
                             onChange={changeEventHandler}
-                            placeholder="ayush@gmail.com"
+                            placeholder="harsh@gmail.com"
                         />
                     </div>
 
