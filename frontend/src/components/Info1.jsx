@@ -90,7 +90,7 @@ const Info1 = () => {
                                 <CommandSeparator />
                                 <CommandGroup heading="Settings" className='bg-black text-white'>
                                 <Link to='/profile'><CommandItem  className='cursor-pointer'>⌘ Profile</CommandItem></Link>
-                                <Link to='/pricing'><CommandItem  className='cursor-pointer'>⌘ Billing</CommandItem></Link>
+                                <Link to='/blog'><CommandItem  className='cursor-pointer'>⌘ Blogs</CommandItem></Link>
                                 <Link to='/browse'><CommandItem  className='cursor-pointer'>⌘ Browse</CommandItem></Link>
 
                                 </CommandGroup>

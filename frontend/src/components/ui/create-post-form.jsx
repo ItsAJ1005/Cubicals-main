@@ -4,6 +4,8 @@ import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BLOG_API_END_POINT } from '@/utils/constant';
+import { Button } from '@mui/material';
+import backButton from '@/assets/backButton.png'
 
 export default function CreatePostForm() {
   const { user } = useSelector((store) => store.auth);
@@ -104,6 +106,7 @@ export default function CreatePostForm() {
     <form onSubmit={createPostSubmitHandler}>
       <div className="space-y-12">
         <div className="border-b border-gray-900/10 pb-12">
+        <Button className='bg-transparent' onClick={() => navigate(-1)}><img src={backButton} alt="Back" width='40rem'/></Button>
           <h2 className="text-2xl font-bold text-gray-900">Create a New Post</h2>
           <p className="mt-1 text-lg text-gray-600">
             This information will be displayed publicly so be careful what you share.
