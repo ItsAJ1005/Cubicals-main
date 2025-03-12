@@ -11,6 +11,16 @@ http://localhost:3000/api-docs/
 
 ---
 
+## API Endpoint Constants
+
+Defined in `Constant.js`:
+
+```javascript
+export const USER_API_END_POINT = "http://localhost:3000/api/v1/user";
+export const JOB_API_END_POINT = "http://localhost:3000/api/v1/job";
+export const APPLICATION_API_END_POINT = "http://localhost:3000/api/v1/application";
+export const COMPANY_API_END_POINT = "http://localhost:3000/api/v1/company";
+```
 
 
 ## User Endpoints
@@ -273,13 +283,3 @@ These routes are accessible without authentication:
 - List of Companies: `/supreme/Companies`
 - List of Job Vacancies: `/supreme/JobVacancies`
 
-## API Endpoint Constants
-
-Defined in `Constant.js`:
-
-```javascript
-export const USER_API_END_POINT = "http://localhost:3000/api/v1/user";
-export const JOB_API_END_POINT = "http://localhost:3000/api/v1/job";
-export const APPLICATION_API_END_POINT = "http://localhost:3000/api/v1/application";
-export const COMPANY_API_END_POINT = "http://localhost:3000/api/v1/company";
-```

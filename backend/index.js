@@ -12,6 +12,7 @@ import applicationRoute from "./routes/application.route.js";
 import blogRoutes from "./routes/blog.route.js"
 import { rate_limiter } from "./utils/rate-limiting.js";
 import setupSwagger from './docs/swaggerDocs.js';
+import { accessLogStream } from "./utils/morganConfig.js";
 dotenv.config({});
 
 const app = express();
@@ -20,9 +21,10 @@ const app = express();
 
 // External middlewares (3rd party) (2)
 app.use(helmet());
-app.use(rate_limiter);
+app.use(rate_limiter);          // To prevent DOS attacks
 app.use(cookieParser());
-app.use(morgan("combined"));
+app.use(morgan("combined", { stream: accessLogStream }));
+// :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"
 
 // Built-in middlewares (3)
 app.use(express.json());
@@ -42,7 +44,7 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
-app.use("/api/v1/blog" ,blogRoutes)
+app.use("/api/v1/blog" ,blogRoutes);
 
 // Setup Swagger documentation
 setupSwagger(app);
@@ -59,4 +61,4 @@ app.use((err, req, res, next) => {
 app.listen(PORT,()=>{
     connectDB();
     console.log(`Server running at port ${PORT}`);
-})
+});
