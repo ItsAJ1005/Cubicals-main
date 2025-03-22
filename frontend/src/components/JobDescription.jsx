@@ -60,7 +60,7 @@ const JobDescription = () => {
         <div className='max-w-7xl mx-auto my-20'>
             <div className='flex items-center justify-between'>
                 <div>
-                    <Button className='bg-transparent' onClick={() => navigate(-1)}><img src={backButton} alt="Back" width='40rem'/></Button>
+                    <Button className='bg-transparent hover:bg-purple-200' onClick={() => navigate(-1)}><img src={backButton} alt="Back" width='40rem'/></Button>
                     <h1 className='font-bold text-xl'>Applying for {singleJob?.title}</h1>
                     <div className='flex items-center gap-2 mt-4'>
                         <Badge className={'text-blue-700 font-bold'} variant="ghost">{singleJob?.postion} Positions</Badge>

@@ -27,7 +27,7 @@ const useGetAllJobs = () => {
         };
         
         fetchAllJobs();
-    }, [searchedQuery, dispatch]);
+    }, [dispatch]);         // [Todo, add searchedQueroy later in dependency array]
     
 }
 

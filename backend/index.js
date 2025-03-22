@@ -21,7 +21,7 @@ const app = express();
 
 // External middlewares (3rd party) (2)
 app.use(helmet());
-app.use(rate_limiter);          // To prevent DOS attacks
+// app.use(rate_limiter);          // To prevent DOS attacks  [Fix too many requests error]
 app.use(cookieParser());
 app.use(morgan("combined", { stream: accessLogStream }));
 // :remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent"

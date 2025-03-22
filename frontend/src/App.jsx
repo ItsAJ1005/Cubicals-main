@@ -12,6 +12,7 @@ import CompanySetup from './components/admin/CompanySetup'
 import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
+import ProtectedRoute from './components/admin/ProtectedRoute'
 import AdminHome from './components/superUser/Components/adminHome/adminHome'
 import Lists from './components/superUser/Pages/UserLists/UserLists'
 import Orders from './components/superUser/Components/Orders/Orders'
@@ -25,9 +26,7 @@ import CreatePost from './components/blogComponents/CreatePost'
 import MyBlogs from './components/blogComponents/MyBlogs/MyBlogs'
 import Pricing from './components/pricing'
 import EditJob from './components/admin/EditJob'
-import JobSeekerProtectedRoute from './components/admin/JobSeekerProtectedRoute'
-import RecruiterProtectedRoute from './components/admin/RecruiterProtectedRoute'
-import SuperProtectedRoute from './components/admin/SuperProtectedRoute'
+import SupremeProtectedRoute from './components/superUser/Components/SupremeProtectedRoute'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -76,7 +75,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/blog/createPost",
-    element: <JobSeekerProtectedRoute><CreatePost/></JobSeekerProtectedRoute>
+    element: <ProtectedRoute><CreatePost/></ProtectedRoute>
   },
   {
     path: "/blog/myBlogs",
@@ -86,31 +85,31 @@ const appRouter = createBrowserRouter([
   // admin ke liye yha se start hoga
   {
     path: "/admin/companies",
-    element: <RecruiterProtectedRoute><Companies /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><Companies /></ProtectedRoute>
   },
   {
     path: "/admin/companies/create",
-    element: <RecruiterProtectedRoute><CompanyCreate /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><CompanyCreate /></ProtectedRoute>
   },
   {
     path: "/admin/companies/:id",
-    element: <RecruiterProtectedRoute><CompanySetup /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><CompanySetup /></ProtectedRoute>
   },
   {
     path: "/admin/jobs",
-    element: <RecruiterProtectedRoute><AdminJobs /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><AdminJobs /></ProtectedRoute>
   },
   {
     path: "/admin/jobs/create",
-    element: <RecruiterProtectedRoute><PostJob /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><PostJob /></ProtectedRoute>
   },
   {
     path: "/admin/jobs/edit/:id",
-    element: <RecruiterProtectedRoute><EditJob /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><EditJob /></ProtectedRoute>
   },
   {
     path: "/admin/jobs/:id/applicants",
-    element: <RecruiterProtectedRoute><Applicants /></RecruiterProtectedRoute>
+    element: <ProtectedRoute><Applicants /></ProtectedRoute>
   },
   // {
   //   path: "/admin/EditJob/:id",
@@ -120,24 +119,24 @@ const appRouter = createBrowserRouter([
   // **For supreme user (highest level)**
   {
     path: "/supreme",
-    element: <SuperProtectedRoute><SuperLogin /></SuperProtectedRoute>
+    element: <SupremeProtectedRoute><SuperLogin /></SupremeProtectedRoute>
   },
   {
     path: "/supreme/adminHome",
-    element: <SuperProtectedRoute><AdminHome /></SuperProtectedRoute>
+    element: <ProtectedRoute><AdminHome /></ProtectedRoute>
   },
 
   {
     path: "/supreme/applicants",
-    element: <SuperProtectedRoute><Lists type="user" /></SuperProtectedRoute>
+    element: <ProtectedRoute><Lists type="user" /></ProtectedRoute>
   },
   {
     path: "/supreme/recruiters",
-    element: <SuperProtectedRoute><Lists type="recruiter" /></SuperProtectedRoute>
+    element: <ProtectedRoute><Lists type="recruiter" /></ProtectedRoute>
   },
   {
     path: "/supreme/Companies",
-    element: <SuperProtectedRoute><Lists type="companies" /></SuperProtectedRoute>
+    element: <ProtectedRoute><Lists type="companies" /></ProtectedRoute>
   },
   {
     path:"/pricing",
@@ -145,7 +144,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/supreme/JobVacancies",
-    element: <SuperProtectedRoute><Orders /></SuperProtectedRoute>
+    element: <ProtectedRoute><Orders /></ProtectedRoute>
   },
   {
     path:"/proErr",
