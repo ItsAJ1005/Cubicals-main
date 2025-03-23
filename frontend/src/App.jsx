@@ -27,6 +27,8 @@ import MyBlogs from './components/blogComponents/MyBlogs/MyBlogs'
 import Pricing from './components/pricing'
 import EditJob from './components/admin/EditJob'
 import SupremeProtectedRoute from './components/superUser/Components/SupremeProtectedRoute'
+import ViewUserProfile from './components/admin/ViewUserProfile'
+import BlogProtectedRoute from './components/auth/BlogProtectedRoute'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -75,7 +77,7 @@ const appRouter = createBrowserRouter([
   },
   {
     path: "/blog/createPost",
-    element: <ProtectedRoute><CreatePost/></ProtectedRoute>
+    element: <BlogProtectedRoute><CreatePost/></BlogProtectedRoute>
   },
   {
     path: "/blog/myBlogs",
@@ -111,6 +113,11 @@ const appRouter = createBrowserRouter([
     path: "/admin/jobs/:id/applicants",
     element: <ProtectedRoute><Applicants /></ProtectedRoute>
   },
+  {
+    path: "/view-user-profile/:userId", 
+    element: <ProtectedRoute><ViewUserProfile /></ProtectedRoute>
+  },
+
   // {
   //   path: "/admin/EditJob/:id",
   //   element: <ProtectedRoute><EditJob /></ProtectedRoute>

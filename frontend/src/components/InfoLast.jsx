@@ -86,14 +86,14 @@ const InfoLast = () => {
                 <p className='mt-3 w-[18vw] text-left text-[16px] font-[500] text-zinc-400'>To get involved in the community, ask questions and share tips.</p>
               </div>
               
-              <div>
-                <div className='flex'>
+              <a href='https://github.com/Cubicles2024/Cubicals-main' target='_blank'>
+                <div className='flex '>
                   <img src='/src/assets/github-mark-logo.png' className='h-[24px] mt-1 mr-2 bg-white rounded-full'/>
                   <span className='font-semibold text-lg'>Github</span>
                   <img src='/src/assets/share-logo.png' className='h-[18px] mt-2 ml-2'></img>
                 </div>
                 <p className='mt-3 w-[18vw] text-left text-[16px] font-[500] text-zinc-400'>To report bugs, request features and contribute to Cubicles</p>
-              </div>
+              </a>
           </div>
       </div>
     </div>

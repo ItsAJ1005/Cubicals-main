@@ -70,6 +70,7 @@ const PostJob = () => {
                             <Input
                                 type="text"
                                 name="title"
+                                placeholder="Job position"
                                 value={input.title}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -80,6 +81,7 @@ const PostJob = () => {
                             <Input
                                 type="text"
                                 name="description"
+                                placeholder="Job description"
                                 value={input.description}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -90,6 +92,7 @@ const PostJob = () => {
                             <Input
                                 type="text"
                                 name="requirements"
+                                placeholder="Job Requirements"
                                 value={input.requirements}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -98,9 +101,10 @@ const PostJob = () => {
                         <div>
                             <Label>Salary</Label>
                             <Input
-                                type="text"
+                                type="number"
                                 name="salary"
                                 value={input.salary}
+                                placeholder="in LPA"
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
                             />
