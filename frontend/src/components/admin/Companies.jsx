@@ -9,14 +9,15 @@ import { useDispatch } from 'react-redux'
 import { setSearchCompanyByText } from '@/redux/companySlice'
 
 const Companies = () => {
-    useGetAllCompanies();
+    const { refreshCompanies } = useGetAllCompanies();
     const [input, setInput] = useState("");
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(setSearchCompanyByText(input));
-    },[input]);
+    }, [input, dispatch]);
+    
     return (
         <div>
             <Navbar />
@@ -29,7 +30,7 @@ const Companies = () => {
                     />
                     <Button onClick={() => navigate("/admin/companies/create")}>New Company</Button>
                 </div>
-                <CompaniesTable/>
+                <CompaniesTable refreshCompanies={refreshCompanies} />
             </div>
         </div>
     )

@@ -1,5 +1,0 @@
-::1 - - [12/Mar/2025:16:55:28 +0000] "GET /api/v1//job/get HTTP/1.1" 404 154 "-" "PostmanRuntime/7.39.1"
-::1 - - [12/Mar/2025:16:55:36 +0000] "GET /api/v1//job HTTP/1.1" 404 150 "-" "PostmanRuntime/7.39.1"
-::1 - - [12/Mar/2025:16:55:41 +0000] "GET /api/v1/job HTTP/1.1" 404 149 "-" "PostmanRuntime/7.39.1"
-::1 - - [12/Mar/2025:16:55:42 +0000] "GET /api/v1/job HTTP/1.1" 404 149 "-" "PostmanRuntime/7.39.1"
-::1 - - [12/Mar/2025:16:57:14 +0000] "GET /api/v1/job/get HTTP/1.1" 200 67090 "-" "PostmanRuntime/7.39.1"
