@@ -96,7 +96,7 @@ const EditJob = () => {
     return (
         <div>
             <Navbar />
-            <div className='flex items-center justify-center w-screen my-5'>
+            <div className='flex items-center justify-center w-screen my-12'>
                 <form onSubmit={submitHandler} className='p-8 max-w-4xl border border-gray-200 shadow-lg rounded-md'>
                     <div className='grid grid-cols-2 gap-2'>
                         <div>
@@ -104,6 +104,7 @@ const EditJob = () => {
                             <Input
                                 type="text"
                                 name="title"
+                                placeholder="Job Position"
                                 value={input.title}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -114,6 +115,7 @@ const EditJob = () => {
                             <Input
                                 type="text"
                                 name="description"
+                                placeholder="Job description"
                                 value={input.description}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -124,6 +126,7 @@ const EditJob = () => {
                             <Input
                                 type="text"
                                 name="requirements"
+                                placeholder="Job requirements (comma separated)"
                                 value={input.requirements.join(", ")} // Display as a comma-separated string
                                 onChange={handleRequirementsChange}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -132,8 +135,9 @@ const EditJob = () => {
                         <div>
                             <Label>Salary</Label>
                             <Input
-                                type="text"
+                                type="number"
                                 name="salary"
+                                placeholder="in LPA"
                                 value={input.salary}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -144,6 +148,7 @@ const EditJob = () => {
                             <Input
                                 type="text"
                                 name="location"
+                                placeholder="City, Country"
                                 value={input.location}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -154,6 +159,7 @@ const EditJob = () => {
                             <Input
                                 type="text"
                                 name="jobType"
+                                placeholder="Intern / Full-time"
                                 value={input.jobType}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -164,6 +170,7 @@ const EditJob = () => {
                             <Input
                                 type="number"
                                 name="experience"
+                                placeholder="in years"
                                 value={input.experience}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
@@ -174,6 +181,7 @@ const EditJob = () => {
                             <Input
                                 type="number"
                                 name="position"
+                                placeholder="No. of positions "
                                 value={input.position}
                                 onChange={changeEventHandler}
                                 className="focus-visible:ring-offset-0 focus-visible:ring-0 my-1"
