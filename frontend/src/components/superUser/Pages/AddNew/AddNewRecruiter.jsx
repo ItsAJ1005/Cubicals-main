@@ -1,54 +1,20 @@
-
 import DriveFolderUploadIcon from '@mui/icons-material/DriveFolderUpload';
 import React, { useState } from 'react';
-import Input from '../../components/Input/Input';
-import Navbar from '../../Components/Navbar/Navbar';
-import Sidebar from '../../Components/Sidebar/Sidebar';
-import noImage from '../../Images/photo-camera.png';
+import Input from '../../Components/Input/Input';
+import Navbar from "../../Components/Navbar/Navbar";
+import Sidebar from "../../Components/Sidebar/Sidebar";
 import './New.scss';
 
-function AddNew({ inputs, titlee, type }) {
-    let dynamicInpVal;
-
-    // dynamically change the state values
-    switch (type) {
-        case 'APPLICANT':
-            dynamicInpVal = {
-                username: '',
-                name: '',
-                email: '',
-                password: '',
-                address: '',
-            };
-            break;
-        case 'RECRUITER':
-            dynamicInpVal = {
-                username: '',
-                name: '',
-                email: '',
-                password: '',
-                address: '',
-            };
-            break;
-        case 'COMPANY':
-            dynamicInpVal = {
-                title: '',
-                description: '',
-                category: '',
-                price: '',
-                stock: '',
-            };
-            break;
-        default:
-            break;
-    }
-    const [userInp, setUserInp] = useState(dynamicInpVal);
+function AddNewRecruiter({ inputs = [], titlee }) {
+    const [userInp, setUserInp] = useState({
+        username: '',
+        name: '',
+        email: '',
+        password: '',
+        address: '',
+    });
 
     const [file, setFile] = useState('');
-
-    const image = false;
-
-    // Dynamicaly change the data for different pages
 
     const handleChange = (e) => {
         setUserInp({ ...userInp, [e.target.name]: e.target.value });
@@ -58,6 +24,7 @@ function AddNew({ inputs, titlee, type }) {
         e.preventDefault();
         console.log(userInp);
     };
+    
     return (
         <div className="add_new">
             <div className="home_sidebar">
@@ -69,10 +36,7 @@ function AddNew({ inputs, titlee, type }) {
 
                 <div className="new_page_main">
                     <div className="new_page_content">
-                        <div className="image">
-                            <p className="add_new_user">{titlee}</p>
-                            <img src={file ? URL.createObjectURL(file) : noImage} alt="" />
-                        </div>
+                        <p className="add_new_user">{titlee || "Add New Recruiter"}</p>
 
                         <form onSubmit={handleSubmit} className="form">
                             <div className="form_inp">
@@ -89,7 +53,7 @@ function AddNew({ inputs, titlee, type }) {
                                 />
                             </div>
 
-                            {inputs.map((detail) => (
+                            {inputs && inputs.map((detail) => (
                                 <Input
                                     key={detail.id}
                                     {...detail}
@@ -109,4 +73,4 @@ function AddNew({ inputs, titlee, type }) {
     );
 }
 
-export default AddNew;
+export default AddNewRecruiter;

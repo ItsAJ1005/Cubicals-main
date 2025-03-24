@@ -7,7 +7,7 @@ import AddNew from './Pages/AddNew/AddNew';
 import Detail from './Pages/Detail/Detail';
 import Login from './Pages/Login/Login';
 import Lists from './Pages/UserLists/UserLists';
-import ViewApplicant from './Pages/ViewApplicants/ViewApplicants'; // Import ViewApplicant component
+
 import './app.scss';
 
 const userInpDetails = [
@@ -25,14 +25,24 @@ function Supreme_App() {
         <div className={darkMode ? 'App dark' : 'App'}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/applicants">
+                    {/* Route 1: Home page route */}
+                    <Route path="/supreme" element={<Home />} />
+                    
+                    {/* Route 2: Login page route */}
+                    <Route path="/supreme/login" element={<Login />} />
+                    
+                    {/* Route 3: Applicants section with nested routes */}
+                    <Route path="/supreme/applicants">
+                        {/* Route 3.1: Applicants list (index route) */}
                         <Route index element={<Lists type="user" />} />
-                        <Route path="/addnew" element={<AddNew inputs={userInpDetails} titlee="Add New Applicant" type="USER" />} />
-                        <Route path="/view/:userId" element={<ViewApplicant />} />
+                        
+                        {/* Route 3.2: Add new applicant route - fixed to use relative path */}
+                        <Route path="addnew" element={<AddNew inputs={userInpDetails} titlee="Add New Applicant" type="USER" />} />
+
                     </Route>
-                    <Route path="JobVacancies" element={<Orders />} />
+                    
+                    {/* Route 4: Job Vacancies route */}
+                    <Route path="/supreme/JobVacancies" element={<Orders />} />
                 </Routes>
             </BrowserRouter>
         </div>

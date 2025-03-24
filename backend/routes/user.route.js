@@ -1,9 +1,19 @@
 import express from "express";
-import { getAllRecruiters, generateUserReport, login, logout, register, updateProfile, getRecruiterCount } from "../controllers/user.controller.js";
+import { 
+    getAllRecruiters, 
+    generateUserReport, 
+    login, 
+    logout, 
+    register, 
+    updateProfile, 
+    getRecruiterCount,
+    deleteRecruiter,
+    getAllUsers,
+    deleteUser 
+} from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js"; 
 import ErrorHandler from '../middlewares/errorHandler.js';
-
 
 const router = express.Router();
 
@@ -30,5 +40,14 @@ router.get('/getRecruiterCount', getRecruiterCount);
 router.get("/error", (req, res, next) => {
     next(new ErrorHandler("This is a test error!", 400));
 });
+
+// Route to delete a recruiter
+router.delete('/deleteRecruiter/:id', deleteRecruiter);
+
+// Route to get all users
+router.get('/getAllUsers', getAllUsers);
+
+// Route to delete a user
+router.delete('/deleteUser/:id', deleteUser);
 
 export default router;

@@ -254,7 +254,67 @@ class UserController {
         } catch (error) {
             next(error);
         }
+    }
+
+    // Delete a recruiter by ID
+    async deleteRecruiter(req, res, next) {
+        try {
+            const { id } = req.params;
+            
+            // Find and delete the recruiter
+            const deletedRecruiter = await User.findByIdAndDelete(id);
+            
+            if (!deletedRecruiter) {
+                return res.status(404).json({ message: 'Recruiter not found' });
+            }
+            
+            res.status(200).json({ 
+                success: true, 
+                message: 'Recruiter deleted successfully' 
+            });
+        } catch (error) {
+            console.error('Error deleting recruiter:', error);
+            next(error);
         }
+    }
+
+    // Get all users with role 'student'
+    async getAllUsers(req, res, next) {
+        try {
+            const users = await User.find({ role: 'student' })
+                .select('fullname email phoneNumber createdAt');
+
+            if (users.length === 0) {
+                return res.status(404).json({ message: "No users found.", success: false });
+            }
+
+            return res.status(200).json({ users, success: true });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // Delete a user by ID
+    async deleteUser(req, res, next) {
+        try {
+            const { id } = req.params;
+            
+            // Find and delete the user
+            const deletedUser = await User.findByIdAndDelete(id);
+            
+            if (!deletedUser) {
+                return res.status(404).json({ message: 'User not found', success: false });
+            }
+            
+            return res.status(200).json({ 
+                success: true, 
+                message: 'User deleted successfully' 
+            });
+        } catch (error) {
+            console.error('Error deleting user:', error);
+            next(error);
+        }
+    }
 
     register = this.register.bind(this);
     login = this.login.bind(this);
@@ -263,7 +323,21 @@ class UserController {
     generateUserReport = this.generateUserReport.bind(this);
     getAllRecruiters = this.getAllRecruiters.bind(this);
     getRecruiterCount = this.getRecruiterCount.bind(this);
+    deleteRecruiter = this.deleteRecruiter.bind(this);
+    getAllUsers = this.getAllUsers.bind(this);
+    deleteUser = this.deleteUser.bind(this);
 }
 
 const userController = new UserController();
-export const { register, login, logout, updateProfile, generateUserReport, getAllRecruiters, getRecruiterCount } = userController;
+export const { 
+    register, 
+    login, 
+    logout, 
+    updateProfile, 
+    generateUserReport, 
+    getAllRecruiters, 
+    getRecruiterCount,
+    deleteRecruiter,
+    getAllUsers,
+    deleteUser 
+} = userController;
