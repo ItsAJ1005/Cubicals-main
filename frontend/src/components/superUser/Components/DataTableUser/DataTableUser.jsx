@@ -1,39 +1,40 @@
 import { DataGrid } from '@mui/x-data-grid';
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './DataTableRecruiter.scss';
+import './DataTableUser.scss';
 import { USER_API_END_POINT } from '@/utils/constant';
 
-function DataTableRecruiter() {
+function DataTableUser() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
-        const fetchRecruiters = async () => {
+        const fetchUsers = async () => {
             try {
-                const response = await axios.get(`${USER_API_END_POINT}/getAllRecruiters`);
-                const formattedData = response.data.recruiters.map((recruiter) => ({
-                    id: recruiter._id,
-                    username: recruiter.fullname,
-                    email: recruiter.email,
-                    image: recruiter.image || 'https://img.icons8.com/?size=100&id=7819&format=png&color=C850F2',
-                    age: recruiter.age || 'N/A',
-                    phoneNumber: recruiter.phoneNumber || 'N/A',
+                const response = await axios.get(`${USER_API_END_POINT}/getAllUsers`);
+                const formattedData = response.data.users.map((user) => ({
+                    id: user._id,
+                    username: user.fullname,
+                    email: user.email,
+                    image: user.image || 'https://img.icons8.com/?size=100&id=7819&format=png&color=C850F2',
+                    age: user.age || 'N/A',
+                    phoneNumber: user.phoneNumber || 'N/A',
+                    joinDate: user.createdAt ? new Date(user.createdAt).toLocaleDateString() : 'N/A',
                 }));
                 setData(formattedData);
             } catch (error) {
-                console.error("Error fetching recruiters:", error);
+                console.error("Error fetching users:", error);
             }
         };
 
-        fetchRecruiters();
+        fetchUsers();
     }, []);
 
     const handleDlt = async (id) => {
         try {
-            await axios.delete(`${USER_API_END_POINT}/deleteRecruiter/${id}`);
+            await axios.delete(`${USER_API_END_POINT}/deleteUser/${id}`);
             setData(data.filter((item) => item.id !== id));
         } catch (error) {
-            console.error("Error deleting recruiter:", error);
+            console.error("Error deleting user:", error);
         }
     };
 
@@ -41,7 +42,7 @@ function DataTableRecruiter() {
         {
             field: 'id',
             headerName: 'ID',
-            width: 310,
+            width: 300,
             renderCell: (param) => (
                 <div className="userr">
                     <img src={param.row.image} alt="User" className="userr_image" />
@@ -49,13 +50,14 @@ function DataTableRecruiter() {
                 </div>
             ),
         },
-        { field: 'username', headerName: 'Recruiter Name', width: 180 },
-        { field: 'email', headerName: 'Email', width: 280 },
-        { field: 'phoneNumber', headerName: 'Phone Number', width: 176 },
+        { field: 'username', headerName: 'User Name', width: 180 },
+        { field: 'email', headerName: 'Email', width: 250 },
+        { field: 'phoneNumber', headerName: 'Phone Number', width: 150 },
+        { field: 'joinDate', headerName: 'Joined Date', width: 120 },
         {
             field: 'action',
             headerName: 'Action',
-            width: 170,
+            width: 150,
             renderCell: (params) => (
                 <div className="actionn">
                     <button
@@ -72,7 +74,6 @@ function DataTableRecruiter() {
 
     return (
         <div className="data_table">
-            
             <DataGrid
                 className="data_grid"
                 rows={data}
@@ -85,4 +86,4 @@ function DataTableRecruiter() {
     );
 }
 
-export default DataTableRecruiter;
+export default DataTableUser;

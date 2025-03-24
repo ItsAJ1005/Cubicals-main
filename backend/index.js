@@ -8,6 +8,7 @@ import connectDB from "./utils/db.js";
 import userRoute from "./routes/user.route.js";
 import companyRoute from "./routes/company.route.js";
 import jobRoute from "./routes/job.route.js";
+import chartRoutes from "./routes/chart.route.js";
 import applicationRoute from "./routes/application.route.js";
 import blogRoutes from "./routes/blog.route.js"
 import { rate_limiter } from "./utils/rate-limiting.js";
@@ -45,7 +46,7 @@ app.use("/api/v1/company", companyRoute);
 app.use("/api/v1/job", jobRoute);
 app.use("/api/v1/application", applicationRoute);
 app.use("/api/v1/blog" ,blogRoutes);
-
+app.use('/api/v1/charts', chartRoutes);
 // Setup Swagger documentation
 setupSwagger(app);
 

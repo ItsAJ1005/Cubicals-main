@@ -13,10 +13,15 @@ import AdminJobs from "./components/admin/AdminJobs";
 import PostJob from './components/admin/PostJob'
 import Applicants from './components/admin/Applicants'
 import ProtectedRoute from './components/admin/ProtectedRoute'
+//super user imports
 import AdminHome from './components/superUser/Components/adminHome/adminHome'
 import Lists from './components/superUser/Pages/UserLists/UserLists'
 import Orders from './components/superUser/Components/Orders/Orders'
 import SuperLogin from './components/superUser/Components/Login/SuperLogin'
+import AddNewApplicant from './components/superUser/Pages/AddNew/AddNewApplicant'
+import AddNewCompany from './components/superUser/Pages/AddNew/AddNewCompany'
+import AddNewRecruiter from './components/superUser/Pages/AddNew/AddNewRecruiter'
+//super user imports end
 import ProErr from './components/ProErr'
 import NotFoundErr from './components/NotFoundErr'
 import LearnMore from './components/LearnMore'
@@ -124,7 +129,12 @@ const appRouter = createBrowserRouter([
   // },
 
   // **For supreme user (highest level)**
-  {
+
+
+/*
+supreme user starts here
+*/
+{
     path: "/supreme",
     element: <SupremeProtectedRoute><SuperLogin /></SupremeProtectedRoute>
   },
@@ -145,6 +155,21 @@ const appRouter = createBrowserRouter([
     path: "/supreme/Companies",
     element: <ProtectedRoute><Lists type="companies" /></ProtectedRoute>
   },
+  {
+    path: "/supreme/applicants/add",
+    element: <ProtectedRoute><AddNewApplicant/></ProtectedRoute>
+  },
+  {
+    path: "/supreme/recruiters/add",
+    element: <ProtectedRoute><AddNewRecruiter /></ProtectedRoute>
+  },
+  {
+    path: "/supreme/Companies/add",
+    element: <ProtectedRoute><AddNewCompany/></ProtectedRoute>
+  },
+  /*
+  supreme user ends here
+  */
   {
     path:"/pricing",
     element:<Pricing />
