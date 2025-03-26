@@ -316,6 +316,120 @@ class UserController {
         }
     }
 
+    // Admin function to add a new applicant/student
+    async addApplicantByAdmin(req, res, next) {
+        try {
+            const { fullname, email, phoneNumber, password, role = 'student' } = req.body;
+
+            // Validate email format
+            if (!simpleEmailRegex.test(email)) {
+                return res.status(400).json({ message: "Invalid email, format: something@something.something", success: false });
+            }
+
+            // Validate password strength
+            if (!passwordRegex.test(password)) {
+                return res.status(400).json({ message: "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character.", success: false });
+            }
+
+            // Check for missing fields
+            if (!fullname || !phoneNumber || !password) {
+                return res.status(400).json({ message: "Required fields are missing", success: false });
+            }
+
+            // Check for file upload
+            const file = req.file;
+            let cloudResponse;
+            if (file) {
+                const fileUri = getDataUri(file);
+                cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            }
+
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ message: "User already exists with this email.", success: false });
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            const newUser = await User.create({
+                fullname,
+                email,
+                phoneNumber,
+                password: hashedPassword,
+                role,
+                profile: {
+                    profilePhoto: cloudResponse ? cloudResponse.secure_url : null,
+                },
+            });
+
+            return res.status(201).json({ 
+                message: "Applicant created successfully.", 
+                user: this.getUserResponse(newUser),
+                success: true 
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    // Admin function to add a new recruiter
+    async addRecruiterByAdmin(req, res, next) {
+        try {
+            const { fullname, email, phoneNumber, password, bio } = req.body;
+            const role = 'recruiter'; // Force role to be recruiter
+
+            // Validate email format
+            if (!simpleEmailRegex.test(email)) {
+                return res.status(400).json({ message: "Invalid email, format: something@something.something", success: false });
+            }
+
+            // Validate password strength
+            if (!passwordRegex.test(password)) {
+                return res.status(400).json({ message: "Password must be at least 8 characters long and contain at least one lowercase letter, one uppercase letter, one digit, and one special character.", success: false });
+            }
+
+            // Check for missing fields
+            if (!fullname || !phoneNumber || !password) {
+                return res.status(400).json({ message: "Required fields are missing", success: false });
+            }
+
+            // Check for file upload
+            const file = req.file;
+            let cloudResponse;
+            if (file) {
+                const fileUri = getDataUri(file);
+                cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+            }
+
+            const existingUser = await User.findOne({ email });
+            if (existingUser) {
+                return res.status(400).json({ message: "User already exists with this email.", success: false });
+            }
+
+            const hashedPassword = await bcrypt.hash(password, 10);
+            
+            const newRecruiter = await User.create({
+                fullname,
+                email,
+                phoneNumber,
+                password: hashedPassword,
+                role,
+                profile: {
+                    profilePhoto: cloudResponse ? cloudResponse.secure_url : null,
+                    bio: bio || "",
+                },
+            });
+
+            return res.status(201).json({ 
+                message: "Recruiter created successfully.", 
+                user: this.getUserResponse(newRecruiter),
+                success: true 
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
+
     register = this.register.bind(this);
     login = this.login.bind(this);
     logout = this.logout.bind(this);
@@ -326,6 +440,8 @@ class UserController {
     deleteRecruiter = this.deleteRecruiter.bind(this);
     getAllUsers = this.getAllUsers.bind(this);
     deleteUser = this.deleteUser.bind(this);
+    addApplicantByAdmin = this.addApplicantByAdmin.bind(this);
+    addRecruiterByAdmin = this.addRecruiterByAdmin.bind(this);
 }
 
 const userController = new UserController();
@@ -339,5 +455,7 @@ export const {
     getRecruiterCount,
     deleteRecruiter,
     getAllUsers,
-    deleteUser 
+    deleteUser,
+    addApplicantByAdmin,
+    addRecruiterByAdmin
 } = userController;

@@ -17,6 +17,9 @@ router.route("/get/:id").get(isAuthenticated, companyController.getCompanyById);
 // Route to update a company by ID (PUT method with file upload)
 router.route("/update/:id").put(isAuthenticated, singleUpload, companyController.updateCompany);
 
+// Route to add a new company with logo upload
+router.route("/add").post(isAuthenticated, singleUpload, companyController.addCompany);
+
 // Add this route to get all companies
 router.get('/companies/all', companyController.getAllCompanies); 
 

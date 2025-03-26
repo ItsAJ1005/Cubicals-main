@@ -135,6 +135,55 @@ class CompanyController {
     }
   } 
 
+  // Add a new company with logo upload
+  async addCompany(req, res, next) {
+    try {
+      const { name, description, website, location } = req.body;
+      
+      if (!name) {
+        return res.status(400).json({ 
+          message: "Company name is required.", 
+          success: false 
+        });
+      }
+
+      // Check if company with same name already exists
+      const existingCompany = await Company.findOne({ name });
+      if (existingCompany) {
+        return res.status(400).json({ 
+          message: "A company with this name already exists.", 
+          success: false 
+        });
+      }
+
+      // Upload logo if it exists
+      let logo;
+      if (req.file) {
+        const fileUri = getDataUri(req.file);
+        const cloudResponse = await cloudinary.uploader.upload(fileUri.content);
+        logo = cloudResponse.secure_url;
+      }
+
+      // Create new company
+      const newCompany = await Company.create({
+        name,
+        description,
+        website,
+        location,
+        logo,
+        userId: req.id,
+      });
+
+      return res.status(201).json({
+        message: "Company created successfully.",
+        company: newCompany,
+        success: true
+      });
+    } catch (error) {
+      next(error);
+    }
+  }
+
 }
 
 export default new CompanyController();

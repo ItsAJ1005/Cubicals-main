@@ -9,7 +9,9 @@ import {
     getRecruiterCount,
     deleteRecruiter,
     getAllUsers,
-    deleteUser 
+    deleteUser,
+    addApplicantByAdmin,
+    addRecruiterByAdmin
 } from "../controllers/user.controller.js";
 import isAuthenticated from "../middlewares/isAuthenticated.js";
 import { singleUpload } from "../middlewares/mutler.js"; 
@@ -49,5 +51,11 @@ router.get('/getAllUsers', getAllUsers);
 
 // Route to delete a user
 router.delete('/deleteUser/:id', deleteUser);
+
+// Route for admin to add a new applicant
+router.route("/admin/addApplicant").post(singleUpload, addApplicantByAdmin);
+
+// Route for admin to add a new recruiter
+router.route("/admin/addRecruiter").post(singleUpload, addRecruiterByAdmin);
 
 export default router;
