@@ -1,76 +1,121 @@
-import React, { useState } from 'react'
-import Navbar from './shared/Navbar'
-import { Avatar, AvatarImage } from './ui/avatar'
-import { Button } from './ui/button'
-import { Contact, Mail, Pen } from 'lucide-react'
-import { Badge } from './ui/badge'
-import { Label } from './ui/label'
-import AppliedJobTable from './AppliedJobTable'
-import UpdateProfileDialog from './UpdateProfileDialog'
-import { useSelector } from 'react-redux'
-import useGetAppliedJobs from '@/hooks/useGetAppliedJobs'
-import { ReportDownloadButton } from './DownloadReport'
-
-// const skills = ["Html", "Css", "Javascript", "Reactjs"]
-const isResume = true;
+import React, { useState } from 'react';
+import Navbar from './shared/Navbar';
+import { Avatar, AvatarImage } from './ui/avatar';
+import { Button } from './ui/button';
+import { Contact, Mail, Pen, Download } from 'lucide-react';
+import { Badge } from './ui/badge';
+import AppliedJobTable from './AppliedJobTable';
+import UpdateProfileDialog from './UpdateProfileDialog';
+import { useSelector } from 'react-redux';
+import useGetAppliedJobs from '@/hooks/useGetAppliedJobs';
+import { ReportDownloadButton } from './DownloadReport';
 
 const Profile = () => {
     useGetAppliedJobs();
     const [open, setOpen] = useState(false);
-    const {user} = useSelector(store=>store.auth);
+    const { user } = useSelector(store => store.auth);
 
     return (
-        <div>
+        <div className="min-h-screen bg-slate-50">
             <Navbar />
-            <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8'>
-                <div className='flex justify-between'>
-                    <div className='flex items-center gap-4'>
-                        <Avatar className="h-24 w-24">
-                            <AvatarImage src={user?.profile?.profilePhoto || "/src/assets/user.png"} alt="profile" />
-                        </Avatar>
-                        <div>
-                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
-                            <p>{user?.profile?.bio}</p>
+            
+            <div className="max-w-5xl mx-auto px-4 py-8 grid grid-cols-1 lg:grid-cols-3 gap-8">
+                {/* Left Profile Column */}
+                <div className="lg:col-span-1 space-y-6">
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="flex flex-col items-center text-center">
+                            <Avatar className="h-24 w-24 mb-4 border-2 border-slate-100">
+                                <AvatarImage 
+                                    src={user?.profile?.profilePhoto || "/src/assets/user.png"} 
+                                    className="object-cover"
+                                />
+                            </Avatar>
+                            <h1 className="text-xl font-bold text-slate-900 mb-1">{user?.fullname}</h1>
+                            <p className="text-slate-600 mb-4">{user?.profile?.bio || "Add a professional bio"}</p>
+                            
+                            <Button 
+                                onClick={() => setOpen(true)}
+                                variant="ghost"
+                                className="w-full gap-2 text-slate-700 hover:bg-slate-50"
+                            >
+                                <Pen className="h-4 w-4" />
+                                Edit Profile
+                            </Button>
+                        </div>
+
+                        <div className="mt-6 space-y-4">
+                            <div className="flex items-center gap-3 text-slate-700 p-3 bg-slate-50 rounded-lg">
+                                <Mail className="h-5 w-5 text-slate-600" />
+                                <span className="text-sm">{user?.email}</span>
+                            </div>
+                            
+                            <div className="flex items-center gap-3 text-slate-700 p-3 bg-slate-50 rounded-lg">
+                                <Contact className="h-5 w-5 text-slate-600" />
+                                <span className="text-sm">{user?.phoneNumber || "Add phone number"}</span>
+                            </div>
                         </div>
                     </div>
-                    <Button onClick={() => setOpen(true)} className="text-right" variant="outline"><Pen /></Button>
-                </div>
-                <div className='my-5'>
-                    <div className='flex items-center gap-3 my-2'>
-                        <Mail />
-                        <span>{user?.email}</span>
-                    </div>
-                    <div className='flex items-center gap-3 my-2'>
-                        <Contact />
-                        <span>{user?.phoneNumber}</span>
-                    </div>
-                </div>
-                <div className='my-5'>
-                    <h1>Skills</h1>
-                    <div className='flex items-center gap-1'>
-                        {
-                            user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
-                        }
-                    </div>
-                </div>
-                <div className='w-full max-w-sm items-center gap-1.5 mt-6'>
-                    <Label className=" text-md font-bold">Resume</Label>
-                    {
-                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer ml-2'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
-                    }
-                </div>
-                <div className='mt-4 p-2'>
-                    <ReportDownloadButton/>
-                </div>
-            </div>
-            <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
-                <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
-                {/* Applied Job Table   */}
-                <AppliedJobTable />
-            </div>
-            <UpdateProfileDialog open={open} setOpen={setOpen}/>
-        </div>
-    )
-}
 
-export default Profile
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <h3 className="text-base font-semibold text-slate-900 mb-4">Skills & Resume</h3>
+                        
+                        <div className="space-y-4">
+                            <div>
+                                <h4 className="text-sm font-medium text-slate-700 mb-2">Technical Skills</h4>
+                                <div className="flex flex-wrap gap-2">
+                                    {user?.profile?.skills?.length ? (
+                                        user.profile.skills.map((skill, index) => (
+                                            <Badge 
+                                                key={index}
+                                                variant="secondary"
+                                                className="px-2.5 py-1 text-gray-100 bg-black"
+                                            >
+                                                {skill}
+                                            </Badge>
+                                        ))
+                                    ) : (
+                                        <p className="text-sm text-slate-400">No skills added yet</p>
+                                    )}
+                                </div>
+                            </div>
+
+                            <div>
+                                <h4 className="text-sm font-medium text-slate-700 mb-2">Resume</h4>
+                                {user?.profile?.resume ? (
+                                    <a
+                                        target="_blank"
+                                        href={user.profile.resume}
+                                        className="flex items-center gap-2 text-sm text-blue-600 hover:text-blue-700"
+                                    >
+                                        <Download className="h-4 w-4" />
+                                        {user.profile.resumeOriginalName}
+                                    </a>
+                                ) : (
+                                    <p className="text-sm text-slate-400">Upload your resume</p>
+                                )}
+                            </div>
+
+                            <div className="pt-4">
+                                <ReportDownloadButton />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Right Content Column */}
+                <div className="lg:col-span-2">
+                    <div className="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-lg font-semibold text-slate-900">Application History</h2>
+                        </div>
+                        <AppliedJobTable />
+                    </div>
+                </div>
+            </div>
+
+            <UpdateProfileDialog open={open} setOpen={setOpen} />
+        </div>
+    );
+};
+
+export default Profile;
