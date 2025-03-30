@@ -5,11 +5,11 @@ window.onload = function() {
       setTimeout(() => {
           popup.classList.remove('hidden');
           popup.classList.add('visible');
-      }, 100);
+      }, 4000);
 
       setTimeout(() => {
           popup.classList.remove('visible');
           popup.classList.add('hidden');
-      }, 5000);
+      }, 10000);
   }
 };

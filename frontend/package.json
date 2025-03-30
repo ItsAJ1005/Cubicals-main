@@ -60,6 +60,7 @@
     "redux-persist": "^6.0.0",
     "sass": "^1.55.0",
     "sonner": "^1.5.0",
+    "styled-components": "^6.1.16",
     "tailwind-merge": "^2.3.0",
     "tailwindcss": "^3.4.4",
     "tailwindcss-animate": "^1.0.7",

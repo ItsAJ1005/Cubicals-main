@@ -34,6 +34,8 @@ import EditJob from './components/admin/EditJob'
 import SupremeProtectedRoute from './components/superUser/Components/SupremeProtectedRoute'
 import ViewUserProfile from './components/admin/ViewUserProfile'
 import BlogProtectedRoute from './components/auth/BlogProtectedRoute'
+import { useEffect, useState } from 'react'
+import LoadingPage from './components/shared/LoadingPage'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -190,10 +192,22 @@ supreme user starts here
 ])
 function App() {
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading process
+    const timer = setTimeout(() => setIsLoading(false), 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div>
-      <RouterProvider router={appRouter} />
-    </div>
+    <>
+      {isLoading ? <LoadingPage/> : (
+        <div>
+          <RouterProvider router={appRouter} />
+        </div>
+      )}
+    </>
   )
 }
 
