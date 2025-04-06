@@ -83,7 +83,10 @@ class JobController {
   async getAdminJobs(req, res, next) {
     try {
       const adminId = req.id;
-      const jobs = await Job.find({ created_by: adminId }).populate({ path: 'company' });
+      const jobs = await Job.find({ created_by: adminId })
+      .sort({ createdAt: -1 }) 
+      .populate({ path: 'company' });
+
 
       if (jobs.length === 0) {
         return res.status(404).json({ message: "Jobs not found.", success: false });
