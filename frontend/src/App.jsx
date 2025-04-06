@@ -202,11 +202,15 @@ function App() {
 
   return (
     <>
-      {isLoading ? <LoadingPage/> : (
+      {/* {isLoading ? <LoadingPage/> : (
         <div>
           <RouterProvider router={appRouter} />
         </div>
-      )}
+      )} */}
+
+        <div>
+          <RouterProvider router={appRouter} />
+        </div>
     </>
   )
 }
