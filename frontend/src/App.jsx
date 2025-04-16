@@ -36,6 +36,7 @@ import ViewUserProfile from './components/admin/ViewUserProfile'
 import BlogProtectedRoute from './components/auth/BlogProtectedRoute'
 import { useEffect, useState } from 'react'
 import LoadingPage from './components/shared/LoadingPage'
+import PostDetail from './components/blogComponents/PostDetail'
 // import EditJob from './components/admin/EditJob'
 
 
@@ -89,6 +90,10 @@ const appRouter = createBrowserRouter([
   {
     path: "/blog/myBlogs",
     element: <MyBlogs/>
+  },
+  {
+    path: "/blog/post/:id",
+    element: <PostDetail/>
   },
 
   // admin ke liye yha se start hoga

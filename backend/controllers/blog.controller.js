@@ -27,15 +27,41 @@ export const createBlog = async (req, res) => {
 };
 
 
-// Get all blogs
+// Get blogs with pagination and sorting
 export const getAllBlogs = async (req, res) => {
     try {
-        const blogs = await Blog.find().populate("author", "fullname email");
-        res.status(200).json(blogs);
+      const { page = 1, limit = 10, sortBy = 'createdAt', sortOrder = -1 } = req.query;
+      const skip = (parseInt(page) - 1) * parseInt(limit);
+      
+      // Create sort object
+      const sort = {};
+      sort[sortBy] = parseInt(sortOrder);
+      
+      // Query with pagination, sorting and field selection
+      const blogs = await Blog.find()
+        .select('title content tags image createdAt updatedAt')
+        .populate("author", "fullname email")
+        .sort(sort)
+        .skip(skip)
+        .limit(parseInt(limit))
+        .lean(); // Use lean() for faster queries
+      
+      // Get total count for pagination info
+      const total = await Blog.countDocuments();
+      
+      res.status(200).json({
+        blogs,
+        pagination: {
+          total,
+          page: parseInt(page),
+          pages: Math.ceil(total / parseInt(limit))
+        }
+      });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching blogs", error });
+      res.status(500).json({ message: "Error fetching blogs", error: error.message });
     }
-};
+  };
+  
 
 // Get a single blog by ID
 export const getBlogById = async (req, res) => {
