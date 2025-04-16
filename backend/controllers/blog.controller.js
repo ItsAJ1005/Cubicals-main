@@ -130,12 +130,24 @@ export const addComment = async (req, res) => {
     }
 };
 
-// Get all comments for a specific blog
+// GET /blogs/:blogId/comments?skip=0&limit=10
 export const getCommentsByBlogId = async (req, res) => {
+    const { blogId } = req.params;
+    const skip = parseInt(req.query.skip) || 0;
+    const limit = parseInt(req.query.limit) || 10;
+  
     try {
-        const comments = await Comment.find({ blog: req.params.blogId }).populate("author", "fullname email");
-        res.status(200).json(comments);
+      const comments = await Comment.find({ blog: blogId })
+        .sort({ createdAt: -1 })
+        .skip(skip)
+        .limit(limit)
+        .populate("author", "fullname email");
+  
+      const totalComments = await Comment.countDocuments({ blog: blogId });
+  
+      res.status(200).json({ comments, total: totalComments });
     } catch (error) {
-        res.status(500).json({ message: "Error fetching comments", error });
+      res.status(500).json({ message: "Error fetching comments", error });
     }
-};
+  };
+  
