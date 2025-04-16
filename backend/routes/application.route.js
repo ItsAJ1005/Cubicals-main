@@ -31,7 +31,7 @@ router.route("/status/:id").patch(isAuthenticated, applicationController.updateA
 // Get total number of applicants for all jobs
 router.get('/countApplicants', applicationController.getTotalApplicants);
 
-// Assuming you're using a router instance
+// Get number of applicants of a company
 router.get('/getApplicantCountsOfEachCompany', applicationController.getApplicantCountsOfEachCompany);
 
 
